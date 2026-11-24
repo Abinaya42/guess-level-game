@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoomStatus {
+  WAITING
+  IN_PROGRESS
+  FINISHED
+}
+
+enum GameStatus {
+  WAITING
+  IN_PROGRESS
+  FINISHED
+}
+
+enum RoundStatus {
+  WAITING
+  WORD_SELECTION
+  IN_PROGRESS
+  FINISHED
+}
+
+model User {
+  id          String   @id @default(uuid())
+  firebaseUid String   @unique
+  email       String   @unique
+  username    String
+  avatar      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  roomsHosted   Room[]        @relation("RoomHost")
+  roomPlayers   RoomPlayer[]
+  roundsAsArtist Round[]      @relation("RoundArtist")
+  guesses       Guess[]
+  scores        PlayerScore[]
+
+  @@map("users")
+}
+
+model Room {
+  id          String     @id @default(uuid())
+  code        String     @unique
+  hostId      String
+  host        User       @relation("RoomHost", fields: [hostId], references: [id])
+  status      RoomStatus @default(WAITING)
+  maxPlayers  Int        @default(11)
+  inviteLink  String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  players     RoomPlayer[]
+  game        Game?
+
+  @@map("rooms")
+}
+
+model RoomPlayer {
+  id       String   @id @default(uuid())
+  roomId   String
+  room     Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  isReady  Boolean  @default(false)
+  joinedAt DateTime @default(now())
+
+  @@unique([roomId, userId])
+  @@map("room_players")
+}
+
+model Game {
+  id           String     @id @default(uuid())
+  roomId       String     @unique
+  room         Room       @relation(fields: [roomId], references: [id])
+  currentRound Int        @default(0)
+  totalRounds  Int        @default(11)
+  status       GameStatus @default(WAITING)
+  startedAt    DateTime?
+  endedAt      DateTime?
+
+  rounds  Round[]
+  scores  PlayerScore[]
+
+  @@map("games")
+}
+
+model Round {
+  id           String      @id @default(uuid())
+  gameId       String
+  game         Game        @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  roundNumber  Int
+  artistId     String
+  artist       User        @relation("RoundArtist", fields: [artistId], references: [id])
+  word         String
+  status       RoundStatus @default(WAITING)
+  startedAt    DateTime?
+  endedAt      DateTime?
+  firstHintAt  DateTime?
+  secondHintAt DateTime?
+
+  guesses     Guess[]
+  drawStrokes DrawStroke[]
+
+  @@map("rounds")
+}
+
+model Guess {
+  id        String   @id @default(uuid())
+  roundId   String
+  round     Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  text      String
+  isCorrect Boolean  @default(false)
+  points    Int      @default(0)
+  rank      Int      @default(0)
+  guessedAt DateTime @default(now())
+
+  @@unique([roundId, userId])
+  @@map("guesses")
+}
+
+model PlayerScore {
+  id          String @id @default(uuid())
+  gameId      String
+  game        Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+  totalPoints Int    @default(0)
+
+  @@unique([gameId, userId])
+  @@map("player_scores")
+}
+
+model DrawStroke {
+  id        String   @id @default(uuid())
+  roundId   String
+  round     Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  data      Json
+  strokeIndex Int
+  createdAt DateTime @default(now())
+
+  @@map("draw_strokes")
+}
