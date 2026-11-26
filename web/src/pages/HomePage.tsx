@@ -68,7 +68,7 @@ export const HomePage: React.FC = () => {
         {/* Stats */}
         {stats && (
           <div style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', marginBottom: 16 }}>📊 Your Stats</h3>
+            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', marginBottom: 16 }}>📊 Your Status</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
               {[['Games', stats.gamesPlayed], ['Wins', stats.gamesWon], ['Avg Score', stats.avgScore], ['Best', stats.bestScore]].map(([label, val]) => (
                 <div key={label as string} style={{ textAlign: 'center', background: '#f8fafc', borderRadius: 10, padding: 12 }}>
