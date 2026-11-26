@@ -32,7 +32,7 @@ export const HomePage: React.FC = () => {
       <header style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '20px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ fontSize: 32 }}>🎨</span>
-          <span style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: 1 }}>GUESS LEVEL</span>
+          <span style={{ fontSize: 22, fontWeight: 800, color: '#fff', letterSpacing: 1 }}>Guess 11</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <button onClick={() => navigate('/profile')} style={ghostBtn}>{user?.username || 'Profile'}</button>

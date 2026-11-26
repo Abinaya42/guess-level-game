@@ -39,7 +39,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
               Text('🎨', style: TextStyle(fontSize: 80)),
               SizedBox(height: 20),
               Text(
-                'GUESS LEVEL',
+                'Guess 11',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 36,

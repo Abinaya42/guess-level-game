@@ -46,7 +46,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       const Text('🎨', style: TextStyle(fontSize: 28)),
                       const SizedBox(width: 10),
-                      const Text('GUESS LEVEL', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: 1)),
+                      const Text('Guess 11', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800, letterSpacing: 1)),
                       const Spacer(),
                       IconButton(icon: const Icon(Icons.person, color: Colors.white), onPressed: () => context.push('/profile')),
                       IconButton(icon: const Icon(Icons.settings, color: Colors.white), onPressed: () => context.push('/settings')),

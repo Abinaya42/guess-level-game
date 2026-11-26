@@ -72,7 +72,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                         const Text('🎨', style: TextStyle(fontSize: 48)),
                         const Text('Create Account', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800)),
                         const SizedBox(height: 4),
-                        const Text('Join GUESS LEVEL!', style: TextStyle(color: Colors.grey)),
+                        const Text('Join Guess 11!', style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 24),
 
                         TextFormField(

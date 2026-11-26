@@ -16,7 +16,7 @@ export const SplashPage: React.FC = () => {
   return (
     <div style={styles.container}>
       <div style={styles.logo}>🎨</div>
-      <h1 style={styles.title}>GUESS LEVEL</h1>
+      <h1 style={styles.title}>Guess 11</h1>
       <p style={styles.subtitle}>Draw • Guess • Win</p>
       <div style={styles.spinner} />
     </div>

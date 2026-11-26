@@ -1,7 +1,7 @@
 {
   "name": "guesslevel-server",
   "version": "1.0.0",
-  "description": "GUESS LEVEL multiplayer drawing and guessing game backend",
+  "description": "Guess 11 multiplayer drawing and guessing game backend",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",

@@ -41,7 +41,7 @@ export const RegisterPage: React.FC = () => {
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{ fontSize: 48 }}>🎨</div>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1e293b', margin: '8px 0 4px' }}>Create Account</h1>
-          <p style={{ color: '#64748b', fontSize: 14 }}>Join GUESS LEVEL and start playing!</p>
+          <p style={{ color: '#64748b', fontSize: 14 }}>Join Guess 11 and start playing!</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

@@ -79,7 +79,7 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
 httpServer.listen(PORT, () => {
-  console.log(`🚀 GUESS LEVEL server running on port ${PORT}`);
+  console.log(`🚀 Guess 11 server running on port ${PORT}`);
   console.log(`   Health: http://localhost:${PORT}/health`);
 });
 
