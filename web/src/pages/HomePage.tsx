@@ -32,32 +32,32 @@ export const HomePage: React.FC = () => {
       <header style={headerStyle}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={brandBadgeStyle}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="#FB7185" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="#4ADE80" />
               <path d="m14 6 4 4" />
             </svg>
           </div>
           <div>
-            <span className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', display: 'block', lineHeight: 1.1 }}>
-              Guess 11
+            <span className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#14532D', display: 'block', lineHeight: 1.1 }}>
+              Find 11
             </span>
-            <span className="font-hand" style={{ fontSize: 16, fontWeight: 700, color: '#57534E' }}>
-              sketchbook studio
+            <span className="font-hand" style={{ fontSize: 16, fontWeight: 700, color: '#166534' }}>
+              green doodle studio
             </span>
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <button onClick={() => navigate('/profile')} className="sketch-btn" style={navBtnStyle('#FFFDF9')}>
+          <button onClick={() => navigate('/profile')} className="sketch-btn" style={navBtnStyle('#F0FDF4')}>
             {user?.username || 'Artist'}
           </button>
           <button onClick={() => navigate('/settings')} className="sketch-btn" style={iconBtnStyle} title="Settings" aria-label="Settings">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="3" />
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
             </svg>
           </button>
-          <button onClick={() => logout().then(() => navigate('/login'))} className="sketch-btn" style={navBtnStyle('#FFE4E6')}>
+          <button onClick={() => logout().then(() => navigate('/login'))} className="sketch-btn" style={navBtnStyle('#DCFCE7')}>
             Sign Out
           </button>
         </div>
@@ -68,20 +68,20 @@ export const HomePage: React.FC = () => {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
           {/* Create Room Card */}
           <button onClick={() => navigate('/create-room')} className="sketch-card" style={createCardStyle}>
-            <div style={actionIconBox('#FFFDF9')}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <div style={actionIconBox('#F0FDF4')}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 5v14M5 12h14" />
               </svg>
             </div>
             <div>
-              <span className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', display: 'block' }}>
+              <span className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#14532D', display: 'block' }}>
                 Host a Room
               </span>
-              <span style={{ fontSize: 14, color: '#44403C', marginTop: 4, display: 'block' }}>
+              <span style={{ fontSize: 14, color: '#166534', marginTop: 4, display: 'block' }}>
                 Pick rounds, invite friends &amp; start drawing
               </span>
             </div>
-            <span className="font-hand" style={{ fontSize: 19, fontWeight: 700, color: '#1C1917', marginTop: 'auto' }}>
+            <span className="font-hand" style={{ fontSize: 19, fontWeight: 700, color: '#14532D', marginTop: 'auto' }}>
               New canvas →
             </span>
           </button>
@@ -89,14 +89,14 @@ export const HomePage: React.FC = () => {
           {/* Join Room Card */}
           <div className="sketch-card" style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={actionIconBox('#38BDF8')}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <div style={actionIconBox('#86EFAC')}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
                   <polyline points="10 17 15 12 10 7" />
                   <line x1="15" y1="12" x2="3" y2="12" />
                 </svg>
               </div>
-              <span className="font-display" style={{ fontSize: 21, fontWeight: 700, color: '#1C1917' }}>
+              <span className="font-display" style={{ fontSize: 21, fontWeight: 700, color: '#14532D' }}>
                 Join with Code
               </span>
             </div>
@@ -116,8 +116,8 @@ export const HomePage: React.FC = () => {
               disabled={joinCode.length !== 6}
               className="sketch-btn"
               style={{
-                background: joinCode.length === 6 ? '#34D399' : '#E7E5E4',
-                color: joinCode.length === 6 ? '#1C1917' : '#78716C',
+                background: joinCode.length === 6 ? '#22C55E' : '#DCFCE7',
+                color: joinCode.length === 6 ? '#FFFFFF' : '#166534',
                 padding: '12px',
                 fontSize: 16,
                 cursor: joinCode.length === 6 ? 'pointer' : 'not-allowed',
@@ -132,27 +132,27 @@ export const HomePage: React.FC = () => {
         {stats && (
           <div className="sketch-card" style={{ padding: 24 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
                 <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
                 <path d="M4 22h16" />
                 <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
                 <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FDE047" />
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#4ADE80" />
               </svg>
-              <h3 style={{ fontSize: 19, fontWeight: 700, color: '#1C1917' }}>Sketchbook Record</h3>
+              <h3 style={{ fontSize: 19, fontWeight: 700, color: '#14532D' }}>Sketchbook Record</h3>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 14 }}>
               {[
-                { label: 'Played', val: stats.gamesPlayed, bg: '#FEF9C3' },
+                { label: 'Played', val: stats.gamesPlayed, bg: '#F0FDF4' },
                 { label: 'Wins', val: stats.gamesWon, bg: '#DCFCE7' },
-                { label: 'Avg Pts', val: stats.avgScore, bg: '#E0F2FE' },
-                { label: 'High Score', val: stats.bestScore, bg: '#FFE4E6' },
+                { label: 'Avg Pts', val: stats.avgScore, bg: '#BBF7D0' },
+                { label: 'High Score', val: stats.bestScore, bg: '#86EFAC' },
               ].map(({ label, val, bg }) => (
-                <div key={label} style={{ textAlign: 'center', background: bg, border: '2px solid #1C1917', borderRadius: 14, padding: '14px 10px' }}>
-                  <div className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#1C1917' }}>{val}</div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#44403C', marginTop: 2 }}>{label}</div>
+                <div key={label} style={{ textAlign: 'center', background: bg, border: '2px solid #14532D', borderRadius: 14, padding: '14px 10px' }}>
+                  <div className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#14532D' }}>{val}</div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#166534', marginTop: 2 }}>{label}</div>
                 </div>
               ))}
             </div>
@@ -164,28 +164,28 @@ export const HomePage: React.FC = () => {
           <div className="sketch-card" style={{ padding: 24 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
-                <h3 style={{ fontSize: 19, fontWeight: 700, color: '#1C1917' }}>Past Rounds</h3>
+                <h3 style={{ fontSize: 19, fontWeight: 700, color: '#14532D' }}>Past Rounds</h3>
               </div>
-              <button onClick={() => navigate('/history')} style={{ background: 'none', border: 'none', color: '#E11D48', fontSize: 14, fontWeight: 700, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+              <button onClick={() => navigate('/history')} style={{ background: 'none', border: 'none', color: '#15803D', fontSize: 14, fontWeight: 700, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}>
                 See all →
               </button>
             </div>
 
             {history.slice(0, 3).map((g, idx) => (
-              <div key={g.gameId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 4px', borderBottom: idx < Math.min(history.length, 3) - 1 ? '1.5px dashed #D6D3D1' : 'none' }}>
+              <div key={g.gameId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 4px', borderBottom: idx < Math.min(history.length, 3) - 1 ? '1.5px dashed #86EFAC' : 'none' }}>
                 <div>
-                  <div style={{ fontWeight: 700, color: '#1C1917', fontSize: 15 }}>Room #{g.roomCode}</div>
-                  <div style={{ color: '#57534E', fontSize: 12 }}>{new Date(g.playedAt).toLocaleDateString()}</div>
+                  <div style={{ fontWeight: 700, color: '#14532D', fontSize: 15 }}>Room #{g.roomCode}</div>
+                  <div style={{ color: '#166534', fontSize: 12 }}>{new Date(g.playedAt).toLocaleDateString()}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <span style={{ display: 'inline-block', background: g.rank === 1 ? '#FDE047' : '#F5F5F4', border: '1.5px solid #1C1917', borderRadius: 8, padding: '2px 8px', fontSize: 12, fontWeight: 700 }}>
+                  <span style={{ display: 'inline-block', background: g.rank === 1 ? '#4ADE80' : '#F0FDF4', border: '1.5px solid #14532D', borderRadius: 8, padding: '2px 8px', fontSize: 12, fontWeight: 700, color: '#14532D' }}>
                     #{g.rank} of {g.totalPlayers}
                   </span>
-                  <div style={{ color: '#57534E', fontSize: 12, fontWeight: 600, marginTop: 3 }}>{g.myScore} pts</div>
+                  <div style={{ color: '#166534', fontSize: 12, fontWeight: 600, marginTop: 3 }}>{g.myScore} pts</div>
                 </div>
               </div>
             ))}
@@ -197,8 +197,8 @@ export const HomePage: React.FC = () => {
 };
 
 const headerStyle: React.CSSProperties = {
-  background: '#FFFDF9',
-  borderBottom: '2.5px solid #1C1917',
+  background: '#F0FDF4',
+  borderBottom: '2.5px solid #14532D',
   padding: '14px 28px',
   display: 'flex',
   alignItems: 'center',
@@ -209,9 +209,9 @@ const brandBadgeStyle: React.CSSProperties = {
   width: 44,
   height: 44,
   borderRadius: 12,
-  background: '#FDE047',
-  border: '2px solid #1C1917',
-  boxShadow: '2px 2px 0px #1C1917',
+  background: '#86EFAC',
+  border: '2px solid #14532D',
+  boxShadow: '2px 2px 0px #14532D',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -220,13 +220,13 @@ const brandBadgeStyle: React.CSSProperties = {
 
 const navBtnStyle = (bg: string): React.CSSProperties => ({
   background: bg,
-  color: '#1C1917',
+  color: '#14532D',
   padding: '8px 14px',
   fontSize: 14,
 });
 
 const iconBtnStyle: React.CSSProperties = {
-  background: '#FFFDF9',
+  background: '#F0FDF4',
   padding: '8px 10px',
   display: 'flex',
   alignItems: 'center',
@@ -234,7 +234,7 @@ const iconBtnStyle: React.CSSProperties = {
 };
 
 const createCardStyle: React.CSSProperties = {
-  background: '#FDE047',
+  background: '#86EFAC',
   padding: 24,
   display: 'flex',
   flexDirection: 'column',
@@ -249,7 +249,7 @@ const actionIconBox = (bg: string): React.CSSProperties => ({
   height: 44,
   borderRadius: 12,
   background: bg,
-  border: '2px solid #1C1917',
+  border: '2px solid #14532D',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -258,12 +258,12 @@ const actionIconBox = (bg: string): React.CSSProperties => ({
 const codeInputStyle: React.CSSProperties = {
   padding: '12px 14px',
   borderRadius: 12,
-  border: '2px solid #1C1917',
-  background: '#FFFDF9',
+  border: '2px solid #14532D',
+  background: '#F0FDF4',
   fontSize: 20,
   letterSpacing: 5,
   fontWeight: 700,
   textAlign: 'center',
-  color: '#1C1917',
+  color: '#14532D',
   outline: 'none',
 };
