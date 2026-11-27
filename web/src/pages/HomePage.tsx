@@ -42,7 +42,7 @@ export const HomePage: React.FC = () => {
               Find 11
             </span>
             <span className="font-hand" style={{ fontSize: 16, fontWeight: 700, color: '#166534' }}>
-              green doodle studio
+              doodle studio
             </span>
           </div>
         </div>
