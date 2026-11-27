@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import { useGameStore } from '../stores/gameStore';
@@ -6,6 +6,8 @@ import { socketService } from '../services/socket';
 import { auth } from '../lib/firebase';
 import { Player } from '../types';
 import toast from 'react-hot-toast';
+
+const AVATAR_COLORS = ['#FDE047', '#38BDF8', '#34D399', '#FB7185', '#C084FC', '#FDBA74'];
 
 export const LobbyPage: React.FC = () => {
   const { code } = useParams<{ code: string }>();
@@ -49,18 +51,17 @@ export const LobbyPage: React.FC = () => {
 
       socket.on('host:changed', (data: any) => {
         if (room) setRoom({ ...room, hostId: data.newHostId });
-        if (data.newHostId === user.id) toast.success('You are now the host!');
+        if (data.newHostId === user.id) toast.success('You are holding the host pencil now!');
       });
 
       socket.on('error', (data: any) => {
-        toast.error(data.message || 'An error occurred');
+        toast.error(data.message || 'Could not sync room');
       });
 
       socket.on('game:started', () => {
         navigate(`/game/${code}`);
       });
 
-      // Check if this is a create or join flow
       if (window.location.pathname.includes('/create-room')) {
         socketService.createRoom(user.username);
       } else {
@@ -86,14 +87,14 @@ export const LobbyPage: React.FC = () => {
   };
 
   const startGame = () => {
-    if (!allReady) { toast.error('All players must be ready!'); return; }
+    if (!allReady) { toast.error('Wait for everyone to ready up!'); return; }
     setStarting(true);
     socketService.startGame(code!);
   };
 
   const copyInvite = () => {
     navigator.clipboard.writeText(inviteLink);
-    toast.success('Invite link copied!');
+    toast.success('Invite link copied to clipboard!');
   };
 
   const leaveRoom = () => {
@@ -102,58 +103,166 @@ export const LobbyPage: React.FC = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8fafc', padding: 24 }}>
-      <div style={{ maxWidth: 700, margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: 16, padding: 24, color: '#fff', marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ minHeight: '100vh', padding: '28px 18px' }}>
+      <div style={{ maxWidth: 680, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Room Ticket Header */}
+        <div className="sketch-card" style={{ padding: 24, background: '#FDE047', position: 'relative' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
             <div>
-              <h1 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>Game Lobby</h1>
-              <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 12 }}>
-                <span style={{ fontSize: 20, fontWeight: 800, letterSpacing: 3, background: 'rgba(255,255,255,0.2)', padding: '4px 12px', borderRadius: 8 }}>{code}</span>
-                <button onClick={copyInvite} style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', borderRadius: 8, padding: '6px 12px', fontSize: 13, cursor: 'pointer' }}>
-                  🔗 Copy Invite
+              <span className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#44403C' }}>
+                Sketchbook Room Pass
+              </span>
+              <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '2px 0 12px' }}>
+                Waiting Lobby
+              </h1>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                <span className="font-display" style={codeTicketStyle}>
+                  {code}
+                </span>
+                <button onClick={copyInvite} className="sketch-btn" style={copyBtnStyle}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                  </svg>
+                  <span>Copy Invite Link</span>
                 </button>
               </div>
             </div>
-            <button onClick={leaveRoom} style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', cursor: 'pointer' }}>Leave</button>
+
+            <button onClick={leaveRoom} className="sketch-btn" style={{ background: '#FFE4E6', color: '#1C1917', padding: '8px 14px', fontSize: 14 }}>
+              Leave Room
+            </button>
           </div>
-          <div style={{ marginTop: 12, fontSize: 14, opacity: 0.8 }}>{players.length} / 11 players</div>
+
+          <div style={{ marginTop: 16, paddingTop: 12, borderTop: '2px dashed #1C1917', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14, fontWeight: 700, color: '#1C1917' }}>
+            <span>Seats filled: {players.length} / 11 artists</span>
+            <span className="font-hand" style={{ fontSize: 18 }}>
+              {players.length < 2 ? 'Invite at least 1 friend' : 'Ready to roll!'}
+            </span>
+          </div>
         </div>
 
-        {/* Players list */}
-        <div style={{ background: '#fff', borderRadius: 16, padding: 20, boxShadow: '0 2px 12px rgba(0,0,0,0.06)', marginBottom: 16 }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: '#374151', marginBottom: 16 }}>Players</h3>
+        {/* Players List */}
+        <div className="sketch-card" style={{ padding: 22, background: '#FFFDF9' }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', marginBottom: 14 }}>
+            Artists in Room
+          </h3>
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {players.map((p: Player) => (
-              <div key={p.userId} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 14px', background: p.userId === user?.id ? '#ede9fe' : '#f8fafc', borderRadius: 10, border: p.userId === user?.id ? '1.5px solid #a78bfa' : '1px solid #e2e8f0' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#6366f1', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14 }}>
-                    {p.username[0].toUpperCase()}
+            {players.map((p: Player, idx: number) => {
+              const isMe = p.userId === user?.id;
+              const avatarBg = AVATAR_COLORS[idx % AVATAR_COLORS.length];
+
+              return (
+                <div
+                  key={p.userId}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 14px',
+                    background: isMe ? '#FEF9C3' : '#FFFFFF',
+                    borderRadius: 12,
+                    border: '2px solid #1C1917',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div
+                      className="font-display"
+                      style={{
+                        width: 38,
+                        height: 38,
+                        borderRadius: 11,
+                        background: avatarBg,
+                        border: '2px solid #1C1917',
+                        color: '#1C1917',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 700,
+                        fontSize: 16,
+                      }}
+                    >
+                      {p.username[0]?.toUpperCase()}
+                    </div>
+
+                    <div>
+                      <div style={{ fontWeight: 700, color: '#1C1917', fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span>{p.username}</span>
+                        {isMe && (
+                          <span style={{ fontSize: 11, background: '#E0F2FE', border: '1.5px solid #1C1917', borderRadius: 6, padding: '1px 6px' }}>
+                            You
+                          </span>
+                        )}
+                      </div>
+
+                      {p.isHost && (
+                        <div style={{ fontSize: 12, color: '#B45309', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#FDE047" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+                          </svg>
+                          <span>Room Host</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
+
+                  {/* Status Stamp */}
                   <div>
-                    <div style={{ fontWeight: 600, color: '#1e293b', fontSize: 14 }}>{p.username} {p.userId === user?.id && '(You)'}</div>
-                    {p.isHost && <div style={{ fontSize: 11, color: '#f59e0b', fontWeight: 600 }}>👑 Host</div>}
+                    {p.isHost ? (
+                      <span style={statusPillStyle('#FEF9C3')}>Host</span>
+                    ) : p.isReady ? (
+                      <span style={statusPillStyle('#DCFCE7')}>Ready</span>
+                    ) : (
+                      <span style={statusPillStyle('#F5F5F4')}>Sharpening...</span>
+                    )}
                   </div>
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: p.isReady || p.isHost ? '#10b981' : '#94a3b8' }}>
-                  {p.isHost ? '—' : (p.isReady ? '✅ Ready' : '⏳ Waiting')}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* Actions */}
+        {/* Bottom Action Bar */}
         <div style={{ display: 'flex', gap: 12 }}>
           {!isHost && (
-            <button onClick={toggleReady} style={{ flex: 1, background: isReady ? '#fee2e2' : '#10b981', color: isReady ? '#dc2626' : '#fff', border: 'none', borderRadius: 12, padding: '14px', fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
-              {isReady ? '✕ Unready' : '✓ Ready'}
+            <button
+              onClick={toggleReady}
+              className="sketch-btn"
+              style={{
+                flex: 1,
+                background: isReady ? '#FFE4E6' : '#34D399',
+                color: '#1C1917',
+                padding: '15px',
+                fontSize: 17,
+              }}
+            >
+              {isReady ? 'Not Ready Yet' : 'Ready to Sketch!'}
             </button>
           )}
+
           {isHost && (
-            <button onClick={startGame} disabled={!allReady || starting || players.length < 2} style={{ flex: 1, background: allReady && players.length >= 2 ? '#6366f1' : '#a5b4fc', color: '#fff', border: 'none', borderRadius: 12, padding: '14px', fontSize: 16, fontWeight: 700, cursor: allReady ? 'pointer' : 'not-allowed' }}>
-              {starting ? 'Starting...' : players.length < 2 ? 'Need 2+ Players' : !allReady ? 'Waiting for players...' : '🚀 Start Game!'}
+            <button
+              onClick={startGame}
+              disabled={!allReady || starting || players.length < 2}
+              className="sketch-btn"
+              style={{
+                flex: 1,
+                background: allReady && players.length >= 2 ? '#34D399' : '#E7E5E4',
+                color: allReady && players.length >= 2 ? '#1C1917' : '#78716C',
+                padding: '15px',
+                fontSize: 17,
+                cursor: allReady && players.length >= 2 ? 'pointer' : 'not-allowed',
+              }}
+            >
+              {starting
+                ? 'Opening Canvas...'
+                : players.length < 2
+                ? 'Waiting for 1 More Artist...'
+                : !allReady
+                ? 'Waiting for Everyone to Ready Up...'
+                : 'Start Sketching →'}
             </button>
           )}
         </div>
@@ -161,3 +270,36 @@ export const LobbyPage: React.FC = () => {
     </div>
   );
 };
+
+const codeTicketStyle: React.CSSProperties = {
+  fontSize: 22,
+  fontWeight: 700,
+  letterSpacing: 4,
+  background: '#FFFDF9',
+  color: '#1C1917',
+  border: '2px solid #1C1917',
+  boxShadow: '2px 2px 0px #1C1917',
+  padding: '6px 14px',
+  borderRadius: 10,
+};
+
+const copyBtnStyle: React.CSSProperties = {
+  background: '#FFFDF9',
+  color: '#1C1917',
+  padding: '8px 14px',
+  fontSize: 14,
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+};
+
+const statusPillStyle = (bg: string): React.CSSProperties => ({
+  display: 'inline-block',
+  background: bg,
+  border: '1.5px solid #1C1917',
+  borderRadius: 8,
+  padding: '3px 10px',
+  fontSize: 12,
+  fontWeight: 700,
+  color: '#1C1917',
+});

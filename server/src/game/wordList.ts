@@ -1,11 +1,17 @@
 const WORDS = [
-  'APPLE', 'BANANA', 'MANGO', 'ORANGE',
-  'TIGER', 'LION', 'ELEPHANT', 'MONKEY',
+  // Fruits
+  'APPLE', 'BANANA', 'MANGO', 'ORANGE', 'GRAPES', 'PINEAPPLE', 'WATERMELON', 'STRAWBERRY', 'PAPAYA', 'CHERRY',
+  // Vehicles (Bus, Van, etc.)
+  'BUS', 'VAN', 'CAR', 'TRUCK', 'AIRPLANE', 'BICYCLE', 'TRAIN', 'ROCKET', 'BOAT', 'HELICOPTER',
+  // Buildings (House, etc.)
+  'HOUSE', 'SCHOOL', 'HOSPITAL', 'GARDEN', 'MARKET', 'CASTLE', 'BRIDGE',
+  // Animals
+  'TIGER', 'LION', 'ELEPHANT', 'MONKEY', 'DOG', 'CAT', 'FISH', 'BIRD',
+  // Tech & Sports
   'COMPUTER', 'KEYBOARD', 'MOBILE', 'LAPTOP',
   'CRICKET', 'FOOTBALL', 'TENNIS', 'HOCKEY',
-  'SCHOOL', 'HOSPITAL', 'GARDEN', 'MARKET',
-  'RAINBOW', 'MOUNTAIN', 'RIVER', 'OCEAN',
-  'AIRPLANE', 'BICYCLE', 'TRAIN', 'ROCKET',
+  // Nature & Music
+  'RAINBOW', 'MOUNTAIN', 'RIVER', 'OCEAN', 'SUN', 'TREE', 'FLOWER',
   'GUITAR', 'PIANO', 'CAMERA', 'TELEVISION'
 ];
 
@@ -19,7 +25,7 @@ export function generateRoomCode(): string {
 }
 
 export function normalizeGuess(text: string): string {
-  return text.trim().toLowerCase().replace(/\s+/g, '');
+  return text.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 export function maskWord(word: string, revealedIndices: number[]): string {

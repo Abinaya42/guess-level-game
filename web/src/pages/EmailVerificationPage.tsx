@@ -13,34 +13,147 @@ export const EmailVerificationPage: React.FC = () => {
     setChecking(true);
     await auth.currentUser?.reload();
     if (auth.currentUser?.emailVerified) {
-      toast.success('Email verified! Welcome!');
+      toast.success('Pass stamped! Welcome to the studio!');
       navigate('/home');
     } else {
-      toast.error('Email not verified yet. Please check your inbox.');
+      toast.error('Not verified yet — check your inbox or spam folder.');
     }
     setChecking(false);
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f8fafc', padding: 16 }}>
-      <div style={{ background: '#fff', borderRadius: 20, padding: 48, maxWidth: 420, width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-        <div style={{ fontSize: 64, marginBottom: 16 }}>📧</div>
-        <h2 style={{ fontSize: 24, fontWeight: 700, color: '#1e293b', marginBottom: 12 }}>Check Your Email</h2>
-        <p style={{ color: '#64748b', lineHeight: 1.6, marginBottom: 32 }}>
-          We've sent a verification link to <strong>{auth.currentUser?.email}</strong>. Click the link to verify your account.
+    <div style={pageStyle}>
+      <div className="sketch-card" style={cardStyle}>
+        {/* Tilted Sticky Note Tag */}
+        <div style={stickyTagStyle} className="font-hand">
+          Stamp Pass
+        </div>
+
+        {/* Custom Hand-Drawn Envelope Emblem */}
+        <div style={badgeStyle}>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="3" fill="#FFFDF9" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+        </div>
+
+        <h2 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '16px 0 8px' }}>
+          Verify Your Sketch Pass
+        </h2>
+        <p style={{ color: '#57534E', fontSize: 14, lineHeight: 1.5, marginBottom: 16 }}>
+          We dispatched a verification note to:
         </p>
+
+        <div style={emailBoxStyle}>
+          {auth.currentUser?.email || 'your email address'}
+        </div>
+
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <button onClick={checkVerification} disabled={checking} style={{ background: '#6366f1', color: '#fff', border: 'none', borderRadius: 12, padding: '14px', fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>
-            {checking ? 'Checking...' : "I've Verified My Email"}
+          <button
+            onClick={checkVerification}
+            disabled={checking}
+            className="sketch-btn"
+            style={{
+              background: checking ? '#E7E5E4' : '#34D399',
+              color: '#1C1917',
+              padding: '14px',
+              fontSize: 16,
+              width: '100%',
+              cursor: checking ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {checking ? 'Checking Stamp...' : "I've Verified My Email →"}
           </button>
-          <button onClick={() => resendVerification().then(() => toast.success('Verification email resent!'))} style={{ background: '#e2e8f0', color: '#374151', border: 'none', borderRadius: 12, padding: '14px', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
-            Resend Email
+
+          <button
+            onClick={() => resendVerification().then(() => toast.success('Fresh verification note sent!'))}
+            className="sketch-btn"
+            style={{
+              background: '#FDE047',
+              color: '#1C1917',
+              padding: '12px',
+              fontSize: 15,
+              width: '100%',
+            }}
+          >
+            Resend Verification Note
           </button>
-          <button onClick={() => logout().then(() => navigate('/login'))} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: 14 }}>
-            Log out
+
+          <button
+            onClick={() => logout().then(() => navigate('/login'))}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#57534E',
+              cursor: 'pointer',
+              fontSize: 14,
+              fontWeight: 700,
+              marginTop: 6,
+              textDecoration: 'underline',
+              textUnderlineOffset: 3,
+            }}
+          >
+            ← Sign Out
           </button>
         </div>
       </div>
     </div>
   );
+};
+
+const pageStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: 20,
+};
+
+const cardStyle: React.CSSProperties = {
+  padding: '38px 32px',
+  maxWidth: 420,
+  width: '100%',
+  textAlign: 'center',
+  position: 'relative',
+};
+
+const stickyTagStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: -14,
+  right: 22,
+  background: '#38BDF8',
+  border: '2px solid #1C1917',
+  borderRadius: 8,
+  padding: '2px 12px',
+  fontSize: 18,
+  fontWeight: 700,
+  color: '#1C1917',
+  transform: 'rotate(3deg)',
+  boxShadow: '2px 2px 0px #1C1917',
+};
+
+const badgeStyle: React.CSSProperties = {
+  width: 60,
+  height: 60,
+  margin: '0 auto',
+  borderRadius: 16,
+  background: '#FEF9C3',
+  border: '2.5px solid #1C1917',
+  boxShadow: '3px 3px 0px #1C1917',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transform: 'rotate(-4deg)',
+};
+
+const emailBoxStyle: React.CSSProperties = {
+  background: '#FEF9C3',
+  border: '2px dashed #1C1917',
+  borderRadius: 11,
+  padding: '10px 14px',
+  fontSize: 14,
+  fontWeight: 700,
+  color: '#1C1917',
+  marginBottom: 24,
+  wordBreak: 'break-all',
 };

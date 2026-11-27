@@ -7,7 +7,7 @@ import { useAuthStore } from '../stores/authStore';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+  email: z.string().email('Drop in a valid email address'),
   password: z.string().min(1, 'Password is required'),
 });
 type FormData = z.infer<typeof schema>;
@@ -25,7 +25,7 @@ export const LoginPage: React.FC = () => {
     setServerError('');
     try {
       await login(data.email, data.password);
-      toast.success('Welcome back!');
+      toast.success('Pencils ready — welcome back!');
       navigate('/home');
     } catch (err: any) {
       setServerError(err.message);
@@ -34,46 +34,176 @@ export const LoginPage: React.FC = () => {
 
   return (
     <div style={pageStyle}>
-      <div style={cardStyle}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ fontSize: 48 }}>🎨</div>
-          <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1e293b', margin: '8px 0 4px' }}>Welcome Back!</h1>
-          <p style={{ color: '#64748b', fontSize: 14 }}>Log in to continue playing</p>
+      {/* Subtle decorative hand-drawn corner doodles */}
+      <svg width="110" height="110" viewBox="0 0 110 110" fill="none" style={{ position: 'fixed', top: 24, left: 24, opacity: 0.22, pointerEvents: 'none' }}>
+        <path d="M18 65 C 25 22, 78 18, 86 58 C 92 85, 42 96, 26 74" stroke="#1C1917" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
+        <path d="M62 24 L 68 38 L 83 40 L 71 50 L 74 65 L 62 57 L 50 65 L 53 50 L 41 40 L 56 38 Z" stroke="#1C1917" strokeWidth="2.5" strokeLinejoin="round" />
+      </svg>
+
+      <div className="sketch-card" style={cardStyle}>
+        {/* Tilted Sticky Note Tag */}
+        <div style={stickyTagStyle} className="font-hand">
+          Sketch &amp; Guess!
+        </div>
+
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          {/* Custom Hand-Drawn Pencil Emblem */}
+          <div style={logoBadgeStyle}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="#FB7185" />
+              <path d="m14 6 4 4" />
+              <path d="M3 21h18" strokeDasharray="3 3" />
+            </svg>
+          </div>
+
+          <h1 style={{ fontSize: 30, fontWeight: 700, color: '#1C1917', margin: '10px 0 4px' }}>
+            Grab a Brush
+          </h1>
+          <p style={{ color: '#57534E', fontSize: 14 }}>
+            Sign in to join your room and start sketching
+          </p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
             <label style={labelStyle}>Email</label>
-            <input {...register('email')} type="email" placeholder="you@example.com" style={inputStyle(!!errors.email)} />
+            <input
+              {...register('email')}
+              type="email"
+              placeholder="artist@sketchbook.com"
+              style={inputStyle(!!errors.email)}
+            />
             {errors.email && <span style={errStyle}>{errors.email.message}</span>}
           </div>
+
           <div>
             <label style={labelStyle}>Password</label>
-            <input {...register('password')} type="password" placeholder="Your password" style={inputStyle(!!errors.password)} />
+            <input
+              {...register('password')}
+              type="password"
+              placeholder="••••••••"
+              style={inputStyle(!!errors.password)}
+            />
             {errors.password && <span style={errStyle}>{errors.password.message}</span>}
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <Link to="/forgot-password" style={{ color: '#6366f1', fontSize: 13, fontWeight: 500 }}>Forgot password?</Link>
+
+          <div style={{ textAlign: 'right', marginTop: -4 }}>
+            <Link to="/forgot-password" style={{ color: '#1C1917', fontSize: 13, fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+              Forgot password?
+            </Link>
           </div>
 
-          {serverError && <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: 8, padding: '10px 14px', color: '#dc2626', fontSize: 14 }}>{serverError}</div>}
+          {serverError && (
+            <div style={errorBoxStyle}>
+              {serverError}
+            </div>
+          )}
 
-          <button type="submit" disabled={isLoading} style={submitBtn(isLoading)}>
-            {isLoading ? 'Logging in...' : 'Log In'}
+          <button type="submit" disabled={isLoading} className="sketch-btn" style={submitBtn(isLoading)}>
+            {isLoading ? 'Opening Sketchbook...' : 'Enter Game Room →'}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: 20, color: '#64748b', fontSize: 14 }}>
-          Don't have an account? <Link to="/register" style={{ color: '#6366f1', fontWeight: 600 }}>Sign Up</Link>
+        <p style={{ textAlign: 'center', marginTop: 22, color: '#57534E', fontSize: 14 }}>
+          New around here?{' '}
+          <Link to="/register" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            Create an account
+          </Link>
         </p>
       </div>
     </div>
   );
 };
 
-const pageStyle: React.CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: 16 };
-const cardStyle: React.CSSProperties = { background: '#fff', borderRadius: 20, padding: 40, maxWidth: 420, width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' };
-const labelStyle: React.CSSProperties = { display: 'block', fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 6 };
-const inputStyle = (err: boolean): React.CSSProperties => ({ width: '100%', padding: '12px 14px', borderRadius: 10, border: `1.5px solid ${err ? '#ef4444' : '#e2e8f0'}`, fontSize: 15, outline: 'none', boxSizing: 'border-box' });
-const errStyle: React.CSSProperties = { color: '#ef4444', fontSize: 12, marginTop: 4, display: 'block' };
-const submitBtn = (loading: boolean): React.CSSProperties => ({ background: loading ? '#a5b4fc' : '#6366f1', color: '#fff', border: 'none', borderRadius: 12, padding: '14px', fontSize: 16, fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer', width: '100%', marginTop: 8 });
+const pageStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: 20,
+  position: 'relative',
+};
+
+const cardStyle: React.CSSProperties = {
+  padding: '38px 34px',
+  maxWidth: 420,
+  width: '100%',
+  position: 'relative',
+};
+
+const stickyTagStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: -14,
+  right: 22,
+  background: '#FDE047',
+  border: '2px solid #1C1917',
+  borderRadius: 8,
+  padding: '2px 12px',
+  fontSize: 18,
+  fontWeight: 700,
+  color: '#1C1917',
+  transform: 'rotate(3deg)',
+  boxShadow: '2px 2px 0px #1C1917',
+};
+
+const logoBadgeStyle: React.CSSProperties = {
+  width: 60,
+  height: 60,
+  margin: '0 auto',
+  borderRadius: 16,
+  background: '#FDE047',
+  border: '2.5px solid #1C1917',
+  boxShadow: '3px 3px 0px #1C1917',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transform: 'rotate(-5deg)',
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: 13,
+  fontWeight: 700,
+  color: '#1C1917',
+  marginBottom: 6,
+};
+
+const inputStyle = (err: boolean): React.CSSProperties => ({
+  width: '100%',
+  padding: '12px 14px',
+  borderRadius: 11,
+  border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
+  background: '#FFFDF9',
+  fontSize: 15,
+  color: '#1C1917',
+  outline: 'none',
+  boxSizing: 'border-box',
+});
+
+const errStyle: React.CSSProperties = {
+  color: '#E11D48',
+  fontSize: 12,
+  fontWeight: 600,
+  marginTop: 5,
+  display: 'block',
+};
+
+const errorBoxStyle: React.CSSProperties = {
+  background: '#FFE4E6',
+  border: '2px solid #1C1917',
+  borderRadius: 10,
+  padding: '10px 14px',
+  color: '#9F1239',
+  fontSize: 13,
+  fontWeight: 600,
+};
+
+const submitBtn = (loading: boolean): React.CSSProperties => ({
+  background: loading ? '#E7E5E4' : '#34D399',
+  color: '#1C1917',
+  padding: '13px',
+  fontSize: 16,
+  width: '100%',
+  marginTop: 6,
+  opacity: loading ? 0.8 : 1,
+});

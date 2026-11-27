@@ -2,43 +2,196 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const slides = [
-  { emoji: '🎨', title: 'Draw Anything', desc: 'Express yourself with our intuitive drawing tools — colors, brushes, undo, and more.' },
-  { emoji: '🧩', title: 'Guess the Word', desc: 'Watch the drawing come to life and type your guesses. Faster guesses earn more points!' },
-  { emoji: '🏆', title: 'Win Together', desc: 'Play with up to 11 friends in private rooms. Invite by code or link and battle for the top score!' },
+  {
+    tag: 'Step 1 · Sketch',
+    badgeBg: '#FDE047',
+    title: 'Sketch Anything',
+    desc: 'Pick your brush size, splash vibrant colors across the paper, and bring tricky prompts to life.',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="13.5" cy="6.5" r="1.5" fill="#E11D48" />
+        <circle cx="17.5" cy="10.5" r="1.5" fill="#38BDF8" />
+        <circle cx="8.5" cy="7.5" r="1.5" fill="#34D399" />
+        <circle cx="6.5" cy="12.5" r="1.5" fill="#F97316" />
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" fill="#FFFDF9" />
+      </svg>
+    ),
+  },
+  {
+    tag: 'Step 2 · Guess',
+    badgeBg: '#38BDF8',
+    title: 'Crack the Doodle',
+    desc: 'Watch every ink stroke appear live and type your guesses fast — quicker cracks earn bonus points!',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" fill="#FFFDF9" />
+        <path d="M9 18h6" />
+        <path d="M10 22h4" />
+      </svg>
+    ),
+  },
+  {
+    tag: 'Step 3 · Win',
+    badgeBg: '#34D399',
+    title: 'Rule the Table',
+    desc: 'Gather up to 11 friends in a private room, take turns with the pencil, and claim the top spot!',
+    icon: (
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+        <path d="M4 22h16" />
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FFFDF9" />
+      </svg>
+    ),
+  },
 ];
 
 export const OnboardingPage: React.FC = () => {
   const [slide, setSlide] = useState(0);
   const navigate = useNavigate();
+  const current = slides[slide];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#f8fafc', padding: 24, gap: 24 }}>
-      <div style={{ background: '#fff', borderRadius: 24, padding: 48, maxWidth: 400, width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.1)', textAlign: 'center' }}>
-        <div style={{ fontSize: 80, marginBottom: 24 }}>{slides[slide].emoji}</div>
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1e293b', marginBottom: 12 }}>{slides[slide].title}</h2>
-        <p style={{ fontSize: 16, color: '#64748b', marginBottom: 32, lineHeight: 1.6 }}>{slides[slide].desc}</p>
+    <div style={pageStyle}>
+      <div className="sketch-card" style={cardStyle}>
+        {/* Tilted Sticky Note Tag */}
+        <div style={stickyTagStyle(current.badgeBg)} className="font-hand">
+          {current.tag}
+        </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 32 }}>
+        {/* Custom Hand-Drawn Emblem */}
+        <div style={badgeStyle(current.badgeBg)}>
+          {current.icon}
+        </div>
+
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '18px 0 10px' }}>
+          {current.title}
+        </h2>
+        <p style={{ fontSize: 15, color: '#57534E', marginBottom: 28, lineHeight: 1.6 }}>
+          {current.desc}
+        </p>
+
+        {/* Ink-Outlined Progress Indicators */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginBottom: 28 }}>
           {slides.map((_, i) => (
-            <div key={i} style={{ width: i === slide ? 24 : 8, height: 8, borderRadius: 4, background: i === slide ? '#6366f1' : '#e2e8f0', transition: 'all 0.3s' }} />
+            <button
+              key={i}
+              type="button"
+              aria-label={`Slide ${i + 1}`}
+              onClick={() => setSlide(i)}
+              style={{
+                width: i === slide ? 28 : 10,
+                height: 10,
+                borderRadius: 99,
+                border: '2px solid #1C1917',
+                background: i === slide ? '#FDE047' : '#FFFDF9',
+                cursor: 'pointer',
+                padding: 0,
+                transition: 'all 0.25s ease',
+              }}
+            />
           ))}
         </div>
 
         {slide < slides.length - 1 ? (
-          <button onClick={() => setSlide(s => s + 1)} style={btnStyle('#6366f1')}>Next →</button>
+          <button
+            onClick={() => setSlide(s => s + 1)}
+            className="sketch-btn"
+            style={btnStyle('#FDE047')}
+          >
+            Flip Page →
+          </button>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <button onClick={() => navigate('/register')} style={btnStyle('#6366f1')}>Get Started</button>
-            <button onClick={() => navigate('/login')} style={btnStyle('#e2e8f0', '#374151')}>Already have an account</button>
+            <button
+              onClick={() => navigate('/register')}
+              className="sketch-btn"
+              style={btnStyle('#34D399')}
+            >
+              Open Your Sketchbook →
+            </button>
+            <button
+              onClick={() => navigate('/login')}
+              className="sketch-btn"
+              style={btnStyle('#FFFDF9')}
+            >
+              I Already Have a Pass
+            </button>
           </div>
         )}
-        <button onClick={() => navigate('/login')} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', marginTop: 16, fontSize: 14 }}>Skip</button>
+
+        <button
+          onClick={() => navigate('/login')}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#57534E',
+            cursor: 'pointer',
+            marginTop: 18,
+            fontSize: 14,
+            fontWeight: 700,
+            textDecoration: 'underline',
+            textUnderlineOffset: 3,
+          }}
+        >
+          Skip Tour
+        </button>
       </div>
     </div>
   );
 };
 
-const btnStyle = (bg: string, color = '#fff'): React.CSSProperties => ({
-  background: bg, color, border: 'none', borderRadius: 12, padding: '14px 32px', fontSize: 16,
-  fontWeight: 600, cursor: 'pointer', width: '100%', transition: 'opacity 0.2s',
+const pageStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: 20,
+};
+
+const cardStyle: React.CSSProperties = {
+  padding: '40px 32px',
+  maxWidth: 420,
+  width: '100%',
+  textAlign: 'center',
+  position: 'relative',
+};
+
+const stickyTagStyle = (bg: string): React.CSSProperties => ({
+  position: 'absolute',
+  top: -14,
+  right: 22,
+  background: bg,
+  border: '2px solid #1C1917',
+  borderRadius: 8,
+  padding: '2px 12px',
+  fontSize: 18,
+  fontWeight: 700,
+  color: '#1C1917',
+  transform: 'rotate(3deg)',
+  boxShadow: '2px 2px 0px #1C1917',
+});
+
+const badgeStyle = (bg: string): React.CSSProperties => ({
+  width: 72,
+  height: 72,
+  margin: '0 auto',
+  borderRadius: 18,
+  background: bg,
+  border: '2.5px solid #1C1917',
+  boxShadow: '3px 3px 0px #1C1917',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  transform: 'rotate(-4deg)',
+});
+
+const btnStyle = (bg: string): React.CSSProperties => ({
+  background: bg,
+  color: '#1C1917',
+  padding: '14px 28px',
+  fontSize: 16,
+  width: '100%',
 });

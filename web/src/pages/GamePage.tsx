@@ -36,7 +36,6 @@ export const GamePage: React.FC = () => {
       const token = await fbUser.getIdToken();
       socketService.connect(token);
 
-      // Restore state on reconnect
       socketService.requestState(code!);
 
       socketService.on('state:restored', (state: any) => {
@@ -84,7 +83,7 @@ export const GamePage: React.FC = () => {
 
       socketService.on('round:hint', (data: any) => {
         updateHint(data.hint);
-        toast(`💡 Hint: ${data.hint}`, { duration: 3000 });
+        toast(`Letter clue revealed: ${data.hint}`, { duration: 3000 });
       });
 
       socketService.on('round:end', (data: any) => {
@@ -132,7 +131,7 @@ export const GamePage: React.FC = () => {
 
       socketService.on('guess:correct', (data: any) => {
         setHasGuessedCorrectly(true);
-        toast.success(`🎉 Correct! +${data.points} points!`, { duration: 4000 });
+        toast.success(`Spot on! +${data.points} points!`, { duration: 4000 });
       });
 
       socketService.on('scores:updated', (data: any) => {
@@ -169,117 +168,202 @@ export const GamePage: React.FC = () => {
     setGuess('');
   };
 
-  // ── Word Selection Phase ────────────────────────────────────────────────────
+  // ── Word Selection Phase (Artist) ───────────────────────────────────────────
   if (phase === 'word-selection' && isArtist) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-        <div style={{ background: '#fff', borderRadius: 20, padding: 40, maxWidth: 480, width: '100%', margin: 16, textAlign: 'center' }}>
-          <h2 style={{ fontSize: 24, fontWeight: 800, color: '#1e293b', marginBottom: 8 }}>Choose a Word to Draw!</h2>
-          <p style={{ color: '#64748b', marginBottom: 32 }}>Round {round?.roundNumber} — You are the Artist</p>
+      <div style={centeredScreenStyle}>
+        <div className="sketch-card" style={{ padding: 36, maxWidth: 460, width: '100%', textAlign: 'center', position: 'relative' }}>
+          <div style={stickyBadgeStyle('#FDE047')} className="font-hand">
+            Round {round?.roundNumber || 1} — Your Turn!
+          </div>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', marginTop: 10, marginBottom: 6 }}>
+            Pick a Word to Sketch
+          </h2>
+          <p style={{ color: '#57534E', fontSize: 14, marginBottom: 26 }}>
+            Choose one prompt below to start drawing
+          </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {wordChoices.map(word => (
-              <button key={word} onClick={() => { socketService.selectWord(round!.id, word); setPhase('drawing'); }} style={{ background: '#f8fafc', border: '2px solid #e2e8f0', borderRadius: 12, padding: '18px', fontSize: 20, fontWeight: 700, color: '#1e293b', cursor: 'pointer', transition: 'all 0.2s' }}>
-                {word}
-              </button>
-            ))}
+            {wordChoices.map((word, idx) => {
+              const cardColors = ['#FEF9C3', '#E0F2FE', '#FFE4E6'];
+              return (
+                <button
+                  key={word}
+                  onClick={() => { socketService.selectWord(round!.id, word); setPhase('drawing'); }}
+                  className="sketch-btn"
+                  style={{
+                    background: cardColors[idx % cardColors.length],
+                    color: '#1C1917',
+                    padding: '16px',
+                    fontSize: 20,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {word}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
     );
   }
 
+  // ── Word Selection Phase (Guessers) ─────────────────────────────────────────
   if (phase === 'word-selection' && !isArtist) {
     const artist = players.find(p => p.userId === round?.artistId);
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-        <div style={{ background: '#fff', borderRadius: 20, padding: 40, maxWidth: 400, width: '100%', margin: 16, textAlign: 'center' }}>
-          <div style={{ fontSize: 64, marginBottom: 16 }}>⏳</div>
-          <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1e293b' }}>{artist?.username} is choosing a word...</h2>
-          <p style={{ color: '#64748b' }}>Get ready to guess!</p>
+      <div style={centeredScreenStyle}>
+        <div className="sketch-card" style={{ padding: 36, maxWidth: 400, width: '100%', textAlign: 'center' }}>
+          <div style={{ ...roundIconBadgeStyle('#38BDF8'), margin: '0 auto 16px', animation: 'wiggle 1.2s ease-in-out infinite' }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+              <path d="m15 5 4 4" />
+            </svg>
+          </div>
+          <h2 style={{ fontSize: 23, fontWeight: 700, color: '#1C1917', marginBottom: 6 }}>
+            {artist?.username || 'The artist'} is picking a word...
+          </h2>
+          <p style={{ color: '#57534E', fontSize: 14 }}>
+            Keep your eyes on the sketchpad!
+          </p>
         </div>
       </div>
     );
   }
 
-  // ── Game End ───────────────────────────────────────────────────────────────
+  // ── Game End ────────────────────────────────────────────────────────────────
   if (phase === 'game-end' && gameEndData) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' }}>
-        <div style={{ background: '#fff', borderRadius: 20, padding: 40, maxWidth: 480, width: '100%', margin: 16, textAlign: 'center' }}>
-          <div style={{ fontSize: 64 }}>🏆</div>
-          <h2 style={{ fontSize: 28, fontWeight: 800, color: '#1e293b', margin: '16px 0 8px' }}>Game Over!</h2>
-          <p style={{ color: '#6366f1', fontSize: 18, fontWeight: 700, marginBottom: 24 }}>🎉 {gameEndData.winner?.username} wins!</p>
+      <div style={centeredScreenStyle}>
+        <div className="sketch-card" style={{ padding: 36, maxWidth: 480, width: '100%', textAlign: 'center', position: 'relative' }}>
+          <div style={stickyBadgeStyle('#34D399')} className="font-hand">
+            Final Standings
+          </div>
+          <div style={{ ...roundIconBadgeStyle('#FDE047'), margin: '8px auto 14px' }}>
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+            </svg>
+          </div>
+          <h2 style={{ fontSize: 30, fontWeight: 700, color: '#1C1917', marginBottom: 4 }}>
+            Match Complete!
+          </h2>
+          <p style={{ color: '#E11D48', fontSize: 18, fontWeight: 700, marginBottom: 22 }}>
+            {gameEndData.winner?.username} takes the crown!
+          </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
             {gameEndData.scores?.map((s: any, i: number) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: i === 0 ? '#fef3c7' : '#f8fafc', borderRadius: 10, border: i === 0 ? '1px solid #fbbf24' : 'none' }}>
-                <span style={{ fontWeight: 600 }}>{i + 1}. {s.username}</span>
-                <span style={{ fontWeight: 800, color: '#6366f1' }}>{s.totalPoints} pts</span>
+              <div
+                key={s.userId}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '10px 16px',
+                  background: i === 0 ? '#FEF9C3' : '#FFFDF9',
+                  borderRadius: 12,
+                  border: '2px solid #1C1917',
+                }}
+              >
+                <span style={{ fontWeight: 700, color: '#1C1917' }}>#{i + 1} {s.username}</span>
+                <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
-          <button onClick={() => { reset(); navigate('/home'); }} style={{ background: '#6366f1', color: '#fff', border: 'none', borderRadius: 12, padding: '14px 32px', fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
-            🏠 Back to Home
+          <button
+            onClick={() => { reset(); navigate('/home'); }}
+            className="sketch-btn"
+            style={{ background: '#FDE047', color: '#1C1917', padding: '14px 32px', fontSize: 16 }}
+          >
+            Back to Studio
           </button>
         </div>
       </div>
     );
   }
 
-  // ── Round End ──────────────────────────────────────────────────────────────
+  // ── Round End ───────────────────────────────────────────────────────────────
   if (phase === 'round-end' && roundEndData) {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: '#1e293b' }}>
-        <div style={{ background: '#fff', borderRadius: 20, padding: 40, maxWidth: 480, width: '100%', margin: 16, textAlign: 'center' }}>
-          <h2 style={{ fontSize: 24, fontWeight: 800, color: '#1e293b', marginBottom: 8 }}>Round {round?.roundNumber} Over!</h2>
-          <div style={{ fontSize: 32, fontWeight: 800, color: '#6366f1', marginBottom: 20 }}>The word was: <span style={{ color: '#10b981' }}>{roundEndData.word}</span></div>
-          <div style={{ marginBottom: 20, fontSize: 15, color: '#64748b' }}>
-            {roundEndData.correctGuessers?.length} player(s) guessed correctly
+      <div style={centeredScreenStyle}>
+        <div className="sketch-card" style={{ padding: 36, maxWidth: 480, width: '100%', textAlign: 'center' }}>
+          <span className="font-hand" style={{ fontSize: 22, fontWeight: 700, color: '#57534E' }}>
+            Round {round?.roundNumber} Wrap-Up
+          </span>
+          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '6px 0 14px' }}>
+            The sketch was{' '}
+            <span style={{ display: 'inline-block', background: '#34D399', border: '2px solid #1C1917', borderRadius: 10, padding: '2px 12px', transform: 'rotate(-1.5deg)' }}>
+              {roundEndData.word}
+            </span>
+          </h2>
+          <div style={{ marginBottom: 18, fontSize: 14, fontWeight: 600, color: '#57534E' }}>
+            {roundEndData.correctGuessers?.length || 0} player(s) nailed it
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
             {scores.slice(0, 5).map((s, i) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 14px', background: '#f8fafc', borderRadius: 8 }}>
-                <span style={{ fontWeight: 600, color: '#374151' }}>#{i + 1} {s.username}</span>
-                <span style={{ fontWeight: 800, color: '#6366f1' }}>{s.totalPoints} pts</span>
+              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#FFFDF9', border: '1.5px solid #1C1917', borderRadius: 10 }}>
+                <span style={{ fontWeight: 700, color: '#1C1917' }}>#{i + 1} {s.username}</span>
+                <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
-          <p style={{ color: '#94a3b8', fontSize: 14 }}>Next round starting in a few seconds...</p>
+          <p className="font-hand" style={{ color: '#57534E', fontSize: 19, fontWeight: 700 }}>
+            Flipping to the next page...
+          </p>
         </div>
       </div>
     );
   }
 
-  // ── Main Game Screen ───────────────────────────────────────────────────────
+  // ── Main Gameplay Screen ────────────────────────────────────────────────────
   const timeLeft = round?.timeLeft ?? 60;
-  const timerColor = timeLeft <= 10 ? '#ef4444' : timeLeft <= 20 ? '#f97316' : '#10b981';
+  const timerBg = timeLeft <= 10 ? '#FB7185' : timeLeft <= 20 ? '#FDE047' : '#34D399';
   const artist = players.find(p => p.userId === round?.artistId);
 
   return (
-    <div style={{ minHeight: '100vh', background: '#1e293b', display: 'flex', flexDirection: 'column' }}>
-      {/* Top bar */}
-      <div style={{ background: '#0f172a', padding: '12px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
-        <div style={{ color: '#fff', fontWeight: 700, fontSize: 16 }}>Round {round?.roundNumber || 1} / {game?.totalRounds || 11}</div>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Sketchbook Top HUD Bar */}
+      <header style={hudBarStyle}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={roundPillStyle} className="font-display">
+            Round {round?.roundNumber || 1} / {game?.totalRounds || 11}
+          </span>
+        </div>
 
-        {/* Timer */}
+        {/* Countdown Clock Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ fontSize: 32, fontWeight: 900, color: timerColor, minWidth: 48, textAlign: 'center' }}>{timeLeft}</div>
-          <div style={{ fontSize: 12, color: '#64748b' }}>seconds</div>
+          <div style={timerBadgeStyle(timerBg)} className="font-display">
+            {timeLeft}
+          </div>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#57534E', textTransform: 'uppercase' }}>sec</span>
         </div>
 
-        {/* Word hint */}
-        <div style={{ color: '#fff', fontSize: 20, fontWeight: 700, letterSpacing: 6, textAlign: 'center' }}>
-          {isArtist ? <span style={{ color: '#fbbf24' }}>🎨 {round?.word}</span> : (round?.hint || '_ _ _ _ _')}
+        {/* Secret Word / Clue Box */}
+        <div style={wordClueBoxStyle} className="font-display">
+          {isArtist ? (
+            <span>Draw: <strong>{round?.word}</strong></span>
+          ) : (
+            <span style={{ letterSpacing: 5 }}>{round?.hint || '_ _ _ _ _'}</span>
+          )}
         </div>
 
-        <div style={{ color: '#94a3b8', fontSize: 14 }}>
-          {isArtist ? '✏️ Draw it!' : `🎨 ${artist?.username} is drawing`}
+        {/* Artist Role Pill */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 14, fontWeight: 700, color: '#1C1917' }}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+          </svg>
+          <span>{isArtist ? 'You are sketching' : `${artist?.username || 'Artist'} is sketching`}</span>
         </div>
-      </div>
+      </header>
 
-      {/* Main content */}
-      <div style={{ flex: 1, display: 'flex', gap: 16, padding: 16, flexWrap: 'wrap' }}>
-        {/* Canvas */}
-        <div style={{ flex: '1 1 500px' }}>
+      {/* Arena Body */}
+      <div style={{ flex: 1, maxWidth: 1120, width: '100%', margin: '0 auto', display: 'flex', gap: 18, padding: 18, flexWrap: 'wrap' }}>
+        {/* Left: Sketchpad */}
+        <div style={{ flex: '1 1 540px' }}>
           <DrawingCanvas
             isArtist={isArtist}
             strokes={round?.strokes || []}
@@ -292,53 +376,199 @@ export const GamePage: React.FC = () => {
           />
         </div>
 
-        {/* Right panel */}
-        <div style={{ flex: '0 0 260px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {/* Scores */}
-          <div style={{ background: '#0f172a', borderRadius: 12, padding: 14 }}>
-            <div style={{ color: '#94a3b8', fontSize: 12, fontWeight: 600, marginBottom: 8 }}>SCORES</div>
-            {scores.map((s, i) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '1px solid #1e293b', fontSize: 13 }}>
-                <span style={{ color: s.userId === user?.id ? '#a78bfa' : '#e2e8f0' }}>#{i + 1} {s.username}</span>
-                <span style={{ color: '#6366f1', fontWeight: 700 }}>{s.totalPoints}</span>
-              </div>
-            ))}
+        {/* Right: Scoreboard + Guesses */}
+        <div style={{ flex: '1 1 280px', maxWidth: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {/* Scoreboard */}
+          <div className="sketch-card" style={{ padding: 16, background: '#FFFDF9' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                <path d="M4 22h16" />
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FDE047" />
+              </svg>
+              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#1C1917' }}>Scoreboard</span>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {scores.map((s, i) => (
+                <div
+                  key={s.userId}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '6px 10px',
+                    borderRadius: 9,
+                    background: s.userId === user?.id ? '#FEF9C3' : 'transparent',
+                    border: s.userId === user?.id ? '1.5px solid #1C1917' : '1.5px solid transparent',
+                    fontSize: 14,
+                  }}
+                >
+                  <span style={{ fontWeight: 700, color: '#1C1917' }}>
+                    #{i + 1} {s.username}
+                  </span>
+                  <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>
+                    {s.totalPoints}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Chat / Guesses */}
-          <div style={{ background: '#0f172a', borderRadius: 12, padding: 14, flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ color: '#94a3b8', fontSize: 12, fontWeight: 600, marginBottom: 8 }}>GUESSES</div>
-            <div style={{ flex: 1, overflowY: 'auto', marginBottom: 10, maxHeight: 240, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          {/* Live Guess Feed */}
+          <div className="sketch-card" style={{ padding: 16, background: '#FFFDF9', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#1C1917' }}>Live Guesses</span>
+            </div>
+
+            <div style={{ flex: 1, overflowY: 'auto', marginBottom: 12, maxHeight: 260, display: 'flex', flexDirection: 'column', gap: 6 }}>
               {guessMessages.map((msg, i) => (
-                <div key={i} style={{ fontSize: 12, padding: '4px 8px', borderRadius: 6, background: msg.isCorrect ? '#065f46' : '#1e293b' }}>
-                  <span style={{ color: msg.isCorrect ? '#34d399' : '#94a3b8', fontWeight: 600 }}>{msg.username}: </span>
-                  <span style={{ color: msg.isCorrect ? '#d1fae5' : '#e2e8f0' }}>
-                    {msg.isCorrect ? `✅ Guessed correctly! (+${msg.points} pts)` : msg.text}
+                <div
+                  key={i}
+                  style={{
+                    fontSize: 13,
+                    padding: '6px 10px',
+                    borderRadius: 9,
+                    background: msg.isCorrect ? '#DCFCE7' : '#F5F5F4',
+                    border: msg.isCorrect ? '1.5px solid #1C1917' : '1px solid #E7E5E4',
+                  }}
+                >
+                  <span style={{ color: '#1C1917', fontWeight: 700 }}>{msg.username}: </span>
+                  <span style={{ color: msg.isCorrect ? '#166534' : '#44403C', fontWeight: msg.isCorrect ? 700 : 500 }}>
+                    {msg.isCorrect ? `Guessed it! (+${msg.points} pts)` : msg.text}
                   </span>
                 </div>
               ))}
             </div>
 
             {!isArtist && !hasGuessedCorrectly && (
-              <form onSubmit={submitGuess} style={{ display: 'flex', gap: 6 }}>
+              <form onSubmit={submitGuess} style={{ display: 'flex', gap: 8 }}>
                 <input
                   value={guess}
                   onChange={e => setGuess(e.target.value)}
-                  placeholder="Your guess..."
-                  style={{ flex: 1, padding: '8px 10px', borderRadius: 8, border: '1px solid #334155', background: '#1e293b', color: '#fff', fontSize: 13, outline: 'none' }}
+                  placeholder="Type your guess..."
+                  style={{
+                    flex: 1,
+                    padding: '10px 12px',
+                    borderRadius: 10,
+                    border: '2px solid #1C1917',
+                    background: '#FFFFFF',
+                    color: '#1C1917',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    outline: 'none',
+                  }}
                 />
-                <button type="submit" style={{ background: '#6366f1', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 12px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>→</button>
+                <button
+                  type="submit"
+                  className="sketch-btn"
+                  style={{ background: '#34D399', color: '#1C1917', padding: '8px 14px', fontSize: 15 }}
+                >
+                  →
+                </button>
               </form>
             )}
+
             {hasGuessedCorrectly && !isArtist && (
-              <div style={{ background: '#065f46', borderRadius: 8, padding: '8px 12px', textAlign: 'center', color: '#34d399', fontWeight: 700, fontSize: 13 }}>🎉 You guessed it!</div>
+              <div style={{ background: '#DCFCE7', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#166534', fontWeight: 700, fontSize: 14 }}>
+                Nailed it! Waiting for others...
+              </div>
             )}
+
             {isArtist && (
-              <div style={{ background: '#1e3a5f', borderRadius: 8, padding: '8px 12px', textAlign: 'center', color: '#93c5fd', fontSize: 12 }}>You are the artist</div>
+              <div style={{ background: '#FEF9C3', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#1C1917', fontWeight: 700, fontSize: 13 }}>
+                You're the artist — no hints in chat!
+              </div>
             )}
           </div>
         </div>
       </div>
     </div>
   );
+};
+
+const centeredScreenStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minHeight: '100vh',
+  padding: 18,
+};
+
+const stickyBadgeStyle = (bg: string): React.CSSProperties => ({
+  position: 'absolute',
+  top: -14,
+  left: '50%',
+  transform: 'translateX(-50%) rotate(-2deg)',
+  background: bg,
+  border: '2px solid #1C1917',
+  borderRadius: 8,
+  padding: '2px 14px',
+  fontSize: 18,
+  fontWeight: 700,
+  color: '#1C1917',
+  boxShadow: '2px 2px 0px #1C1917',
+  whiteSpace: 'nowrap',
+});
+
+const roundIconBadgeStyle = (bg: string): React.CSSProperties => ({
+  width: 58,
+  height: 58,
+  borderRadius: 16,
+  background: bg,
+  border: '2.5px solid #1C1917',
+  boxShadow: '3px 3px 0px #1C1917',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const hudBarStyle: React.CSSProperties = {
+  background: '#FFFDF9',
+  borderBottom: '2.5px solid #1C1917',
+  padding: '12px 24px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  gap: 14,
+  flexWrap: 'wrap',
+};
+
+const roundPillStyle: React.CSSProperties = {
+  background: '#E0F2FE',
+  border: '2px solid #1C1917',
+  borderRadius: 10,
+  padding: '5px 12px',
+  fontSize: 14,
+  fontWeight: 700,
+  color: '#1C1917',
+};
+
+const timerBadgeStyle = (bg: string): React.CSSProperties => ({
+  background: bg,
+  border: '2px solid #1C1917',
+  boxShadow: '2px 2px 0px #1C1917',
+  borderRadius: 12,
+  minWidth: 46,
+  padding: '4px 10px',
+  fontSize: 22,
+  fontWeight: 700,
+  color: '#1C1917',
+  textAlign: 'center',
+});
+
+const wordClueBoxStyle: React.CSSProperties = {
+  background: '#FDE047',
+  border: '2px solid #1C1917',
+  boxShadow: '2px 2px 0px #1C1917',
+  borderRadius: 12,
+  padding: '6px 18px',
+  fontSize: 19,
+  fontWeight: 700,
+  color: '#1C1917',
+  textAlign: 'center',
 };

@@ -4,12 +4,62 @@
   box-sizing: border-box;
 }
 
+:root {
+  --paper-bg: #FAF6EE;
+  --paper-dot: #DFD7C8;
+  --ink: #1C1917;
+  --ink-muted: #57534E;
+  --accent-yellow: #FDE047;
+  --accent-coral: #FB7185;
+  --accent-mint: #34D399;
+  --accent-blue: #38BDF8;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #f8fafc;
-  color: #1e293b;
+  background-color: var(--paper-bg);
+  background-image: radial-gradient(var(--paper-dot) 1.25px, transparent 1.25px);
+  background-size: 20px 20px;
+  color: var(--ink);
+}
+
+h1, h2, h3, .font-display {
+  font-family: 'Fredoka', cursive, sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-hand {
+  font-family: 'Caveat', cursive;
+}
+
+/* Handcrafted Sketchbook Card & Button Utilities */
+.sketch-card {
+  background: #FFFFFF;
+  border: 2.5px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 5px 5px 0px var(--ink);
+}
+
+.sketch-btn {
+  border: 2.5px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 3px 3px 0px var(--ink);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
+}
+
+.sketch-btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px var(--ink);
+}
+
+.sketch-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--ink);
 }
 
 @keyframes spin {
@@ -18,21 +68,26 @@ body {
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
 }
 
 button:focus-visible, input:focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2.5px solid var(--ink);
   outline-offset: 2px;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #F0E9DC;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: #A8A29E;
+  border-radius: 999px;
 }

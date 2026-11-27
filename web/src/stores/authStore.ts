@@ -31,7 +31,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       user: null,
       firebaseUser: null,
       isAuthenticated: false,
@@ -44,11 +44,12 @@ export const useAuthStore = create<AuthState>()(
           const credential = await createUserWithEmailAndPassword(auth, email, password);
           await firebaseUpdateProfile(credential.user, { displayName: username });
           await sendEmailVerification(credential.user);
-          const token = await credential.user.getIdToken();
+          await credential.user.getIdToken();
           const user = await verifyAndCreateUser(username);
           set({ user, firebaseUser: credential.user, isAuthenticated: true, isLoading: false });
         } catch (err: any) {
-          const msg = getAuthErrorMessage(err.code);
+          console.error('Register error:', err);
+          const msg = getAuthErrorMessage(err);
           set({ error: msg, isLoading: false });
           throw new Error(msg);
         }
@@ -61,7 +62,8 @@ export const useAuthStore = create<AuthState>()(
           const user = await verifyAndCreateUser();
           set({ user, firebaseUser: credential.user, isAuthenticated: true, isLoading: false });
         } catch (err: any) {
-          const msg = getAuthErrorMessage(err.code);
+          console.error('Login error:', err);
+          const msg = getAuthErrorMessage(err);
           set({ error: msg, isLoading: false });
           throw new Error(msg);
         }
@@ -78,7 +80,8 @@ export const useAuthStore = create<AuthState>()(
           await sendPasswordResetEmail(auth, email);
           set({ isLoading: false });
         } catch (err: any) {
-          const msg = getAuthErrorMessage(err.code);
+          console.error('Forgot password error:', err);
+          const msg = getAuthErrorMessage(err);
           set({ error: msg, isLoading: false });
           throw new Error(msg);
         }
@@ -100,16 +103,31 @@ export const useAuthStore = create<AuthState>()(
   )
 );
 
-function getAuthErrorMessage(code: string): string {
+function getAuthErrorMessage(err: any): string {
+  const code = err?.code;
   switch (code) {
-    case 'auth/email-already-in-use': return 'This email is already registered. Please log in.';
-    case 'auth/invalid-email': return 'Please enter a valid email address.';
-    case 'auth/weak-password': return 'Password must be at least 6 characters.';
-    case 'auth/user-not-found': return 'No account found with this email.';
-    case 'auth/wrong-password': return 'Incorrect password. Please try again.';
-    case 'auth/too-many-requests': return 'Too many failed attempts. Please try again later.';
-    case 'auth/network-request-failed': return 'Network error. Check your connection.';
-    case 'auth/invalid-credential': return 'Invalid email or password.';
-    default: return 'An error occurred. Please try again.';
+    case 'auth/email-already-in-use':
+      return 'This email is already registered. Please log in.';
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.';
+    case 'auth/weak-password':
+      return 'Password must be at least 6 characters.';
+    case 'auth/user-not-found':
+      return 'No account found with this email.';
+    case 'auth/wrong-password':
+      return 'Incorrect password. Please try again.';
+    case 'auth/too-many-requests':
+      return 'Too many failed attempts. Please try again later.';
+    case 'auth/network-request-failed':
+      return 'Network error. Check your connection.';
+    case 'auth/invalid-credential':
+      return 'Invalid email or password.';
+    default:
+      return (
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        err?.message ||
+        'An error occurred. Please try again.'
+      );
   }
 }

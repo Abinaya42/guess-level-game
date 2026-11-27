@@ -20,10 +20,12 @@ interface DrawingTools {
 }
 
 const COLORS = [
-  '#000000', '#ffffff', '#ef4444', '#f97316', '#eab308',
-  '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4',
-  '#84cc16', '#f59e0b', '#6b7280', '#a78bfa', '#34d399',
+  '#1C1917', '#FFFFFF', '#E11D48', '#F97316', '#EAB308',
+  '#16A34A', '#2563EB', '#7C3AED', '#EC4899', '#0891B2',
+  '#65A30D', '#92400E', '#64748B', '#38BDF8', '#34D399',
 ];
+
+const BRUSH_SIZES = [3, 7, 13, 22];
 
 export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   isArtist,
@@ -38,7 +40,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const currentPoints = useRef<Array<{ x: number; y: number }>>([]);
-  const [tools, setTools] = useState<DrawingTools>({ color: '#000000', brushSize: 4, isEraser: false });
+  const [tools, setTools] = useState<DrawingTools>({ color: '#1C1917', brushSize: 7, isEraser: false });
 
   // Redraw all strokes whenever strokes array changes
   useEffect(() => {
@@ -48,13 +50,13 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#FFFDF9';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     strokes.forEach((stroke) => {
       if (stroke.points.length < 2) return;
       ctx.beginPath();
-      ctx.strokeStyle = stroke.isEraser ? '#ffffff' : stroke.color;
+      ctx.strokeStyle = stroke.isEraser ? '#FFFDF9' : stroke.color;
       ctx.lineWidth = stroke.brushSize;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -91,8 +93,8 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
     const ctx = canvas.getContext('2d')!;
     ctx.beginPath();
-    ctx.strokeStyle = tools.isEraser ? '#ffffff' : tools.color;
-    ctx.lineWidth = tools.isEraser ? tools.brushSize * 3 : tools.brushSize;
+    ctx.strokeStyle = tools.isEraser ? '#FFFDF9' : tools.color;
+    ctx.lineWidth = tools.isEraser ? tools.brushSize * 2.5 : tools.brushSize;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.moveTo(pos.x, pos.y);
@@ -119,7 +121,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
         id: uuidv4(),
         points: [...currentPoints.current],
         color: tools.color,
-        brushSize: tools.isEraser ? tools.brushSize * 3 : tools.brushSize,
+        brushSize: tools.isEraser ? tools.brushSize * 2.5 : tools.brushSize,
         isEraser: tools.isEraser,
         timestamp: Date.now(),
       };
@@ -129,68 +131,193 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   }, [isArtist, tools, onStroke]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {isArtist && (
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', padding: '8px', background: '#f8fafc', borderRadius: 8, border: '1px solid #e2e8f0' }}>
-          {/* Colors */}
-          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-            {COLORS.map((c) => (
-              <button
-                key={c}
-                onClick={() => setTools(t => ({ ...t, color: c, isEraser: false }))}
-                style={{
-                  width: 24, height: 24, borderRadius: '50%', background: c,
-                  border: tools.color === c && !tools.isEraser ? '3px solid #3b82f6' : '1px solid #94a3b8',
-                  cursor: 'pointer',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Brush size */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ fontSize: 12, color: '#64748b' }}>Size:</span>
-            <input
-              type="range" min={1} max={30} value={tools.brushSize}
-              onChange={e => setTools(t => ({ ...t, brushSize: +e.target.value }))}
-              style={{ width: 80 }}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* Sketchpad Frame */}
+      <div className="sketch-card" style={{ padding: 10, background: '#FFFDF9', position: 'relative' }}>
+        {/* Top Binder Rings Accent */}
+        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '0 24px 8px', borderBottom: '1.5px dashed #E7E5E4' }}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span
+              key={i}
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                background: '#FAF6EE',
+                border: '2px solid #1C1917',
+              }}
             />
-            <span style={{ fontSize: 12, minWidth: 20 }}>{tools.brushSize}</span>
+          ))}
+        </div>
+
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
+          style={{
+            display: 'block',
+            width: '100%',
+            borderRadius: 10,
+            background: '#FFFDF9',
+            cursor: isArtist ? (tools.isEraser ? 'cell' : 'crosshair') : 'default',
+            touchAction: 'none',
+          }}
+          onMouseDown={startDraw}
+          onMouseMove={draw}
+          onMouseUp={endDraw}
+          onMouseLeave={endDraw}
+          onTouchStart={startDraw}
+          onTouchMove={draw}
+          onTouchEnd={endDraw}
+        />
+      </div>
+
+      {/* Artist Palette & Tools */}
+      {isArtist && (
+        <div className="sketch-card" style={toolbarStyle}>
+          {/* Color Swatches */}
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+            {COLORS.map((c) => {
+              const active = tools.color === c && !tools.isEraser;
+              return (
+                <button
+                  key={c}
+                  onClick={() => setTools(t => ({ ...t, color: c, isEraser: false }))}
+                  aria-label={`Color ${c}`}
+                  style={{
+                    width: 26,
+                    height: 26,
+                    borderRadius: 8,
+                    background: c,
+                    border: '2px solid #1C1917',
+                    boxShadow: active ? '2px 2px 0px #1C1917' : 'none',
+                    transform: active ? 'translateY(-3px) scale(1.08)' : 'none',
+                    transition: 'transform 0.1s ease',
+                    cursor: 'pointer',
+                  }}
+                />
+              );
+            })}
           </div>
 
-          {/* Tools */}
-          <button
-            onClick={() => setTools(t => ({ ...t, isEraser: !t.isEraser }))}
-            style={{ padding: '4px 10px', borderRadius: 6, background: tools.isEraser ? '#3b82f6' : '#e2e8f0', color: tools.isEraser ? '#fff' : '#374151', border: 'none', cursor: 'pointer', fontSize: 13 }}
-          >
-            ✏️ {tools.isEraser ? 'Eraser' : 'Draw'}
-          </button>
-          <button onClick={onUndo} style={{ padding: '4px 10px', borderRadius: 6, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontSize: 13 }}>↩ Undo</button>
-          <button onClick={onRedo} style={{ padding: '4px 10px', borderRadius: 6, background: '#e2e8f0', border: 'none', cursor: 'pointer', fontSize: 13 }}>↪ Redo</button>
-          <button onClick={onClear} style={{ padding: '4px 10px', borderRadius: 6, background: '#fee2e2', color: '#dc2626', border: 'none', cursor: 'pointer', fontSize: 13 }}>🗑 Clear</button>
+          <div style={dividerStyle} />
+
+          {/* Nib / Brush Size Dots */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {BRUSH_SIZES.map((size) => {
+              const active = tools.brushSize === size;
+              return (
+                <button
+                  key={size}
+                  onClick={() => setTools(t => ({ ...t, brushSize: size }))}
+                  title={`Brush size ${size}`}
+                  style={{
+                    width: 30,
+                    height: 30,
+                    borderRadius: 8,
+                    background: active ? '#FDE047' : '#FFFDF9',
+                    border: '2px solid #1C1917',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span
+                    style={{
+                      width: Math.min(size + 3, 18),
+                      height: Math.min(size + 3, 18),
+                      borderRadius: '50%',
+                      background: tools.isEraser ? '#78716C' : tools.color,
+                      border: tools.color === '#FFFFFF' ? '1px solid #1C1917' : 'none',
+                    }}
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <div style={dividerStyle} />
+
+          {/* Tool Buttons */}
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            <button
+              onClick={() => setTools(t => ({ ...t, isEraser: false }))}
+              className="sketch-btn"
+              style={toolBtnStyle(!tools.isEraser ? '#FDE047' : '#FFFDF9')}
+              title="Pencil"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+              </svg>
+              <span>Pen</span>
+            </button>
+
+            <button
+              onClick={() => setTools(t => ({ ...t, isEraser: true }))}
+              className="sketch-btn"
+              style={toolBtnStyle(tools.isEraser ? '#38BDF8' : '#FFFDF9')}
+              title="Eraser"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21" />
+                <path d="M22 21H7" />
+              </svg>
+              <span>Eraser</span>
+            </button>
+
+            <button onClick={onUndo} className="sketch-btn" style={toolBtnStyle('#FFFDF9')} title="Undo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 7v6h6" />
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+              </svg>
+            </button>
+
+            <button onClick={onRedo} className="sketch-btn" style={toolBtnStyle('#FFFDF9')} title="Redo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 7v6h-6" />
+                <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
+              </svg>
+            </button>
+
+            <button onClick={onClear} className="sketch-btn" style={toolBtnStyle('#FFE4E6')} title="Clear sheet">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18" />
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+              </svg>
+              <span>Clear</span>
+            </button>
+          </div>
         </div>
       )}
-
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        style={{
-          border: '2px solid #e2e8f0',
-          borderRadius: 8,
-          background: '#ffffff',
-          cursor: isArtist ? (tools.isEraser ? 'cell' : 'crosshair') : 'default',
-          touchAction: 'none',
-          maxWidth: '100%',
-        }}
-        onMouseDown={startDraw}
-        onMouseMove={draw}
-        onMouseUp={endDraw}
-        onMouseLeave={endDraw}
-        onTouchStart={startDraw}
-        onTouchMove={draw}
-        onTouchEnd={endDraw}
-      />
     </div>
   );
 };
+
+const toolbarStyle: React.CSSProperties = {
+  display: 'flex',
+  gap: 12,
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '12px 14px',
+  background: '#FFFDF9',
+};
+
+const dividerStyle: React.CSSProperties = {
+  width: 2,
+  height: 26,
+  background: '#E7E5E4',
+  borderRadius: 2,
+};
+
+const toolBtnStyle = (bg: string): React.CSSProperties => ({
+  background: bg,
+  color: '#1C1917',
+  padding: '6px 10px',
+  fontSize: 13,
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 5,
+});
