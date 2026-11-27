@@ -1,38 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-<<<<<<< HEAD
-import { getUserstatus, getUserHistory } from '../services/api';
-import { Gamestatus, GameHistory } from '../types';
-=======
 import { getUserStats } from '../services/api';
 import { GameStats } from '../types';
->>>>>>> d066e9d (Update UI, auth handling, and API config)
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
-<<<<<<< HEAD
-  const [status, setstatus] = useState<Gamestatus | null>(null);
-  const [history, setHistory] = useState<GameHistory[]>([]);
-=======
   const [stats, setStats] = useState<GameStats | null>(null);
->>>>>>> d066e9d (Update UI, auth handling, and API config)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
-<<<<<<< HEAD
-    Promise.all([
-      getUserstatus(user.id).then(setstatus).catch(() => {}),
-      getUserHistory(user.id).then(d => setHistory(d.history)).catch(() => {}),
-    ]).finally(() => setLoading(false));
-=======
     getUserStats(user.id)
       .then(setStats)
       .catch(() => {})
       .finally(() => setLoading(false));
->>>>>>> d066e9d (Update UI, auth handling, and API config)
   }, [user]);
 
   const initials = user?.username?.slice(0, 2).toUpperCase() || '??';
@@ -84,24 +67,6 @@ export const ProfilePage: React.FC = () => {
           </p>
         </div>
 
-<<<<<<< HEAD
-        {/* status */}
-        {status && (
-          <div style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: '#374151', marginBottom: 16 }}>Statistics</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-              {[
-                ['🎮 Games Played', status.gamesPlayed],
-                ['🏆 Games Won', status.gamesWon],
-                ['📈 Avg Score', status.avgScore],
-                ['⭐ Best Score', status.bestScore],
-                ['💎 Total Points', status.totalPoints],
-                ['🎯 Win Rate', status.gamesPlayed > 0 ? `${Math.round(status.gamesWon / status.gamesPlayed * 100)}%` : '0%'],
-              ].map(([label, val]) => (
-                <div key={label as string} style={{ background: '#f8fafc', borderRadius: 10, padding: '14px 16px' }}>
-                  <div style={{ fontSize: 20, fontWeight: 800, color: '#6366f1' }}>{val}</div>
-                  <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{label}</div>
-=======
         {/* Career Stats */}
         {!loading && stats && (
           <div className="sketch-card" style={{ padding: 24 }}>
@@ -133,7 +98,6 @@ export const ProfilePage: React.FC = () => {
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#44403C', marginTop: 3 }}>
                     {label}
                   </div>
->>>>>>> d066e9d (Update UI, auth handling, and API config)
                 </div>
               ))}
             </div>

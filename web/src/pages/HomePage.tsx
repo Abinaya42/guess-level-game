@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-import { getUserstatus, getUserHistory } from '../services/api';
-import { Gamestatus, GameHistory } from '../types';
+import { getUserStats, getUserHistory } from '../services/api';
+import { GameHistory } from '../types';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [joinCode, setJoinCode] = useState('');
-  const [status, setstatus] = useState<Gamestatus | null>(null);
+  const [stats, setStats] = useState<{ gamesPlayed: number; gamesWon: number; avgScore: number; bestScore: number } | null>(null);
   const [history, setHistory] = useState<GameHistory[]>([]);
   const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user) return;
     Promise.all([
-      getUserstatus(user.id).then(setstatus).catch(() => {}),
+      getUserStats(user.id).then(setStats).catch(() => {}),
       getUserHistory(user.id).then(d => setHistory(d.history)).catch(() => {}),
     ]).finally(() => setLoading(false));
   }, [user]);
@@ -128,17 +128,6 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
 
-<<<<<<< HEAD
-        {/* status */}
-        {status && (
-          <div style={{ background: '#fff', borderRadius: 16, padding: 24, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#1e293b', marginBottom: 16 }}>📊 Your Status</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-              {[['Games', status.gamesPlayed], ['Wins', status.gamesWon], ['Avg Score', status.avgScore], ['Best', status.bestScore]].map(([label, val]) => (
-                <div key={label as string} style={{ textAlign: 'center', background: '#f8fafc', borderRadius: 10, padding: 12 }}>
-                  <div style={{ fontSize: 24, fontWeight: 800, color: '#6366f1' }}>{val}</div>
-                  <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{label}</div>
-=======
         {/* Player Stats */}
         {stats && (
           <div className="sketch-card" style={{ padding: 24 }}>
@@ -164,7 +153,6 @@ export const HomePage: React.FC = () => {
                 <div key={label} style={{ textAlign: 'center', background: bg, border: '2px solid #1C1917', borderRadius: 14, padding: '14px 10px' }}>
                   <div className="font-display" style={{ fontSize: 26, fontWeight: 700, color: '#1C1917' }}>{val}</div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#44403C', marginTop: 2 }}>{label}</div>
->>>>>>> d066e9d (Update UI, auth handling, and API config)
                 </div>
               ))}
             </div>
