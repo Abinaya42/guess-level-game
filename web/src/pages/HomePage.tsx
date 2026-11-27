@@ -41,9 +41,6 @@ export const HomePage: React.FC = () => {
             <span className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#14532D', display: 'block', lineHeight: 1.1 }}>
               Find 11
             </span>
-            <span className="font-hand" style={{ fontSize: 16, fontWeight: 700, color: '#166534' }}>
-              doodle studio
-            </span>
           </div>
         </div>
 
