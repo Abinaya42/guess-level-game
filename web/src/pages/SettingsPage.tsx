@@ -31,7 +31,7 @@ export const SettingsPage: React.FC = () => {
       {/* Sketchbook Top Navbar */}
       <header style={headerStyle}>
         <button onClick={() => navigate('/home')} className="sketch-btn" style={backBtnStyle}>
-          ← Studio
+          ← Back
         </button>
         <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#14532D', margin: 0 }}>
           Setting
