@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { StrokeData } from '../types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/+$/, '');
 
 class SocketService {
   private socket: Socket | null = null;
