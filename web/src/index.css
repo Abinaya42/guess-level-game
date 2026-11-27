@@ -5,14 +5,14 @@
 }
 
 :root {
-  --paper-bg: #FAF6EE;
-  --paper-dot: #DFD7C8;
-  --ink: #1C1917;
-  --ink-muted: #57534E;
-  --accent-yellow: #FDE047;
-  --accent-coral: #FB7185;
+  --paper-bg: #F0FDF4;
+  --paper-dot: #BBF7D0;
+  --ink: #14532D;
+  --ink-muted: #166534;
+  --accent-yellow: #4ADE80;
+  --accent-coral: #22C55E;
   --accent-mint: #34D399;
-  --accent-blue: #38BDF8;
+  --accent-blue: #16A34A;
 }
 
 body {
