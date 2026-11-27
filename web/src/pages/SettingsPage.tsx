@@ -33,8 +33,8 @@ export const SettingsPage: React.FC = () => {
         <button onClick={() => navigate('/home')} className="sketch-btn" style={backBtnStyle}>
           ← Studio
         </button>
-        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', margin: 0 }}>
-          Studio Settings
+        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#14532D', margin: 0 }}>
+          Setting
         </h1>
         <div style={{ width: 84 }} />
       </header>
@@ -47,10 +47,10 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
             </svg>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', margin: 0 }}>
+            <h3 style={{ fontSize: 18, fontWeight: 700, color: '#14532D', margin: 0 }}>
               Artist Display Name
             </h3>
           </div>
@@ -68,8 +68,8 @@ export const SettingsPage: React.FC = () => {
             disabled={saving}
             className="sketch-btn"
             style={{
-              background: saving ? '#E7E5E4' : '#34D399',
-              color: '#1C1917',
+              background: saving ? '#DCFCE7' : '#22C55E',
+              color: saving ? '#166534' : '#FFFFFF',
               padding: '12px 22px',
               fontSize: 15,
               cursor: saving ? 'not-allowed' : 'pointer',
@@ -81,11 +81,11 @@ export const SettingsPage: React.FC = () => {
 
         {/* Account Card */}
         <div className="sketch-card" style={{ padding: 24 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', margin: '0 0 8px' }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#14532D', margin: '0 0 8px' }}>
             Account Pass
           </h3>
-          <p style={{ color: '#57534E', fontSize: 14, marginBottom: 18 }}>
-            Signed in as <strong style={{ color: '#1C1917' }}>{user?.email}</strong>
+          <p style={{ color: '#166534', fontSize: 14, marginBottom: 18 }}>
+            Signed in as <strong style={{ color: '#14532D' }}>{user?.email}</strong>
           </p>
 
           <button
@@ -93,7 +93,7 @@ export const SettingsPage: React.FC = () => {
             className="sketch-btn"
             style={logoutBtnStyle}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#14532D" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
               <polyline points="16 17 21 12 16 7" />
               <line x1="21" y1="12" x2="9" y2="12" />
@@ -107,8 +107,8 @@ export const SettingsPage: React.FC = () => {
 };
 
 const headerStyle: React.CSSProperties = {
-  background: '#FFFDF9',
-  borderBottom: '2.5px solid #1C1917',
+  background: '#F0FDF4',
+  borderBottom: '2.5px solid #14532D',
   padding: '14px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -116,8 +116,8 @@ const headerStyle: React.CSSProperties = {
 };
 
 const backBtnStyle: React.CSSProperties = {
-  background: '#FDE047',
-  color: '#1C1917',
+  background: '#86EFAC',
+  color: '#14532D',
   padding: '8px 14px',
   fontSize: 14,
 };
@@ -126,34 +126,34 @@ const stickyTagStyle: React.CSSProperties = {
   position: 'absolute',
   top: -13,
   right: 20,
-  background: '#FDE047',
-  border: '2px solid #1C1917',
+  background: '#86EFAC',
+  border: '2px solid #14532D',
   borderRadius: 8,
   padding: '1px 12px',
   fontSize: 17,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#14532D',
   transform: 'rotate(2.5deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #14532D',
 };
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
   padding: '12px 14px',
   borderRadius: 11,
-  border: '2px solid #1C1917',
-  background: '#FFFDF9',
+  border: '2px solid #14532D',
+  background: '#F0FDF4',
   fontSize: 15,
   fontWeight: 600,
-  color: '#1C1917',
+  color: '#14532D',
   outline: 'none',
   boxSizing: 'border-box',
   marginBottom: 14,
 };
 
 const logoutBtnStyle: React.CSSProperties = {
-  background: '#FFE4E6',
-  color: '#1C1917',
+  background: '#DCFCE7',
+  color: '#14532D',
   padding: '11px 20px',
   fontSize: 15,
   display: 'inline-flex',
