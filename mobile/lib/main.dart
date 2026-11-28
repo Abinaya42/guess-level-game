@@ -1,8 +1,13 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// Ungal project-la firebase_options.dart irundhaa keezha irukkura line-ah uncomment pannunga:
+// import 'firebase_options.dart';
+
 import 'core/providers/providers.dart';
 import 'features/auth/screens/splash_screen.dart';
 import 'features/auth/screens/onboarding_screen.dart';
@@ -19,10 +24,33 @@ import 'features/room/screens/lobby_screen.dart';
 import 'features/game/screens/game_screen.dart';
 import 'features/auth/screens/history_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const ProviderScope(child: GuessLevelApp()));
+void main() {
+  runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    try {
+      await Firebase.initializeApp(
+        // firebase_options.dart irundhaa:
+        // options: DefaultFirebaseOptions.currentPlatform,
+
+        // firebase_options.dart illaatti unga Firebase Web keys podunga:
+        options: kIsWeb
+            ? const FirebaseOptions(
+                apiKey: 'YOUR_WEB_API_KEY',
+                appId: 'YOUR_WEB_APP_ID',
+                messagingSenderId: 'YOUR_SENDER_ID',
+                projectId: 'YOUR_PROJECT_ID',
+              )
+            : null,
+      );
+    } catch (e, stack) {
+      debugPrint('Firebase init error: $e\n$stack');
+    }
+
+    runApp(const ProviderScope(child: GuessLevelApp()));
+  }, (error, stack) {
+    debugPrint('Uncaught error: $error\n$stack');
+  });
 }
 
 final _router = GoRouter(
