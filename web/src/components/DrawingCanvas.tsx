@@ -20,7 +20,7 @@ interface DrawingTools {
 }
 
 const COLORS = [
-  '#1C1917', '#0E2E1F', '#E11D48', '#F97316', '#EAB308',
+  '#ECFDF5', '#0E2E1F', '#E11D48', '#F97316', '#EAB308',
   '#16A34A', '#2563EB', '#7C3AED', '#EC4899', '#0891B2',
   '#65A30D', '#92400E', '#64748B', '#10B981', '#34D399',
 ];
@@ -40,7 +40,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const currentPoints = useRef<Array<{ x: number; y: number }>>([]);
-  const [tools, setTools] = useState<DrawingTools>({ color: '#1C1917', brushSize: 7, isEraser: false });
+  const [tools, setTools] = useState<DrawingTools>({ color: '#ECFDF5', brushSize: 7, isEraser: false });
 
   // Redraw all strokes whenever strokes array changes
   useEffect(() => {
@@ -135,7 +135,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
       {/* Sketchpad Frame */}
       <div className="sketch-card" style={{ padding: 10, background: '#0B2418', position: 'relative' }}>
         {/* Top Binder Rings Accent */}
-        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '0 24px 8px', borderBottom: '1.5px dashed #E7E5E4' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '0 24px 8px', borderBottom: '1.5px dashed #1F6B46' }}>
           {Array.from({ length: 8 }).map((_, i) => (
             <span
               key={i}
@@ -144,7 +144,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                 height: 10,
                 borderRadius: '50%',
                 background: '#FAF6EE',
-                border: '2px solid #1C1917',
+                border: '2px solid #1F6B46',
               }}
             />
           ))}
@@ -189,8 +189,8 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                     height: 26,
                     borderRadius: 8,
                     background: c,
-                    border: '2px solid #1C1917',
-                    boxShadow: active ? '2px 2px 0px #1C1917' : 'none',
+                    border: '2px solid #1F6B46',
+                    boxShadow: active ? '2px 2px 0px #ECFDF5' : 'none',
                     transform: active ? 'translateY(-3px) scale(1.08)' : 'none',
                     transition: 'transform 0.1s ease',
                     cursor: 'pointer',
@@ -216,7 +216,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                     height: 30,
                     borderRadius: 8,
                     background: active ? '#22C55E' : '#0B2418',
-                    border: '2px solid #1C1917',
+                    border: '2px solid #1F6B46',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -228,8 +228,8 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                       width: Math.min(size + 3, 18),
                       height: Math.min(size + 3, 18),
                       borderRadius: '50%',
-                      background: tools.isEraser ? '#78716C' : tools.color,
-                      border: tools.color === '#0E2E1F' ? '1px solid #1C1917' : 'none',
+                      background: tools.isEraser ? '#6EE7B7' : tools.color,
+                      border: tools.color === '#0E2E1F' ? '1px solid #ECFDF5' : 'none',
                     }}
                   />
                 </button>
@@ -247,7 +247,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
               style={toolBtnStyle(!tools.isEraser ? '#22C55E' : '#0B2418')}
               title="Pencil"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
               </svg>
               <span>Pen</span>
@@ -259,7 +259,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
               style={toolBtnStyle(tools.isEraser ? '#10B981' : '#0B2418')}
               title="Eraser"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21" />
                 <path d="M22 21H7" />
               </svg>
@@ -267,21 +267,21 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
             </button>
 
             <button onClick={onUndo} className="sketch-btn" style={toolBtnStyle('#0B2418')} title="Undo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 7v6h6" />
                 <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
               </svg>
             </button>
 
             <button onClick={onRedo} className="sketch-btn" style={toolBtnStyle('#0B2418')} title="Redo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 7v6h-6" />
                 <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
               </svg>
             </button>
 
             <button onClick={onClear} className="sketch-btn" style={toolBtnStyle('#FFE4E6')} title="Clear sheet">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 6h18" />
                 <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
                 <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -308,13 +308,13 @@ const toolbarStyle: React.CSSProperties = {
 const dividerStyle: React.CSSProperties = {
   width: 2,
   height: 26,
-  background: '#E7E5E4',
+  background: '#1F6B46',
   borderRadius: 2,
 };
 
 const toolBtnStyle = (bg: string): React.CSSProperties => ({
   background: bg,
-  color: '#1C1917',
+  color: '#ECFDF5',
   padding: '6px 10px',
   fontSize: 13,
   display: 'inline-flex',

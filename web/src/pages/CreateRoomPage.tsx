@@ -68,7 +68,7 @@ export const CreateRoomPage: React.FC = () => {
 
         {/* Custom Hand-Drawn Easel / Canvas Emblem */}
         <div style={logoBadgeStyle}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
             <rect x="4" y="3" width="16" height="12" rx="2" fill="#0B2418" />
             <path d="M12 15v6" />
             <path d="M8 21l2-6" />
@@ -77,22 +77,22 @@ export const CreateRoomPage: React.FC = () => {
           </svg>
         </div>
 
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '14px 0 6px' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
           Set Up a Sketch Room
         </h1>
-        <p style={{ color: '#57534E', fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
+        <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
           Open a private sketchbook table and share the invite code with your crew.
         </p>
 
         {/* Room Rules Box */}
         <div style={rulesBoxStyle}>
-          <div className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', marginBottom: 10 }}>
+          <div className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#ECFDF5', marginBottom: 10 }}>
             House Rules
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, fontWeight: 600, color: '#1C1917', textAlign: 'left' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, fontWeight: 600, color: '#ECFDF5', textAlign: 'left' }}>
             <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -102,7 +102,7 @@ export const CreateRoomPage: React.FC = () => {
             </div>
 
             <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                 <path d="M3 3v5h5" />
                 <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
@@ -112,7 +112,7 @@ export const CreateRoomPage: React.FC = () => {
             </div>
 
             <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
@@ -126,8 +126,8 @@ export const CreateRoomPage: React.FC = () => {
           disabled={creating}
           className="sketch-btn"
           style={{
-            background: creating ? '#E7E5E4' : '#34D399',
-            color: '#1C1917',
+            background: creating ? '#1F6B46' : '#34D399',
+            color: '#ECFDF5',
             padding: '15px 28px',
             fontSize: 17,
             width: '100%',
@@ -143,7 +143,7 @@ export const CreateRoomPage: React.FC = () => {
           style={{
             background: 'none',
             border: 'none',
-            color: '#57534E',
+            color: '#86EFAC',
             cursor: 'pointer',
             fontSize: 14,
             fontWeight: 700,
@@ -179,14 +179,14 @@ const stickyTagStyle: React.CSSProperties = {
   top: -14,
   right: 22,
   background: '#10B981',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 };
 
 const logoBadgeStyle: React.CSSProperties = {
@@ -195,8 +195,8 @@ const logoBadgeStyle: React.CSSProperties = {
   margin: '0 auto',
   borderRadius: 16,
   background: '#22C55E',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -205,7 +205,7 @@ const logoBadgeStyle: React.CSSProperties = {
 
 const rulesBoxStyle: React.CSSProperties = {
   background: '#14452E',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 14,
   padding: '16px 18px',
   marginBottom: 24,

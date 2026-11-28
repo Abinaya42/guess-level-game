@@ -34,7 +34,7 @@ export const GameHistoryPage: React.FC = () => {
         <button onClick={() => navigate('/home')} className="sketch-btn" style={backBtnStyle}>
           ← Studio
         </button>
-        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', margin: 0 }}>
+        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#ECFDF5', margin: 0 }}>
           Sketchbook Log
         </h1>
         <div style={{ width: 84 }} />
@@ -42,26 +42,26 @@ export const GameHistoryPage: React.FC = () => {
 
       <main style={{ maxWidth: 660, margin: '32px auto', padding: '0 18px' }}>
         {loading && page === 1 ? (
-          <div className="sketch-card" style={{ padding: 36, textAlign: 'center', color: '#57534E', fontWeight: 600 }}>
+          <div className="sketch-card" style={{ padding: 36, textAlign: 'center', color: '#86EFAC', fontWeight: 600 }}>
             Flipping through past pages...
           </div>
         ) : history.length === 0 ? (
           <div className="sketch-card" style={{ padding: '42px 28px', textAlign: 'center' }}>
             <div style={emptyBadgeStyle}>
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
               </svg>
             </div>
-            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', margin: '14px 0 6px' }}>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
               No Sketches Logged Yet
             </h2>
-            <p style={{ color: '#57534E', fontSize: 14, marginBottom: 22 }}>
+            <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 22 }}>
               Start or join a table to fill your sketchbook with match results!
             </p>
             <button
               onClick={() => navigate('/home')}
               className="sketch-btn"
-              style={{ background: '#34D399', color: '#1C1917', padding: '12px 26px', fontSize: 16 }}
+              style={{ background: '#34D399', color: '#ECFDF5', padding: '12px 26px', fontSize: 16 }}
             >
               Jump Into a Game →
             </button>
@@ -77,14 +77,14 @@ export const GameHistoryPage: React.FC = () => {
                         Room {g.roomCode}
                       </span>
                     </div>
-                    <div style={{ color: '#57534E', fontSize: 13, marginTop: 6 }}>
+                    <div style={{ color: '#86EFAC', fontSize: 13, marginTop: 6 }}>
                       {new Date(g.playedAt).toLocaleString()}
                     </div>
                   </div>
 
                   {/* Rank Badge */}
                   <div style={rankBoxStyle(g.rank === 1)}>
-                    <div className="font-display" style={{ fontSize: 20, fontWeight: 700, color: '#1C1917', lineHeight: 1.1 }}>
+                    <div className="font-display" style={{ fontSize: 20, fontWeight: 700, color: '#ECFDF5', lineHeight: 1.1 }}>
                       #{g.rank}
                     </div>
                     <div style={{ fontSize: 11, fontWeight: 700, color: '#44403C' }}>
@@ -94,9 +94,9 @@ export const GameHistoryPage: React.FC = () => {
                 </div>
 
                 {/* Score & Podium */}
-                <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', paddingTop: 12, borderTop: '1.5px dashed #D6D3D1' }}>
+                <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', paddingTop: 12, borderTop: '1.5px dashed #1F6B46' }}>
                   <div style={myScorePillStyle}>
-                    <span className="font-display" style={{ fontSize: 18, fontWeight: 700, color: '#1C1917' }}>
+                    <span className="font-display" style={{ fontSize: 18, fontWeight: 700, color: '#ECFDF5' }}>
                       {g.myScore}
                     </span>
                     <span style={{ fontSize: 12, fontWeight: 700, color: '#44403C', marginLeft: 4 }}>
@@ -105,7 +105,7 @@ export const GameHistoryPage: React.FC = () => {
                   </div>
 
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: '#57534E', marginBottom: 6 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', marginBottom: 6 }}>
                       Top Artists:
                     </div>
                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -115,11 +115,11 @@ export const GameHistoryPage: React.FC = () => {
                           style={{
                             fontSize: 12,
                             fontWeight: 700,
-                            background: PODIUM_COLORS[i] || '#F5F5F4',
-                            border: '1.5px solid #1C1917',
+                            background: PODIUM_COLORS[i] || '#103322',
+                            border: '1.5px solid #1F6B46',
                             borderRadius: 8,
                             padding: '3px 9px',
-                            color: '#1C1917',
+                            color: '#ECFDF5',
                           }}
                         >
                           {PODIUM_LABELS[i] || `#${i + 1}`} · {s.username} ({s.points})
@@ -138,7 +138,7 @@ export const GameHistoryPage: React.FC = () => {
                 className="sketch-btn"
                 style={{
                   background: '#22C55E',
-                  color: '#1C1917',
+                  color: '#ECFDF5',
                   padding: '13px',
                   fontSize: 15,
                   width: '100%',
@@ -158,7 +158,7 @@ export const GameHistoryPage: React.FC = () => {
 
 const headerStyle: React.CSSProperties = {
   background: '#0B2418',
-  borderBottom: '2.5px solid #1C1917',
+  borderBottom: '2.5px solid #1F6B46',
   padding: '14px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -167,7 +167,7 @@ const headerStyle: React.CSSProperties = {
 
 const backBtnStyle: React.CSSProperties = {
   background: '#22C55E',
-  color: '#1C1917',
+  color: '#ECFDF5',
   padding: '8px 14px',
   fontSize: 14,
 };
@@ -178,8 +178,8 @@ const emptyBadgeStyle: React.CSSProperties = {
   margin: '0 auto',
   borderRadius: 16,
   background: '#14452E',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -189,17 +189,17 @@ const emptyBadgeStyle: React.CSSProperties = {
 const roomTagStyle: React.CSSProperties = {
   display: 'inline-block',
   background: '#E0F2FE',
-  border: '1.5px solid #1C1917',
+  border: '1.5px solid #1F6B46',
   borderRadius: 8,
   padding: '3px 10px',
   fontSize: 14,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
 };
 
 const rankBoxStyle = (isFirst: boolean): React.CSSProperties => ({
-  background: isFirst ? '#22C55E' : '#F5F5F4',
-  border: '2px solid #1C1917',
+  background: isFirst ? '#22C55E' : '#103322',
+  border: '2px solid #1F6B46',
   borderRadius: 12,
   padding: '6px 12px',
   textAlign: 'center',
@@ -208,7 +208,7 @@ const rankBoxStyle = (isFirst: boolean): React.CSSProperties => ({
 
 const myScorePillStyle: React.CSSProperties = {
   background: '#DCFCE7',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 10,
   padding: '6px 12px',
 };

@@ -36,8 +36,8 @@ export const LoginPage: React.FC = () => {
     <div style={pageStyle}>
       {/* Subtle decorative hand-drawn corner doodles */}
       <svg width="110" height="110" viewBox="0 0 110 110" fill="none" style={{ position: 'fixed', top: 24, left: 24, opacity: 0.22, pointerEvents: 'none' }}>
-        <path d="M18 65 C 25 22, 78 18, 86 58 C 92 85, 42 96, 26 74" stroke="#1C1917" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
-        <path d="M62 24 L 68 38 L 83 40 L 71 50 L 74 65 L 62 57 L 50 65 L 53 50 L 41 40 L 56 38 Z" stroke="#1C1917" strokeWidth="2.5" strokeLinejoin="round" />
+        <path d="M18 65 C 25 22, 78 18, 86 58 C 92 85, 42 96, 26 74" stroke="#ECFDF5" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
+        <path d="M62 24 L 68 38 L 83 40 L 71 50 L 74 65 L 62 57 L 50 65 L 53 50 L 41 40 L 56 38 Z" stroke="#ECFDF5" strokeWidth="2.5" strokeLinejoin="round" />
       </svg>
 
       <div className="sketch-card" style={cardStyle}>
@@ -49,17 +49,17 @@ export const LoginPage: React.FC = () => {
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           {/* Custom Hand-Drawn Pencil Emblem */}
           <div style={logoBadgeStyle}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="#FB7185" />
               <path d="m14 6 4 4" />
               <path d="M3 21h18" strokeDasharray="3 3" />
             </svg>
           </div>
 
-          <h1 style={{ fontSize: 30, fontWeight: 700, color: '#1C1917', margin: '10px 0 4px' }}>
+          <h1 style={{ fontSize: 30, fontWeight: 700, color: '#ECFDF5', margin: '10px 0 4px' }}>
             Grab a Brush
           </h1>
-          <p style={{ color: '#57534E', fontSize: 14 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14 }}>
             Sign in to join your room and start sketching
           </p>
         </div>
@@ -88,7 +88,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           <div style={{ textAlign: 'right', marginTop: -4 }}>
-            <Link to="/forgot-password" style={{ color: '#1C1917', fontSize: 13, fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            <Link to="/forgot-password" style={{ color: '#ECFDF5', fontSize: 13, fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
               Forgot password?
             </Link>
           </div>
@@ -104,7 +104,7 @@ export const LoginPage: React.FC = () => {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: 22, color: '#57534E', fontSize: 14 }}>
+        <p style={{ textAlign: 'center', marginTop: 22, color: '#86EFAC', fontSize: 14 }}>
           New around here?{' '}
           <Link to="/register" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
             Create an account
@@ -136,14 +136,14 @@ const stickyTagStyle: React.CSSProperties = {
   top: -14,
   right: 22,
   background: '#22C55E',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 };
 
 const logoBadgeStyle: React.CSSProperties = {
@@ -152,8 +152,8 @@ const logoBadgeStyle: React.CSSProperties = {
   margin: '0 auto',
   borderRadius: 16,
   background: '#22C55E',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -164,7 +164,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 13,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   marginBottom: 6,
 };
 
@@ -172,10 +172,10 @@ const inputStyle = (err: boolean): React.CSSProperties => ({
   width: '100%',
   padding: '12px 14px',
   borderRadius: 11,
-  border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
+  border: `2px solid ${err ? '#E11D48' : '#ECFDF5'}`,
   background: '#0B2418',
   fontSize: 15,
-  color: '#1C1917',
+  color: '#ECFDF5',
   outline: 'none',
   boxSizing: 'border-box',
 });
@@ -190,7 +190,7 @@ const errStyle: React.CSSProperties = {
 
 const errorBoxStyle: React.CSSProperties = {
   background: '#FFE4E6',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 10,
   padding: '10px 14px',
   color: '#9F1239',
@@ -199,8 +199,8 @@ const errorBoxStyle: React.CSSProperties = {
 };
 
 const submitBtn = (loading: boolean): React.CSSProperties => ({
-  background: loading ? '#E7E5E4' : '#34D399',
-  color: '#1C1917',
+  background: loading ? '#1F6B46' : '#34D399',
+  color: '#ECFDF5',
   padding: '13px',
   fontSize: 16,
   width: '100%',

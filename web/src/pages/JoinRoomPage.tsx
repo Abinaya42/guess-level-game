@@ -28,7 +28,7 @@ export const JoinRoomPage: React.FC = () => {
 
         {/* Custom Hand-Drawn Ticket Stub Emblem */}
         <div style={badgeStyle}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" fill="#0B2418" />
             <path d="M13 5v2" />
             <path d="M13 17v2" />
@@ -36,10 +36,10 @@ export const JoinRoomPage: React.FC = () => {
           </svg>
         </div>
 
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '14px 0 6px' }}>
+        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
           Join a Sketch Table
         </h1>
-        <p style={{ color: '#57534E', fontSize: 14, marginBottom: 26, lineHeight: 1.5 }}>
+        <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 26, lineHeight: 1.5 }}>
           Punch in the 6-character room code from your host to pull up a chair.
         </p>
 
@@ -68,8 +68,8 @@ export const JoinRoomPage: React.FC = () => {
           disabled={!isReady}
           className="sketch-btn"
           style={{
-            background: isReady ? '#34D399' : '#E7E5E4',
-            color: isReady ? '#1C1917' : '#78716C',
+            background: isReady ? '#34D399' : '#1F6B46',
+            color: isReady ? '#ECFDF5' : '#6EE7B7',
             padding: '15px',
             fontSize: 17,
             width: '100%',
@@ -85,7 +85,7 @@ export const JoinRoomPage: React.FC = () => {
           style={{
             background: 'none',
             border: 'none',
-            color: '#57534E',
+            color: '#86EFAC',
             cursor: 'pointer',
             fontSize: 14,
             fontWeight: 700,
@@ -121,14 +121,14 @@ const stickyTagStyle: React.CSSProperties = {
   top: -14,
   right: 22,
   background: '#22C55E',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 };
 
 const badgeStyle: React.CSSProperties = {
@@ -137,8 +137,8 @@ const badgeStyle: React.CSSProperties = {
   margin: '0 auto',
   borderRadius: 16,
   background: '#10B981',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -147,7 +147,7 @@ const badgeStyle: React.CSSProperties = {
 
 const ticketSlotStyle: React.CSSProperties = {
   background: '#14452E',
-  border: '2px dashed #1C1917',
+  border: '2px dashed #1F6B46',
   borderRadius: 14,
   padding: '16px 16px 18px',
   marginBottom: 22,
@@ -157,7 +157,7 @@ const codeInputStyle = (err: boolean): React.CSSProperties => ({
   width: '100%',
   padding: '14px 12px',
   borderRadius: 11,
-  border: `2.5px solid ${err ? '#E11D48' : '#1C1917'}`,
+  border: `2.5px solid ${err ? '#E11D48' : '#ECFDF5'}`,
   background: '#0B2418',
   fontSize: 28,
   fontWeight: 700,
@@ -165,7 +165,7 @@ const codeInputStyle = (err: boolean): React.CSSProperties => ({
   textAlign: 'center',
   outline: 'none',
   boxSizing: 'border-box',
-  color: '#1C1917',
+  color: '#ECFDF5',
 });
 
 const errStyle: React.CSSProperties = {

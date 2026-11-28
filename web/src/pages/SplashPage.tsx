@@ -28,7 +28,7 @@ export const SplashPage: React.FC = () => {
             height="44"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="#1C1917"
+            stroke="#ECFDF5"
             strokeWidth="2.3"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -84,22 +84,22 @@ const styles: Record<string, any> = {
     top: -14,
     right: 22,
     background: '#10B981',
-    border: '2px solid #1C1917',
+    border: '2px solid #1F6B46',
     borderRadius: 8,
     padding: '2px 12px',
     fontSize: 18,
     fontWeight: 700,
-    color: '#1C1917',
+    color: '#ECFDF5',
     transform: 'rotate(3deg)',
-    boxShadow: '2px 2px 0px #1C1917',
+    boxShadow: '2px 2px 0px #020A06',
   },
   logoBadge: {
     width: 84,
     height: 84,
     borderRadius: 22,
     background: '#22C55E',
-    border: '3px solid #1C1917',
-    boxShadow: '4px 4px 0px #1C1917',
+    border: '3px solid #1F6B46',
+    boxShadow: '4px 4px 0px #020A06',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -109,7 +109,7 @@ const styles: Record<string, any> = {
   title: {
     fontSize: 44,
     fontWeight: 700,
-    color: '#1C1917',
+    color: '#ECFDF5',
     letterSpacing: 1,
     margin: '0 0 14px',
     lineHeight: 1.1,
@@ -123,12 +123,12 @@ const styles: Record<string, any> = {
   },
   pill: (bg: string): React.CSSProperties => ({
     background: bg,
-    border: '2px solid #1C1917',
+    border: '2px solid #1F6B46',
     borderRadius: 99,
     padding: '4px 14px',
     fontSize: 14,
     fontWeight: 700,
-    color: '#1C1917',
+    color: '#ECFDF5',
   }),
   loaderWrap: {
     display: 'flex',
@@ -139,14 +139,14 @@ const styles: Record<string, any> = {
   spinner: {
     width: 34,
     height: 34,
-    border: '3.5px solid #E7E5E4',
-    borderTop: '3.5px solid #1C1917',
+    border: '3.5px solid #1F6B46',
+    borderTop: '3.5px solid #1F6B46',
     borderRadius: '50%',
     animation: 'spin 0.9s linear infinite',
   },
   loadingText: {
     fontSize: 19,
     fontWeight: 700,
-    color: '#57534E',
+    color: '#86EFAC',
   },
 };

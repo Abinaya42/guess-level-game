@@ -42,7 +42,7 @@ export const ProfilePage: React.FC = () => {
         <button onClick={() => navigate('/home')} className="sketch-btn" style={backBtnStyle}>
           ← Studio
         </button>
-        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#1C1917', margin: 0 }}>
+        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#ECFDF5', margin: 0 }}>
           Artist Profile
         </h1>
         <div style={{ width: 84 }} />
@@ -59,10 +59,10 @@ export const ProfilePage: React.FC = () => {
             {initials}
           </div>
 
-          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '0 0 4px' }}>
+          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '0 0 4px' }}>
             {user?.username || 'Sketch Artist'}
           </h2>
-          <p style={{ color: '#57534E', fontSize: 14, margin: 0 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14, margin: 0 }}>
             {user?.email}
           </p>
         </div>
@@ -71,12 +71,12 @@ export const ProfilePage: React.FC = () => {
         {!loading && stats && (
           <div className="sketch-card" style={{ padding: 24 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20V10" />
                 <path d="M18 20V4" />
                 <path d="M6 20v-4" />
               </svg>
-              <h3 style={{ fontSize: 19, fontWeight: 700, color: '#1C1917', margin: 0 }}>
+              <h3 style={{ fontSize: 19, fontWeight: 700, color: '#ECFDF5', margin: 0 }}>
                 Sketchbook Stats
               </h3>
             </div>
@@ -87,12 +87,12 @@ export const ProfilePage: React.FC = () => {
                   key={label}
                   style={{
                     background: bg,
-                    border: '2px solid #1C1917',
+                    border: '2px solid #1F6B46',
                     borderRadius: 14,
                     padding: '16px 14px',
                   }}
                 >
-                  <div className="font-display" style={{ fontSize: 24, fontWeight: 700, color: '#1C1917' }}>
+                  <div className="font-display" style={{ fontSize: 24, fontWeight: 700, color: '#ECFDF5' }}>
                     {val}
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 600, color: '#44403C', marginTop: 3 }}>
@@ -110,7 +110,7 @@ export const ProfilePage: React.FC = () => {
 
 const headerStyle: React.CSSProperties = {
   background: '#0B2418',
-  borderBottom: '2.5px solid #1C1917',
+  borderBottom: '2.5px solid #1F6B46',
   padding: '14px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -119,7 +119,7 @@ const headerStyle: React.CSSProperties = {
 
 const backBtnStyle: React.CSSProperties = {
   background: '#22C55E',
-  color: '#1C1917',
+  color: '#ECFDF5',
   padding: '8px 14px',
   fontSize: 14,
 };
@@ -129,14 +129,14 @@ const stickyTagStyle: React.CSSProperties = {
   top: -14,
   right: 22,
   background: '#10B981',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 };
 
 const avatarBadgeStyle: React.CSSProperties = {
@@ -144,9 +144,9 @@ const avatarBadgeStyle: React.CSSProperties = {
   height: 82,
   borderRadius: 20,
   background: '#22C55E',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
-  color: '#1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
+  color: '#ECFDF5',
   fontSize: 30,
   fontWeight: 700,
   display: 'flex',

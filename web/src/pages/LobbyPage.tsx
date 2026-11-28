@@ -112,7 +112,7 @@ export const LobbyPage: React.FC = () => {
               <span className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#44403C' }}>
                 Sketchbook Room Pass
               </span>
-              <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '2px 0 12px' }}>
+              <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '2px 0 12px' }}>
                 Waiting Lobby
               </h1>
 
@@ -121,7 +121,7 @@ export const LobbyPage: React.FC = () => {
                   {code}
                 </span>
                 <button onClick={copyInvite} className="sketch-btn" style={copyBtnStyle}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                   </svg>
@@ -130,12 +130,12 @@ export const LobbyPage: React.FC = () => {
               </div>
             </div>
 
-            <button onClick={leaveRoom} className="sketch-btn" style={{ background: '#FFE4E6', color: '#1C1917', padding: '8px 14px', fontSize: 14 }}>
+            <button onClick={leaveRoom} className="sketch-btn" style={{ background: '#FFE4E6', color: '#ECFDF5', padding: '8px 14px', fontSize: 14 }}>
               Leave Room
             </button>
           </div>
 
-          <div style={{ marginTop: 16, paddingTop: 12, borderTop: '2px dashed #1C1917', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14, fontWeight: 700, color: '#1C1917' }}>
+          <div style={{ marginTop: 16, paddingTop: 12, borderTop: '2px dashed #1F6B46', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14, fontWeight: 700, color: '#ECFDF5' }}>
             <span>Seats filled: {players.length} / 11 artists</span>
             <span className="font-hand" style={{ fontSize: 18 }}>
               {players.length < 2 ? 'Invite at least 1 friend' : 'Ready to roll!'}
@@ -145,7 +145,7 @@ export const LobbyPage: React.FC = () => {
 
         {/* Players List */}
         <div className="sketch-card" style={{ padding: 22, background: '#0B2418' }}>
-          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', marginBottom: 14 }}>
+          <h3 style={{ fontSize: 18, fontWeight: 700, color: '#ECFDF5', marginBottom: 14 }}>
             Artists in Room
           </h3>
 
@@ -164,7 +164,7 @@ export const LobbyPage: React.FC = () => {
                     padding: '10px 14px',
                     background: isMe ? '#14452E' : '#0E2E1F',
                     borderRadius: 12,
-                    border: '2px solid #1C1917',
+                    border: '2px solid #1F6B46',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -175,8 +175,8 @@ export const LobbyPage: React.FC = () => {
                         height: 38,
                         borderRadius: 11,
                         background: avatarBg,
-                        border: '2px solid #1C1917',
-                        color: '#1C1917',
+                        border: '2px solid #1F6B46',
+                        color: '#ECFDF5',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -188,10 +188,10 @@ export const LobbyPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <div style={{ fontWeight: 700, color: '#1C1917', fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <div style={{ fontWeight: 700, color: '#ECFDF5', fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
                         <span>{p.username}</span>
                         {isMe && (
-                          <span style={{ fontSize: 11, background: '#E0F2FE', border: '1.5px solid #1C1917', borderRadius: 6, padding: '1px 6px' }}>
+                          <span style={{ fontSize: 11, background: '#E0F2FE', border: '1.5px solid #1F6B46', borderRadius: 6, padding: '1px 6px' }}>
                             You
                           </span>
                         )}
@@ -199,7 +199,7 @@ export const LobbyPage: React.FC = () => {
 
                       {p.isHost && (
                         <div style={{ fontSize: 12, color: '#B45309', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#22C55E" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#22C55E" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                             <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
                           </svg>
                           <span>Room Host</span>
@@ -215,7 +215,7 @@ export const LobbyPage: React.FC = () => {
                     ) : p.isReady ? (
                       <span style={statusPillStyle('#DCFCE7')}>Ready</span>
                     ) : (
-                      <span style={statusPillStyle('#F5F5F4')}>Sharpening...</span>
+                      <span style={statusPillStyle('#103322')}>Sharpening...</span>
                     )}
                   </div>
                 </div>
@@ -233,7 +233,7 @@ export const LobbyPage: React.FC = () => {
               style={{
                 flex: 1,
                 background: isReady ? '#FFE4E6' : '#34D399',
-                color: '#1C1917',
+                color: '#ECFDF5',
                 padding: '15px',
                 fontSize: 17,
               }}
@@ -249,8 +249,8 @@ export const LobbyPage: React.FC = () => {
               className="sketch-btn"
               style={{
                 flex: 1,
-                background: allReady && players.length >= 2 ? '#34D399' : '#E7E5E4',
-                color: allReady && players.length >= 2 ? '#1C1917' : '#78716C',
+                background: allReady && players.length >= 2 ? '#34D399' : '#1F6B46',
+                color: allReady && players.length >= 2 ? '#ECFDF5' : '#6EE7B7',
                 padding: '15px',
                 fontSize: 17,
                 cursor: allReady && players.length >= 2 ? 'pointer' : 'not-allowed',
@@ -276,16 +276,16 @@ const codeTicketStyle: React.CSSProperties = {
   fontWeight: 700,
   letterSpacing: 4,
   background: '#0B2418',
-  color: '#1C1917',
-  border: '2px solid #1C1917',
-  boxShadow: '2px 2px 0px #1C1917',
+  color: '#ECFDF5',
+  border: '2px solid #1F6B46',
+  boxShadow: '2px 2px 0px #020A06',
   padding: '6px 14px',
   borderRadius: 10,
 };
 
 const copyBtnStyle: React.CSSProperties = {
   background: '#0B2418',
-  color: '#1C1917',
+  color: '#ECFDF5',
   padding: '8px 14px',
   fontSize: 14,
   display: 'inline-flex',
@@ -296,10 +296,10 @@ const copyBtnStyle: React.CSSProperties = {
 const statusPillStyle = (bg: string): React.CSSProperties => ({
   display: 'inline-block',
   background: bg,
-  border: '1.5px solid #1C1917',
+  border: '1.5px solid #1F6B46',
   borderRadius: 8,
   padding: '3px 10px',
   fontSize: 12,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
 });

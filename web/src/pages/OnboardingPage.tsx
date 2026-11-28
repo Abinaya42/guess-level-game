@@ -8,7 +8,7 @@ const slides = [
     title: 'Sketch Anything',
     desc: 'Pick your brush size, splash vibrant colors across the paper, and bring tricky prompts to life.',
     icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="13.5" cy="6.5" r="1.5" fill="#E11D48" />
         <circle cx="17.5" cy="10.5" r="1.5" fill="#10B981" />
         <circle cx="8.5" cy="7.5" r="1.5" fill="#34D399" />
@@ -23,7 +23,7 @@ const slides = [
     title: 'Crack the Doodle',
     desc: 'Watch every ink stroke appear live and type your guesses fast — quicker cracks earn bonus points!',
     icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
         <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" fill="#0B2418" />
         <path d="M9 18h6" />
         <path d="M10 22h4" />
@@ -36,7 +36,7 @@ const slides = [
     title: 'Rule the Table',
     desc: 'Gather up to 11 friends in a private room, take turns with the pencil, and claim the top spot!',
     icon: (
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
         <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
         <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
         <path d="M4 22h16" />
@@ -66,10 +66,10 @@ export const OnboardingPage: React.FC = () => {
           {current.icon}
         </div>
 
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '18px 0 10px' }}>
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '18px 0 10px' }}>
           {current.title}
         </h2>
-        <p style={{ fontSize: 15, color: '#57534E', marginBottom: 28, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 15, color: '#86EFAC', marginBottom: 28, lineHeight: 1.6 }}>
           {current.desc}
         </p>
 
@@ -85,7 +85,7 @@ export const OnboardingPage: React.FC = () => {
                 width: i === slide ? 28 : 10,
                 height: 10,
                 borderRadius: 99,
-                border: '2px solid #1C1917',
+                border: '2px solid #1F6B46',
                 background: i === slide ? '#22C55E' : '#0B2418',
                 cursor: 'pointer',
                 padding: 0,
@@ -127,7 +127,7 @@ export const OnboardingPage: React.FC = () => {
           style={{
             background: 'none',
             border: 'none',
-            color: '#57534E',
+            color: '#86EFAC',
             cursor: 'pointer',
             marginTop: 18,
             fontSize: 14,
@@ -164,14 +164,14 @@ const stickyTagStyle = (bg: string): React.CSSProperties => ({
   top: -14,
   right: 22,
   background: bg,
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 });
 
 const badgeStyle = (bg: string): React.CSSProperties => ({
@@ -180,8 +180,8 @@ const badgeStyle = (bg: string): React.CSSProperties => ({
   margin: '0 auto',
   borderRadius: 18,
   background: bg,
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -190,7 +190,7 @@ const badgeStyle = (bg: string): React.CSSProperties => ({
 
 const btnStyle = (bg: string): React.CSSProperties => ({
   background: bg,
-  color: '#1C1917',
+  color: '#ECFDF5',
   padding: '14px 28px',
   fontSize: 16,
   width: '100%',

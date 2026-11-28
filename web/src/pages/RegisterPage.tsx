@@ -46,8 +46,8 @@ export const RegisterPage: React.FC = () => {
     <div style={pageStyle}>
       {/* Subtle decorative hand-drawn corner doodle */}
       <svg width="110" height="110" viewBox="0 0 110 110" fill="none" style={{ position: 'fixed', bottom: 24, right: 24, opacity: 0.22, pointerEvents: 'none' }}>
-        <path d="M20 82 C 34 38, 76 34, 88 76" stroke="#1C1917" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
-        <circle cx="54" cy="30" r="12" stroke="#1C1917" strokeWidth="2.5" />
+        <path d="M20 82 C 34 38, 76 34, 88 76" stroke="#ECFDF5" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
+        <circle cx="54" cy="30" r="12" stroke="#ECFDF5" strokeWidth="2.5" />
       </svg>
 
       <div className="sketch-card" style={cardStyle}>
@@ -59,16 +59,16 @@ export const RegisterPage: React.FC = () => {
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           {/* Custom Hand-Drawn Brush Emblem */}
           <div style={logoBadgeStyle}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" fill="#22C55E" />
               <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" fill="#FB7185" />
             </svg>
           </div>
 
-          <h1 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', margin: '10px 0 4px' }}>
+          <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '10px 0 4px' }}>
             Claim Your Sketchbook
           </h1>
-          <p style={{ color: '#57534E', fontSize: 14 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14 }}>
             Pick an artist name and jump into Guess 11
           </p>
         </div>
@@ -105,7 +105,7 @@ export const RegisterPage: React.FC = () => {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: 20, color: '#57534E', fontSize: 14 }}>
+        <p style={{ textAlign: 'center', marginTop: 20, color: '#86EFAC', fontSize: 14 }}>
           Already have a sketchbook?{' '}
           <Link to="/login" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
             Sign In
@@ -137,14 +137,14 @@ const stickyTagStyle: React.CSSProperties = {
   top: -14,
   right: 22,
   background: '#34D399',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 };
 
 const logoBadgeStyle: React.CSSProperties = {
@@ -153,8 +153,8 @@ const logoBadgeStyle: React.CSSProperties = {
   margin: '0 auto',
   borderRadius: 16,
   background: '#10B981',
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -165,7 +165,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 13,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   marginBottom: 5,
 };
 
@@ -173,10 +173,10 @@ const inputStyle = (err: boolean): React.CSSProperties => ({
   width: '100%',
   padding: '11px 14px',
   borderRadius: 11,
-  border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
+  border: `2px solid ${err ? '#E11D48' : '#ECFDF5'}`,
   background: '#0B2418',
   fontSize: 15,
-  color: '#1C1917',
+  color: '#ECFDF5',
   outline: 'none',
   boxSizing: 'border-box',
 });
@@ -191,7 +191,7 @@ const errStyle: React.CSSProperties = {
 
 const errorBoxStyle: React.CSSProperties = {
   background: '#FFE4E6',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 10,
   padding: '10px 14px',
   color: '#9F1239',
@@ -200,8 +200,8 @@ const errorBoxStyle: React.CSSProperties = {
 };
 
 const submitBtn = (loading: boolean): React.CSSProperties => ({
-  background: loading ? '#E7E5E4' : '#22C55E',
-  color: '#1C1917',
+  background: loading ? '#1F6B46' : '#22C55E',
+  color: '#ECFDF5',
   padding: '13px',
   fontSize: 16,
   width: '100%',

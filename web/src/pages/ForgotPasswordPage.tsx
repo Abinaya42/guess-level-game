@@ -42,16 +42,16 @@ export const ForgotPasswordPage: React.FC = () => {
 
           <div style={{ textAlign: 'center' }}>
             <div style={badgeStyle('#14452E')}>
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="3" fill="#0B2418" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
             </div>
 
-            <h2 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '16px 0 8px' }}>
+            <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '16px 0 8px' }}>
               Check Your Inbox
             </h2>
-            <p style={{ color: '#57534E', fontSize: 14, lineHeight: 1.5 }}>
+            <p style={{ color: '#86EFAC', fontSize: 14, lineHeight: 1.5 }}>
               We've sent a fresh password reset link to your email address.
             </p>
 
@@ -61,7 +61,7 @@ export const ForgotPasswordPage: React.FC = () => {
               style={{
                 marginTop: 24,
                 background: '#22C55E',
-                color: '#1C1917',
+                color: '#ECFDF5',
                 padding: '13px 28px',
                 fontSize: 16,
                 width: '100%',
@@ -84,17 +84,17 @@ export const ForgotPasswordPage: React.FC = () => {
 
         <div style={{ textAlign: 'center', marginBottom: 26 }}>
           <div style={badgeStyle('#22C55E')}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="7.5" cy="15.5" r="5.5" fill="#0B2418" />
               <path d="m21 2-9.6 9.6" />
               <path d="m15.5 7.5 3 3L22 7l-3-3" />
             </svg>
           </div>
 
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '14px 0 6px' }}>
+          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
             Lost Your Key?
           </h1>
-          <p style={{ color: '#57534E', fontSize: 14, lineHeight: 1.5 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14, lineHeight: 1.5 }}>
             Enter your email and we'll send over a password reset link.
           </p>
         </div>
@@ -118,8 +118,8 @@ export const ForgotPasswordPage: React.FC = () => {
             disabled={isLoading}
             className="sketch-btn"
             style={{
-              background: isLoading ? '#E7E5E4' : '#34D399',
-              color: '#1C1917',
+              background: isLoading ? '#1F6B46' : '#34D399',
+              color: '#ECFDF5',
               padding: '13px',
               fontSize: 16,
               width: '100%',
@@ -130,7 +130,7 @@ export const ForgotPasswordPage: React.FC = () => {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: 22, color: '#57534E', fontSize: 14 }}>
+        <p style={{ textAlign: 'center', marginTop: 22, color: '#86EFAC', fontSize: 14 }}>
           <Link to="/login" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
             ← Back to Sign In
           </Link>
@@ -160,14 +160,14 @@ const stickyTagStyle = (bg: string): React.CSSProperties => ({
   top: -14,
   right: 22,
   background: bg,
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 12px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #1C1917',
+  boxShadow: '2px 2px 0px #020A06',
 });
 
 const badgeStyle = (bg: string): React.CSSProperties => ({
@@ -176,8 +176,8 @@ const badgeStyle = (bg: string): React.CSSProperties => ({
   margin: '0 auto',
   borderRadius: 16,
   background: bg,
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -188,7 +188,7 @@ const labelStyle: React.CSSProperties = {
   display: 'block',
   fontSize: 13,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   marginBottom: 6,
 };
 
@@ -196,10 +196,10 @@ const inputStyle = (err: boolean): React.CSSProperties => ({
   width: '100%',
   padding: '12px 14px',
   borderRadius: 11,
-  border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
+  border: `2px solid ${err ? '#E11D48' : '#ECFDF5'}`,
   background: '#0B2418',
   fontSize: 15,
-  color: '#1C1917',
+  color: '#ECFDF5',
   outline: 'none',
   boxSizing: 'border-box',
 });
@@ -214,7 +214,7 @@ const errStyle: React.CSSProperties = {
 
 const errorBoxStyle: React.CSSProperties = {
   background: '#FFE4E6',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 10,
   padding: '10px 14px',
   color: '#9F1239',

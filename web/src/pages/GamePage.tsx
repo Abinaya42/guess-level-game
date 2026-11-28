@@ -176,10 +176,10 @@ export const GamePage: React.FC = () => {
           <div style={stickyBadgeStyle('#22C55E')} className="font-hand">
             Round {round?.roundNumber || 1} — Your Turn!
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', marginTop: 10, marginBottom: 6 }}>
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', marginTop: 10, marginBottom: 6 }}>
             Pick a Word to Sketch
           </h2>
-          <p style={{ color: '#57534E', fontSize: 14, marginBottom: 26 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 26 }}>
             Choose one prompt below to start drawing
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -192,7 +192,7 @@ export const GamePage: React.FC = () => {
                   className="sketch-btn"
                   style={{
                     background: cardColors[idx % cardColors.length],
-                    color: '#1C1917',
+                    color: '#ECFDF5',
                     padding: '16px',
                     fontSize: 20,
                     letterSpacing: 0.5,
@@ -215,15 +215,15 @@ export const GamePage: React.FC = () => {
       <div style={centeredScreenStyle}>
         <div className="sketch-card" style={{ padding: 36, maxWidth: 400, width: '100%', textAlign: 'center' }}>
           <div style={{ ...roundIconBadgeStyle('#10B981'), margin: '0 auto 16px', animation: 'wiggle 1.2s ease-in-out infinite' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
               <path d="m15 5 4 4" />
             </svg>
           </div>
-          <h2 style={{ fontSize: 23, fontWeight: 700, color: '#1C1917', marginBottom: 6 }}>
+          <h2 style={{ fontSize: 23, fontWeight: 700, color: '#ECFDF5', marginBottom: 6 }}>
             {artist?.username || 'The artist'} is picking a word...
           </h2>
-          <p style={{ color: '#57534E', fontSize: 14 }}>
+          <p style={{ color: '#86EFAC', fontSize: 14 }}>
             Keep your eyes on the sketchpad!
           </p>
         </div>
@@ -240,7 +240,7 @@ export const GamePage: React.FC = () => {
             Final Standings
           </div>
           <div style={{ ...roundIconBadgeStyle('#22C55E'), margin: '8px auto 14px' }}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
               <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
               <path d="M4 22h16" />
@@ -249,7 +249,7 @@ export const GamePage: React.FC = () => {
               <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
             </svg>
           </div>
-          <h2 style={{ fontSize: 30, fontWeight: 700, color: '#1C1917', marginBottom: 4 }}>
+          <h2 style={{ fontSize: 30, fontWeight: 700, color: '#ECFDF5', marginBottom: 4 }}>
             Match Complete!
           </h2>
           <p style={{ color: '#E11D48', fontSize: 18, fontWeight: 700, marginBottom: 22 }}>
@@ -266,18 +266,18 @@ export const GamePage: React.FC = () => {
                   padding: '10px 16px',
                   background: i === 0 ? '#14452E' : '#0B2418',
                   borderRadius: 12,
-                  border: '2px solid #1C1917',
+                  border: '2px solid #1F6B46',
                 }}
               >
-                <span style={{ fontWeight: 700, color: '#1C1917' }}>#{i + 1} {s.username}</span>
-                <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>{s.totalPoints} pts</span>
+                <span style={{ fontWeight: 700, color: '#ECFDF5' }}>#{i + 1} {s.username}</span>
+                <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
           <button
             onClick={() => { reset(); navigate('/home'); }}
             className="sketch-btn"
-            style={{ background: '#22C55E', color: '#1C1917', padding: '14px 32px', fontSize: 16 }}
+            style={{ background: '#22C55E', color: '#ECFDF5', padding: '14px 32px', fontSize: 16 }}
           >
             Back to Studio
           </button>
@@ -291,27 +291,27 @@ export const GamePage: React.FC = () => {
     return (
       <div style={centeredScreenStyle}>
         <div className="sketch-card" style={{ padding: 36, maxWidth: 480, width: '100%', textAlign: 'center' }}>
-          <span className="font-hand" style={{ fontSize: 22, fontWeight: 700, color: '#57534E' }}>
+          <span className="font-hand" style={{ fontSize: 22, fontWeight: 700, color: '#86EFAC' }}>
             Round {round?.roundNumber} Wrap-Up
           </span>
-          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#1C1917', margin: '6px 0 14px' }}>
+          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '6px 0 14px' }}>
             The sketch was{' '}
-            <span style={{ display: 'inline-block', background: '#34D399', border: '2px solid #1C1917', borderRadius: 10, padding: '2px 12px', transform: 'rotate(-1.5deg)' }}>
+            <span style={{ display: 'inline-block', background: '#34D399', border: '2px solid #1F6B46', borderRadius: 10, padding: '2px 12px', transform: 'rotate(-1.5deg)' }}>
               {roundEndData.word}
             </span>
           </h2>
-          <div style={{ marginBottom: 18, fontSize: 14, fontWeight: 600, color: '#57534E' }}>
+          <div style={{ marginBottom: 18, fontSize: 14, fontWeight: 600, color: '#86EFAC' }}>
             {roundEndData.correctGuessers?.length || 0} player(s) nailed it
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
             {scores.slice(0, 5).map((s, i) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#0B2418', border: '1.5px solid #1C1917', borderRadius: 10 }}>
-                <span style={{ fontWeight: 700, color: '#1C1917' }}>#{i + 1} {s.username}</span>
-                <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>{s.totalPoints} pts</span>
+              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#0B2418', border: '1.5px solid #1F6B46', borderRadius: 10 }}>
+                <span style={{ fontWeight: 700, color: '#ECFDF5' }}>#{i + 1} {s.username}</span>
+                <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
-          <p className="font-hand" style={{ color: '#57534E', fontSize: 19, fontWeight: 700 }}>
+          <p className="font-hand" style={{ color: '#86EFAC', fontSize: 19, fontWeight: 700 }}>
             Flipping to the next page...
           </p>
         </div>
@@ -339,7 +339,7 @@ export const GamePage: React.FC = () => {
           <div style={timerBadgeStyle(timerBg)} className="font-display">
             {timeLeft}
           </div>
-          <span style={{ fontSize: 12, fontWeight: 700, color: '#57534E', textTransform: 'uppercase' }}>sec</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', textTransform: 'uppercase' }}>sec</span>
         </div>
 
         {/* Secret Word / Clue Box */}
@@ -352,8 +352,8 @@ export const GamePage: React.FC = () => {
         </div>
 
         {/* Artist Role Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 14, fontWeight: 700, color: '#1C1917' }}>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 14, fontWeight: 700, color: '#ECFDF5' }}>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
             <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
           </svg>
           <span>{isArtist ? 'You are sketching' : `${artist?.username || 'Artist'} is sketching`}</span>
@@ -380,14 +380,14 @@ export const GamePage: React.FC = () => {
         <div style={{ flex: '1 1 280px', maxWidth: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Scoreboard */}
           <div className="sketch-card" style={{ padding: 16, background: '#0B2418' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #1F6B46' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
                 <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
                 <path d="M4 22h16" />
                 <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#22C55E" />
               </svg>
-              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#1C1917' }}>Scoreboard</span>
+              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Scoreboard</span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -401,14 +401,14 @@ export const GamePage: React.FC = () => {
                     padding: '6px 10px',
                     borderRadius: 9,
                     background: s.userId === user?.id ? '#14452E' : 'transparent',
-                    border: s.userId === user?.id ? '1.5px solid #1C1917' : '1.5px solid transparent',
+                    border: s.userId === user?.id ? '1.5px solid #ECFDF5' : '1.5px solid transparent',
                     fontSize: 14,
                   }}
                 >
-                  <span style={{ fontWeight: 700, color: '#1C1917' }}>
+                  <span style={{ fontWeight: 700, color: '#ECFDF5' }}>
                     #{i + 1} {s.username}
                   </span>
-                  <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>
+                  <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>
                     {s.totalPoints}
                   </span>
                 </div>
@@ -418,11 +418,11 @@ export const GamePage: React.FC = () => {
 
           {/* Live Guess Feed */}
           <div className="sketch-card" style={{ padding: 16, background: '#0B2418', flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #1F6B46' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#1C1917' }}>Live Guesses</span>
+              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Live Guesses</span>
             </div>
 
             <div style={{ flex: 1, overflowY: 'auto', marginBottom: 12, maxHeight: 260, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -433,11 +433,11 @@ export const GamePage: React.FC = () => {
                     fontSize: 13,
                     padding: '6px 10px',
                     borderRadius: 9,
-                    background: msg.isCorrect ? '#DCFCE7' : '#F5F5F4',
-                    border: msg.isCorrect ? '1.5px solid #1C1917' : '1px solid #E7E5E4',
+                    background: msg.isCorrect ? '#DCFCE7' : '#103322',
+                    border: msg.isCorrect ? '1.5px solid #ECFDF5' : '1px solid #1F6B46',
                   }}
                 >
-                  <span style={{ color: '#1C1917', fontWeight: 700 }}>{msg.username}: </span>
+                  <span style={{ color: '#ECFDF5', fontWeight: 700 }}>{msg.username}: </span>
                   <span style={{ color: msg.isCorrect ? '#166534' : '#44403C', fontWeight: msg.isCorrect ? 700 : 500 }}>
                     {msg.isCorrect ? `Guessed it! (+${msg.points} pts)` : msg.text}
                   </span>
@@ -455,9 +455,9 @@ export const GamePage: React.FC = () => {
                     flex: 1,
                     padding: '10px 12px',
                     borderRadius: 10,
-                    border: '2px solid #1C1917',
+                    border: '2px solid #1F6B46',
                     background: '#0E2E1F',
-                    color: '#1C1917',
+                    color: '#ECFDF5',
                     fontSize: 14,
                     fontWeight: 500,
                     outline: 'none',
@@ -466,7 +466,7 @@ export const GamePage: React.FC = () => {
                 <button
                   type="submit"
                   className="sketch-btn"
-                  style={{ background: '#34D399', color: '#1C1917', padding: '8px 14px', fontSize: 15 }}
+                  style={{ background: '#34D399', color: '#ECFDF5', padding: '8px 14px', fontSize: 15 }}
                 >
                   →
                 </button>
@@ -474,13 +474,13 @@ export const GamePage: React.FC = () => {
             )}
 
             {hasGuessedCorrectly && !isArtist && (
-              <div style={{ background: '#DCFCE7', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#166534', fontWeight: 700, fontSize: 14 }}>
+              <div style={{ background: '#DCFCE7', border: '2px solid #1F6B46', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#166534', fontWeight: 700, fontSize: 14 }}>
                 Nailed it! Waiting for others...
               </div>
             )}
 
             {isArtist && (
-              <div style={{ background: '#14452E', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#1C1917', fontWeight: 700, fontSize: 13 }}>
+              <div style={{ background: '#14452E', border: '2px solid #1F6B46', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#ECFDF5', fontWeight: 700, fontSize: 13 }}>
                 You're the artist — no hints in chat!
               </div>
             )}
@@ -505,13 +505,13 @@ const stickyBadgeStyle = (bg: string): React.CSSProperties => ({
   left: '50%',
   transform: 'translateX(-50%) rotate(-2deg)',
   background: bg,
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 8,
   padding: '2px 14px',
   fontSize: 18,
   fontWeight: 700,
-  color: '#1C1917',
-  boxShadow: '2px 2px 0px #1C1917',
+  color: '#ECFDF5',
+  boxShadow: '2px 2px 0px #020A06',
   whiteSpace: 'nowrap',
 });
 
@@ -520,8 +520,8 @@ const roundIconBadgeStyle = (bg: string): React.CSSProperties => ({
   height: 58,
   borderRadius: 16,
   background: bg,
-  border: '2.5px solid #1C1917',
-  boxShadow: '3px 3px 0px #1C1917',
+  border: '2.5px solid #1F6B46',
+  boxShadow: '3px 3px 0px #020A06',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -529,7 +529,7 @@ const roundIconBadgeStyle = (bg: string): React.CSSProperties => ({
 
 const hudBarStyle: React.CSSProperties = {
   background: '#0B2418',
-  borderBottom: '2.5px solid #1C1917',
+  borderBottom: '2.5px solid #1F6B46',
   padding: '12px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -540,35 +540,35 @@ const hudBarStyle: React.CSSProperties = {
 
 const roundPillStyle: React.CSSProperties = {
   background: '#E0F2FE',
-  border: '2px solid #1C1917',
+  border: '2px solid #1F6B46',
   borderRadius: 10,
   padding: '5px 12px',
   fontSize: 14,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
 };
 
 const timerBadgeStyle = (bg: string): React.CSSProperties => ({
   background: bg,
-  border: '2px solid #1C1917',
-  boxShadow: '2px 2px 0px #1C1917',
+  border: '2px solid #1F6B46',
+  boxShadow: '2px 2px 0px #020A06',
   borderRadius: 12,
   minWidth: 46,
   padding: '4px 10px',
   fontSize: 22,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   textAlign: 'center',
 });
 
 const wordClueBoxStyle: React.CSSProperties = {
   background: '#22C55E',
-  border: '2px solid #1C1917',
-  boxShadow: '2px 2px 0px #1C1917',
+  border: '2px solid #1F6B46',
+  boxShadow: '2px 2px 0px #020A06',
   borderRadius: 12,
   padding: '6px 18px',
   fontSize: 19,
   fontWeight: 700,
-  color: '#1C1917',
+  color: '#ECFDF5',
   textAlign: 'center',
 };
