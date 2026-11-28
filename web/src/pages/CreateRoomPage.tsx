@@ -19,7 +19,10 @@ export const CreateRoomPage: React.FC = () => {
 
     const setup = async () => {
       const fbUser = auth.currentUser;
-      if (!fbUser) { navigate('/login'); return; }
+      if (!fbUser) {
+        navigate('/login');
+        return;
+      }
       const token = await fbUser.getIdToken();
       socketService.connect(token);
 
@@ -60,63 +63,45 @@ export const CreateRoomPage: React.FC = () => {
 
   return (
     <div style={pageStyle}>
-      <div className="sketch-card" style={cardStyle}>
-        {/* Tilted Sticky Note Tag */}
-        <div style={stickyTagStyle} className="font-hand">
-          Private Table
-        </div>
-
-        {/* Custom Hand-Drawn Easel / Canvas Emblem */}
-        <div style={logoBadgeStyle}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="4" y="3" width="16" height="12" rx="2" fill="#0B2418" />
-            <path d="M12 15v6" />
-            <path d="M8 21l2-6" />
-            <path d="M16 21l-2-6" />
-            <path d="M8 9c1.5-2 3.5-2 5 0s3 1.5 3.5 0" stroke="#E11D48" />
+      <div style={cardStyle}>
+        <div style={badgeRowStyle}>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
           </svg>
         </div>
 
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
-          Set Up a Sketch Room
-        </h1>
-        <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 24, lineHeight: 1.5 }}>
-          Open a private sketchbook table and share the invite code with your crew.
+        <h1 style={titleStyle}>Create Room</h1>
+        <p style={subtitleStyle}>
+          Start a private room and share the code with friends.
         </p>
 
-        {/* Room Rules Box */}
-        <div style={rulesBoxStyle}>
-          <div className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#ECFDF5', marginBottom: 10 }}>
-            House Rules
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14, fontWeight: 600, color: '#ECFDF5', textAlign: 'left' }}>
-            <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <div style={infoBoxStyle}>
+          <div style={infoHeadingStyle}>Game Details</div>
+          <div style={infoListStyle}>
+            <div style={infoItemStyle}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
                 <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
               </svg>
-              <span>Up to 11 artists per table</span>
+              <span>Up to 11 players</span>
             </div>
 
-            <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <div style={infoItemStyle}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                 <path d="M3 3v5h5" />
-                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
-                <path d="M16 16h5v5" />
               </svg>
-              <span>11 rounds — everyone gets the pencil</span>
+              <span>11 rounds per game</span>
             </div>
 
-            <div style={ruleRowStyle}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+            <div style={infoItemStyle}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <span>60 seconds on the clock per sketch</span>
+              <span>60 seconds per turn</span>
             </div>
           </div>
         </div>
@@ -124,34 +109,18 @@ export const CreateRoomPage: React.FC = () => {
         <button
           onClick={createRoom}
           disabled={creating}
-          className="sketch-btn"
           style={{
-            background: creating ? '#1F6B46' : '#34D399',
-            color: '#ECFDF5',
-            padding: '15px 28px',
-            fontSize: 17,
-            width: '100%',
-            marginBottom: 14,
+            ...primaryBtnStyle,
+            background: creating ? '#143827' : '#22C55E',
+            color: creating ? '#86EFAC' : '#05160E',
             cursor: creating ? 'not-allowed' : 'pointer',
           }}
         >
-          {creating ? 'Setting Up Easel...' : 'Open Room & Get Code →'}
+          {creating ? 'Creating Room...' : 'Create Room'}
         </button>
 
-        <button
-          onClick={() => navigate('/home')}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#86EFAC',
-            cursor: 'pointer',
-            fontSize: 14,
-            fontWeight: 700,
-            textDecoration: 'underline',
-            textUnderlineOffset: 3,
-          }}
-        >
-          ← Back to Studio
+        <button onClick={() => navigate('/home')} style={backBtnStyle}>
+          Back to Home
         </button>
       </div>
     </div>
@@ -164,55 +133,92 @@ const pageStyle: React.CSSProperties = {
   justifyContent: 'center',
   minHeight: '100vh',
   padding: 20,
+  background: '#05160E',
 };
 
 const cardStyle: React.CSSProperties = {
-  padding: '38px 32px',
-  maxWidth: 430,
+  padding: '32px 28px',
+  maxWidth: 420,
   width: '100%',
   textAlign: 'center',
-  position: 'relative',
-};
-
-const stickyTagStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: -14,
-  right: 22,
-  background: '#10B981',
+  background: '#0B2418',
   border: '2px solid #1F6B46',
-  borderRadius: 8,
-  padding: '2px 12px',
-  fontSize: 18,
-  fontWeight: 700,
-  color: '#ECFDF5',
-  transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #020A06',
+  borderRadius: 16,
 };
 
-const logoBadgeStyle: React.CSSProperties = {
-  width: 62,
-  height: 62,
-  margin: '0 auto',
-  borderRadius: 16,
-  background: '#22C55E',
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
+const badgeRowStyle: React.CSSProperties = {
+  width: 52,
+  height: 52,
+  margin: '0 auto 12px',
+  borderRadius: 12,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  transform: 'rotate(-4deg)',
 };
 
-const rulesBoxStyle: React.CSSProperties = {
-  background: '#14452E',
-  border: '2px solid #1F6B46',
-  borderRadius: 14,
-  padding: '16px 18px',
-  marginBottom: 24,
+const titleStyle: React.CSSProperties = {
+  fontSize: 26,
+  fontWeight: 700,
+  color: '#ECFDF5',
+  margin: '0 0 6px',
 };
 
-const ruleRowStyle: React.CSSProperties = {
+const subtitleStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  margin: '0 0 22px',
+  lineHeight: 1.5,
+};
+
+const infoBoxStyle: React.CSSProperties = {
+  background: '#081D13',
+  border: '1.5px solid #1F6B46',
+  borderRadius: 12,
+  padding: '14px 16px',
+  marginBottom: 22,
+};
+
+const infoHeadingStyle: React.CSSProperties = {
+  fontSize: 15,
+  fontWeight: 700,
+  color: '#ECFDF5',
+  marginBottom: 10,
+};
+
+const infoListStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 10,
+  fontSize: 14,
+  fontWeight: 600,
+  color: '#ECFDF5',
+  textAlign: 'left',
+};
+
+const infoItemStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   gap: 10,
+};
+
+const primaryBtnStyle: React.CSSProperties = {
+  padding: '13px 24px',
+  fontSize: 16,
+  fontWeight: 700,
+  width: '100%',
+  borderRadius: 10,
+  border: 'none',
+  marginBottom: 12,
+};
+
+const backBtnStyle: React.CSSProperties = {
+  background: 'none',
+  border: 'none',
+  color: '#86EFAC',
+  cursor: 'pointer',
+  fontSize: 14,
+  fontWeight: 600,
+  textDecoration: 'underline',
 };

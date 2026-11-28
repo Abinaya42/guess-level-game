@@ -4,6 +4,8 @@ import { useAuthStore } from '../stores/authStore';
 import { getUserStats } from '../services/api';
 import { GameStats } from '../types';
 
+const STAT_BOX_BG = ['#081D13', '#0D291C', '#103322', '#14452E', '#0D291C', '#081D13'];
+
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
@@ -22,82 +24,60 @@ export const ProfilePage: React.FC = () => {
 
   const statItems = stats
     ? [
-        { label: 'Games Played', val: stats.gamesPlayed, bg: '#14452E' },
-        { label: 'Games Won', val: stats.gamesWon, bg: '#DCFCE7' },
-        { label: 'Avg Score', val: stats.avgScore, bg: '#E0F2FE' },
-        { label: 'Best Score', val: stats.bestScore, bg: '#FFE4E6' },
-        { label: 'Total Points', val: stats.totalPoints, bg: '#F3E8FF' },
+        { label: 'Games Played', val: stats.gamesPlayed },
+        { label: 'Games Won', val: stats.gamesWon },
+        { label: 'Avg Score', val: stats.avgScore },
+        { label: 'Best Score', val: stats.bestScore },
+        { label: 'Total Points', val: stats.totalPoints },
         {
           label: 'Win Rate',
           val: stats.gamesPlayed > 0 ? `${Math.round((stats.gamesWon / stats.gamesPlayed) * 100)}%` : '0%',
-          bg: '#FFEDD5',
         },
       ]
     : [];
 
   return (
-    <div style={{ minHeight: '100vh', paddingBottom: 48 }}>
-      {/* Sketchbook Top Navbar */}
+    <div style={pageStyle}>
       <header style={headerStyle}>
-        <button onClick={() => navigate('/home')} className="sketch-btn" style={backBtnStyle}>
-          ← Studio
+        <button onClick={() => navigate('/home')} style={backBtnStyle}>
+          Home
         </button>
-        <h1 className="font-display" style={{ fontSize: 22, fontWeight: 700, color: '#ECFDF5', margin: 0 }}>
-          Artist Profile
-        </h1>
-        <div style={{ width: 84 }} />
+        <h1 style={headerTitleStyle}>Profile</h1>
+        <div style={{ width: 64 }} />
       </header>
 
-      <main style={{ maxWidth: 620, margin: '32px auto', padding: '0 18px', display: 'flex', flexDirection: 'column', gap: 24 }}>
-        {/* Artist ID Card */}
-        <div className="sketch-card" style={{ padding: '34px 28px', textAlign: 'center', position: 'relative' }}>
-          <div style={stickyTagStyle} className="font-hand">
-            Studio Member
-          </div>
+      <main style={mainStyle}>
+        <div style={profileCardStyle}>
+          <div style={avatarBadgeStyle}>{initials}</div>
 
-          <div className="font-display" style={avatarBadgeStyle}>
-            {initials}
-          </div>
-
-          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '0 0 4px' }}>
-            {user?.username || 'Sketch Artist'}
-          </h2>
-          <p style={{ color: '#86EFAC', fontSize: 14, margin: 0 }}>
-            {user?.email}
-          </p>
+          <h2 style={usernameStyle}>{user?.username || 'Player'}</h2>
+          <p style={emailStyle}>{user?.email}</p>
         </div>
 
-        {/* Career Stats */}
         {!loading && stats && (
-          <div className="sketch-card" style={{ padding: 24 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <div style={statsCardStyle}>
+            <div style={statsHeaderStyle}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 20V10" />
                 <path d="M18 20V4" />
                 <path d="M6 20v-4" />
               </svg>
-              <h3 style={{ fontSize: 19, fontWeight: 700, color: '#ECFDF5', margin: 0 }}>
-                Sketchbook Stats
-              </h3>
+              <h3 style={statsTitleStyle}>Statistics</h3>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 14 }}>
-              {statItems.map(({ label, val, bg }) => (
+            <div style={statsGridStyle}>
+              {statItems.map(({ label, val }, idx) => (
                 <div
                   key={label}
                   style={{
-                    background: bg,
-                    border: '2px solid #1F6B46',
-                    borderRadius: 14,
-                    padding: '16px 14px',
+                    background: STAT_BOX_BG[idx % STAT_BOX_BG.length],
+                    border: '1.5px solid #1F6B46',
+                    borderRadius: 12,
+                    padding: '15px 14px',
                   }}
                 >
-                  <div className="font-display" style={{ fontSize: 24, fontWeight: 700, color: '#ECFDF5' }}>
-                    {val}
-                  </div>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#44403C', marginTop: 3 }}>
-                    {label}
-                  </div>
+                  <div style={statValStyle}>{val}</div>
+                  <div style={statLabelStyle}>{label}</div>
                 </div>
               ))}
             </div>
@@ -108,9 +88,15 @@ export const ProfilePage: React.FC = () => {
   );
 };
 
+const pageStyle: React.CSSProperties = {
+  minHeight: '100vh',
+  paddingBottom: 48,
+  background: '#05160E',
+};
+
 const headerStyle: React.CSSProperties = {
   background: '#0B2418',
-  borderBottom: '2.5px solid #1F6B46',
+  borderBottom: '2px solid #1F6B46',
   padding: '14px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -119,39 +105,103 @@ const headerStyle: React.CSSProperties = {
 
 const backBtnStyle: React.CSSProperties = {
   background: '#22C55E',
-  color: '#ECFDF5',
+  color: '#05160E',
   padding: '8px 14px',
   fontSize: 14,
+  fontWeight: 700,
+  borderRadius: 8,
+  border: 'none',
+  cursor: 'pointer',
 };
 
-const stickyTagStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: -14,
-  right: 22,
-  background: '#10B981',
-  border: '2px solid #1F6B46',
-  borderRadius: 8,
-  padding: '2px 12px',
-  fontSize: 18,
+const headerTitleStyle: React.CSSProperties = {
+  fontSize: 21,
   fontWeight: 700,
   color: '#ECFDF5',
-  transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #020A06',
+  margin: 0,
+};
+
+const mainStyle: React.CSSProperties = {
+  maxWidth: 620,
+  margin: '32px auto',
+  padding: '0 18px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 22,
+};
+
+const profileCardStyle: React.CSSProperties = {
+  padding: '32px 24px',
+  textAlign: 'center',
+  background: '#0B2418',
+  border: '2px solid #1F6B46',
+  borderRadius: 16,
 };
 
 const avatarBadgeStyle: React.CSSProperties = {
-  width: 82,
-  height: 82,
-  borderRadius: 20,
-  background: '#22C55E',
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
-  color: '#ECFDF5',
-  fontSize: 30,
+  width: 72,
+  height: 72,
+  borderRadius: 16,
+  background: '#103322',
+  border: '2px solid #22C55E',
+  color: '#4ADE80',
+  fontSize: 26,
   fontWeight: 700,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  margin: '0 auto 16px',
-  transform: 'rotate(-4deg)',
+  margin: '0 auto 14px',
+};
+
+const usernameStyle: React.CSSProperties = {
+  fontSize: 24,
+  fontWeight: 700,
+  color: '#ECFDF5',
+  margin: '0 0 4px',
+};
+
+const emailStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  margin: 0,
+};
+
+const statsCardStyle: React.CSSProperties = {
+  padding: 24,
+  background: '#0B2418',
+  border: '2px solid #1F6B46',
+  borderRadius: 16,
+};
+
+const statsHeaderStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 10,
+  marginBottom: 16,
+};
+
+const statsTitleStyle: React.CSSProperties = {
+  fontSize: 18,
+  fontWeight: 700,
+  color: '#ECFDF5',
+  margin: 0,
+};
+
+const statsGridStyle: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+  gap: 12,
+};
+
+const statValStyle: React.CSSProperties = {
+  fontSize: 22,
+  fontWeight: 700,
+  color: '#ECFDF5',
+};
+
+const statLabelStyle: React.CSSProperties = {
+  fontSize: 13,
+  fontWeight: 600,
+  color: '#86EFAC',
+  marginTop: 3,
 };

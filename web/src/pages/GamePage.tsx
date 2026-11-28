@@ -8,6 +8,8 @@ import { DrawingCanvas } from '../components/DrawingCanvas';
 import { StrokeData, GuessMessage } from '../types';
 import toast from 'react-hot-toast';
 
+const WORD_CARD_BG = ['#14452E', '#103322', '#0D291C'];
+
 export const GamePage: React.FC = () => {
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
@@ -32,11 +34,14 @@ export const GamePage: React.FC = () => {
 
     const connectAndSubscribe = async () => {
       const fbUser = auth.currentUser;
-      if (!fbUser) { navigate('/login'); return; }
+      if (!fbUser) {
+        navigate('/login');
+        return;
+      }
       const token = await fbUser.getIdToken();
       socketService.connect(token);
 
-      socketService.requestState(code!);
+      socketService.requestState(code);
 
       socketService.on('state:restored', (state: any) => {
         if (state.game) setGame(state.game);
@@ -55,11 +60,20 @@ export const GamePage: React.FC = () => {
       });
 
       socketService.on('round:started', (data: any) => {
-        setRound({ id: data.roundId, roundNumber: data.roundNumber, artistId: data.artistId, status: 'WORD_SELECTION', timeLeft: 30, hint: '', correctGuessers: [], strokes: [] });
+        setRound({
+          id: data.roundId,
+          roundNumber: data.roundNumber,
+          artistId: data.artistId,
+          status: 'WORD_SELECTION',
+          timeLeft: 30,
+          hint: '',
+          correctGuessers: [],
+          strokes: [],
+        });
         clearStrokes();
         setIsArtist(data.artistId === user.id);
         setHasGuessedCorrectly(false);
-        setGame((prev: any) => prev ? { ...prev, currentRound: data.roundNumber, totalRounds: data.totalRounds } : prev);
+        setGame((prev: any) => (prev ? { ...prev, currentRound: data.roundNumber, totalRounds: data.totalRounds } : prev));
         if (data.scores) setScores(data.scores);
       });
 
@@ -69,12 +83,12 @@ export const GamePage: React.FC = () => {
       });
 
       socketService.on('round:drawing-start', (data: any) => {
-        setRound((prev: any) => prev ? { ...prev, hint: data.hint, timeLeft: data.timeLeft, status: 'IN_PROGRESS' } : prev);
+        setRound((prev: any) => (prev ? { ...prev, hint: data.hint, timeLeft: data.timeLeft, status: 'IN_PROGRESS' } : prev));
         setPhase('drawing');
       });
 
       socketService.on('round:word', (data: any) => {
-        setRound((prev: any) => prev ? { ...prev, word: data.word } : prev);
+        setRound((prev: any) => (prev ? { ...prev, word: data.word } : prev));
       });
 
       socketService.on('round:timer', (data: any) => {
@@ -83,7 +97,7 @@ export const GamePage: React.FC = () => {
 
       socketService.on('round:hint', (data: any) => {
         updateHint(data.hint);
-        toast(`Letter clue revealed: ${data.hint}`, { duration: 3000 });
+        toast(`Hint: ${data.hint}`, { duration: 3000 });
       });
 
       socketService.on('round:end', (data: any) => {
@@ -131,7 +145,7 @@ export const GamePage: React.FC = () => {
 
       socketService.on('guess:correct', (data: any) => {
         setHasGuessedCorrectly(true);
-        toast.success(`Spot on! +${data.points} points!`, { duration: 4000 });
+        toast.success(`Correct! +${data.points} points`, { duration: 4000 });
       });
 
       socketService.on('scores:updated', (data: any) => {
@@ -146,9 +160,11 @@ export const GamePage: React.FC = () => {
     connectAndSubscribe();
 
     return () => {
-      ['state:restored','round:started','round:word-choices','round:drawing-start','round:word',
-       'round:timer','round:hint','round:end','game:end','draw:stroke','draw:undo','draw:redo',
-       'draw:clear','guess:result','guess:correct','scores:updated','error'].forEach(e => socketService.off(e));
+      [
+        'state:restored', 'round:started', 'round:word-choices', 'round:drawing-start', 'round:word',
+        'round:timer', 'round:hint', 'round:end', 'game:end', 'draw:stroke', 'draw:undo', 'draw:redo',
+        'draw:clear', 'guess:result', 'guess:correct', 'scores:updated', 'error',
+      ].forEach((e) => socketService.off(e));
     };
   }, [code, user]);
 
@@ -157,9 +173,17 @@ export const GamePage: React.FC = () => {
     if (round) socketService.drawStroke(round.id, stroke);
   }, [round]);
 
-  const handleUndo = () => { if (round) socketService.undoStroke(round.id); };
-  const handleRedo = () => { if (round) socketService.redoStroke(round.id); };
-  const handleClear = () => { if (round) socketService.clearCanvas(round.id); };
+  const handleUndo = () => {
+    if (round) socketService.undoStroke(round.id);
+  };
+
+  const handleRedo = () => {
+    if (round) socketService.redoStroke(round.id);
+  };
+
+  const handleClear = () => {
+    if (round) socketService.clearCanvas(round.id);
+  };
 
   const submitGuess = (e: React.FormEvent) => {
     e.preventDefault();
@@ -168,79 +192,74 @@ export const GamePage: React.FC = () => {
     setGuess('');
   };
 
-  // ── Word Selection Phase (Artist) ───────────────────────────────────────────
   if (phase === 'word-selection' && isArtist) {
     return (
       <div style={centeredScreenStyle}>
-        <div className="sketch-card" style={{ padding: 36, maxWidth: 460, width: '100%', textAlign: 'center', position: 'relative' }}>
-          <div style={stickyBadgeStyle('#22C55E')} className="font-hand">
-            Round {round?.roundNumber || 1} — Your Turn!
+        <div style={modalCardStyle}>
+          <div style={roundTagStyle}>
+            Round {round?.roundNumber || 1}
           </div>
-          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', marginTop: 10, marginBottom: 6 }}>
-            Pick a Word to Sketch
-          </h2>
-          <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 26 }}>
-            Choose one prompt below to start drawing
+          <h2 style={modalTitleStyle}>Choose a Word</h2>
+          <p style={modalSubtitleStyle}>
+            Pick a word to start drawing
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {wordChoices.map((word, idx) => {
-              const cardColors = ['#14452E', '#E0F2FE', '#FFE4E6'];
-              return (
-                <button
-                  key={word}
-                  onClick={() => { socketService.selectWord(round!.id, word); setPhase('drawing'); }}
-                  className="sketch-btn"
-                  style={{
-                    background: cardColors[idx % cardColors.length],
-                    color: '#ECFDF5',
-                    padding: '16px',
-                    fontSize: 20,
-                    letterSpacing: 0.5,
-                  }}
-                >
-                  {word}
-                </button>
-              );
-            })}
+          <div style={wordChoicesListStyle}>
+            {wordChoices.map((word, idx) => (
+              <button
+                key={word}
+                onClick={() => {
+                  socketService.selectWord(round!.id, word);
+                  setPhase('drawing');
+                }}
+                style={{
+                  background: WORD_CARD_BG[idx % WORD_CARD_BG.length],
+                  color: '#ECFDF5',
+                  padding: '15px 18px',
+                  fontSize: 19,
+                  fontWeight: 700,
+                  borderRadius: 12,
+                  border: '2px solid #22C55E',
+                  cursor: 'pointer',
+                }}
+              >
+                {word}
+              </button>
+            ))}
           </div>
         </div>
       </div>
     );
   }
 
-  // ── Word Selection Phase (Guessers) ─────────────────────────────────────────
   if (phase === 'word-selection' && !isArtist) {
-    const artist = players.find(p => p.userId === round?.artistId);
+    const artist = players.find((p) => p.userId === round?.artistId);
     return (
       <div style={centeredScreenStyle}>
-        <div className="sketch-card" style={{ padding: 36, maxWidth: 400, width: '100%', textAlign: 'center' }}>
-          <div style={{ ...roundIconBadgeStyle('#10B981'), margin: '0 auto 16px', animation: 'wiggle 1.2s ease-in-out infinite' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <div style={modalCardStyle}>
+          <div style={iconBadgeStyle}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
               <path d="m15 5 4 4" />
             </svg>
           </div>
-          <h2 style={{ fontSize: 23, fontWeight: 700, color: '#ECFDF5', marginBottom: 6 }}>
-            {artist?.username || 'The artist'} is picking a word...
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: '#ECFDF5', marginBottom: 6 }}>
+            {artist?.username || 'Artist'} is choosing a word...
           </h2>
-          <p style={{ color: '#86EFAC', fontSize: 14 }}>
-            Keep your eyes on the sketchpad!
+          <p style={{ color: '#86EFAC', fontSize: 14, margin: 0 }}>
+            Get ready to guess.
           </p>
         </div>
       </div>
     );
   }
 
-  // ── Game End ────────────────────────────────────────────────────────────────
   if (phase === 'game-end' && gameEndData) {
     return (
       <div style={centeredScreenStyle}>
-        <div className="sketch-card" style={{ padding: 36, maxWidth: 480, width: '100%', textAlign: 'center', position: 'relative' }}>
-          <div style={stickyBadgeStyle('#34D399')} className="font-hand">
-            Final Standings
-          </div>
-          <div style={{ ...roundIconBadgeStyle('#22C55E'), margin: '8px auto 14px' }}>
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+        <div style={modalCardStyle}>
+          <div style={roundTagStyle}>Final Scores</div>
+          <div style={iconBadgeStyle}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
               <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
               <path d="M4 22h16" />
@@ -249,13 +268,13 @@ export const GamePage: React.FC = () => {
               <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
             </svg>
           </div>
-          <h2 style={{ fontSize: 30, fontWeight: 700, color: '#ECFDF5', marginBottom: 4 }}>
-            Match Complete!
+          <h2 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '0 0 6px' }}>
+            Game Over
           </h2>
-          <p style={{ color: '#E11D48', fontSize: 18, fontWeight: 700, marginBottom: 22 }}>
-            {gameEndData.winner?.username} takes the crown!
+          <p style={{ color: '#4ADE80', fontSize: 17, fontWeight: 700, margin: '0 0 20px' }}>
+            Winner: {gameEndData.winner?.username}
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
+          <div style={scoreListStyle}>
             {gameEndData.scores?.map((s: any, i: number) => (
               <div
                 key={s.userId}
@@ -263,106 +282,112 @@ export const GamePage: React.FC = () => {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '10px 16px',
-                  background: i === 0 ? '#14452E' : '#0B2418',
-                  borderRadius: 12,
-                  border: '2px solid #1F6B46',
+                  padding: '10px 14px',
+                  background: i === 0 ? '#14452E' : '#081D13',
+                  borderRadius: 10,
+                  border: '1.5px solid #1F6B46',
                 }}
               >
                 <span style={{ fontWeight: 700, color: '#ECFDF5' }}>#{i + 1} {s.username}</span>
-                <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>{s.totalPoints} pts</span>
+                <span style={{ fontWeight: 700, color: '#4ADE80' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
           <button
-            onClick={() => { reset(); navigate('/home'); }}
-            className="sketch-btn"
-            style={{ background: '#22C55E', color: '#ECFDF5', padding: '14px 32px', fontSize: 16 }}
+            onClick={() => {
+              reset();
+              navigate('/home');
+            }}
+            style={primaryBtnStyle}
           >
-            Back to Studio
+            Back to Home
           </button>
         </div>
       </div>
     );
   }
 
-  // ── Round End ───────────────────────────────────────────────────────────────
   if (phase === 'round-end' && roundEndData) {
     return (
       <div style={centeredScreenStyle}>
-        <div className="sketch-card" style={{ padding: 36, maxWidth: 480, width: '100%', textAlign: 'center' }}>
-          <span className="font-hand" style={{ fontSize: 22, fontWeight: 700, color: '#86EFAC' }}>
-            Round {round?.roundNumber} Wrap-Up
-          </span>
-          <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '6px 0 14px' }}>
-            The sketch was{' '}
-            <span style={{ display: 'inline-block', background: '#34D399', border: '2px solid #1F6B46', borderRadius: 10, padding: '2px 12px', transform: 'rotate(-1.5deg)' }}>
+        <div style={modalCardStyle}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: '#86EFAC' }}>
+            Round {round?.roundNumber} Ended
+          </div>
+          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#ECFDF5', margin: '10px 0 14px' }}>
+            Word:{' '}
+            <span style={revealedWordStyle}>
               {roundEndData.word}
             </span>
           </h2>
-          <div style={{ marginBottom: 18, fontSize: 14, fontWeight: 600, color: '#86EFAC' }}>
-            {roundEndData.correctGuessers?.length || 0} player(s) nailed it
+          <div style={{ marginBottom: 16, fontSize: 14, fontWeight: 600, color: '#86EFAC' }}>
+            {roundEndData.correctGuessers?.length || 0} player(s) guessed correctly
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
+          <div style={scoreListStyle}>
             {scores.slice(0, 5).map((s, i) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#0B2418', border: '1.5px solid #1F6B46', borderRadius: 10 }}>
+              <div
+                key={s.userId}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '9px 14px',
+                  background: '#081D13',
+                  border: '1.5px solid #1F6B46',
+                  borderRadius: 10,
+                }}
+              >
                 <span style={{ fontWeight: 700, color: '#ECFDF5' }}>#{i + 1} {s.username}</span>
-                <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>{s.totalPoints} pts</span>
+                <span style={{ fontWeight: 700, color: '#4ADE80' }}>{s.totalPoints} pts</span>
               </div>
             ))}
           </div>
-          <p className="font-hand" style={{ color: '#86EFAC', fontSize: 19, fontWeight: 700 }}>
-            Flipping to the next page...
+          <p style={{ color: '#86EFAC', fontSize: 14, fontWeight: 600, margin: 0 }}>
+            Starting next round...
           </p>
         </div>
       </div>
     );
   }
 
-  // ── Main Gameplay Screen ────────────────────────────────────────────────────
   const timeLeft = round?.timeLeft ?? 60;
-  const timerBg = timeLeft <= 10 ? '#FB7185' : timeLeft <= 20 ? '#22C55E' : '#34D399';
-  const artist = players.find(p => p.userId === round?.artistId);
+  const timerBg = timeLeft <= 10 ? '#14532D' : timeLeft <= 20 ? '#15803D' : '#22C55E';
+  const artist = players.find((p) => p.userId === round?.artistId);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Sketchbook Top HUD Bar */}
+    <div style={gameShellStyle}>
       <header style={hudBarStyle}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={roundPillStyle} className="font-display">
+          <span style={roundPillStyle}>
             Round {round?.roundNumber || 1} / {game?.totalRounds || 11}
           </span>
         </div>
 
-        {/* Countdown Clock Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={timerBadgeStyle(timerBg)} className="font-display">
+          <div style={timerBadgeStyle(timerBg, timeLeft > 20)}>
             {timeLeft}
           </div>
-          <span style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', textTransform: 'uppercase' }}>sec</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: '#86EFAC', textTransform: 'uppercase' }}>
+            sec
+          </span>
         </div>
 
-        {/* Secret Word / Clue Box */}
-        <div style={wordClueBoxStyle} className="font-display">
+        <div style={wordClueBoxStyle}>
           {isArtist ? (
-            <span>Draw: <strong>{round?.word}</strong></span>
+            <span>Word: <strong>{round?.word}</strong></span>
           ) : (
-            <span style={{ letterSpacing: 5 }}>{round?.hint || '_ _ _ _ _'}</span>
+            <span style={{ letterSpacing: 4 }}>{round?.hint || '_ _ _ _ _'}</span>
           )}
         </div>
 
-        {/* Artist Role Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 14, fontWeight: 700, color: '#ECFDF5' }}>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <div style={artistRoleStyle}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
           </svg>
-          <span>{isArtist ? 'You are sketching' : `${artist?.username || 'Artist'} is sketching`}</span>
+          <span>{isArtist ? 'Your turn to draw' : `${artist?.username || 'Artist'} is drawing`}</span>
         </div>
       </header>
 
-      {/* Arena Body */}
-      <div style={{ flex: 1, maxWidth: 1120, width: '100%', margin: '0 auto', display: 'flex', gap: 18, padding: 18, flexWrap: 'wrap' }}>
-        {/* Left: Sketchpad */}
+      <div style={arenaBodyStyle}>
         <div style={{ flex: '1 1 540px' }}>
           <DrawingCanvas
             isArtist={isArtist}
@@ -376,18 +401,16 @@ export const GamePage: React.FC = () => {
           />
         </div>
 
-        {/* Right: Scoreboard + Guesses */}
-        <div style={{ flex: '1 1 280px', maxWidth: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {/* Scoreboard */}
-          <div className="sketch-card" style={{ padding: 16, background: '#0B2418' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #1F6B46' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+        <div style={sidebarStyle}>
+          <div style={sideCardStyle}>
+            <div style={sideHeaderStyle}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
                 <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
                 <path d="M4 22h16" />
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#22C55E" />
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
               </svg>
-              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Scoreboard</span>
+              <span style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Scores</span>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -399,16 +422,16 @@ export const GamePage: React.FC = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '6px 10px',
-                    borderRadius: 9,
+                    borderRadius: 8,
                     background: s.userId === user?.id ? '#14452E' : 'transparent',
-                    border: s.userId === user?.id ? '1.5px solid #ECFDF5' : '1.5px solid transparent',
+                    border: s.userId === user?.id ? '1.5px solid #22C55E' : '1.5px solid transparent',
                     fontSize: 14,
                   }}
                 >
                   <span style={{ fontWeight: 700, color: '#ECFDF5' }}>
                     #{i + 1} {s.username}
                   </span>
-                  <span className="font-display" style={{ fontWeight: 700, color: '#ECFDF5' }}>
+                  <span style={{ fontWeight: 700, color: '#4ADE80' }}>
                     {s.totalPoints}
                   </span>
                 </div>
@@ -416,30 +439,29 @@ export const GamePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Live Guess Feed */}
-          <div className="sketch-card" style={{ padding: 16, background: '#0B2418', flex: 1, display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #1F6B46' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <div style={{ ...sideCardStyle, flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <div style={sideHeaderStyle}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Live Guesses</span>
+              <span style={{ fontSize: 15, fontWeight: 700, color: '#ECFDF5' }}>Guesses</span>
             </div>
 
-            <div style={{ flex: 1, overflowY: 'auto', marginBottom: 12, maxHeight: 260, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <div style={guessFeedStyle}>
               {guessMessages.map((msg, i) => (
                 <div
                   key={i}
                   style={{
                     fontSize: 13,
                     padding: '6px 10px',
-                    borderRadius: 9,
-                    background: msg.isCorrect ? '#DCFCE7' : '#103322',
-                    border: msg.isCorrect ? '1.5px solid #ECFDF5' : '1px solid #1F6B46',
+                    borderRadius: 8,
+                    background: msg.isCorrect ? '#14532D' : '#081D13',
+                    border: msg.isCorrect ? '1.5px solid #22C55E' : '1px solid #1F6B46',
                   }}
                 >
                   <span style={{ color: '#ECFDF5', fontWeight: 700 }}>{msg.username}: </span>
-                  <span style={{ color: msg.isCorrect ? '#166534' : '#44403C', fontWeight: msg.isCorrect ? 700 : 500 }}>
-                    {msg.isCorrect ? `Guessed it! (+${msg.points} pts)` : msg.text}
+                  <span style={{ color: msg.isCorrect ? '#86EFAC' : '#D1FAE5', fontWeight: msg.isCorrect ? 700 : 500 }}>
+                    {msg.isCorrect ? `Guessed it (+${msg.points} pts)` : msg.text}
                   </span>
                 </div>
               ))}
@@ -449,39 +471,25 @@ export const GamePage: React.FC = () => {
               <form onSubmit={submitGuess} style={{ display: 'flex', gap: 8 }}>
                 <input
                   value={guess}
-                  onChange={e => setGuess(e.target.value)}
+                  onChange={(e) => setGuess(e.target.value)}
                   placeholder="Type your guess..."
-                  style={{
-                    flex: 1,
-                    padding: '10px 12px',
-                    borderRadius: 10,
-                    border: '2px solid #1F6B46',
-                    background: '#0E2E1F',
-                    color: '#ECFDF5',
-                    fontSize: 14,
-                    fontWeight: 500,
-                    outline: 'none',
-                  }}
+                  style={guessInputStyle}
                 />
-                <button
-                  type="submit"
-                  className="sketch-btn"
-                  style={{ background: '#34D399', color: '#ECFDF5', padding: '8px 14px', fontSize: 15 }}
-                >
-                  →
+                <button type="submit" style={sendBtnStyle}>
+                  Send
                 </button>
               </form>
             )}
 
             {hasGuessedCorrectly && !isArtist && (
-              <div style={{ background: '#DCFCE7', border: '2px solid #1F6B46', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#166534', fontWeight: 700, fontSize: 14 }}>
-                Nailed it! Waiting for others...
+              <div style={guessedBannerStyle}>
+                Correct guess. Waiting for round end...
               </div>
             )}
 
             {isArtist && (
-              <div style={{ background: '#14452E', border: '2px solid #1F6B46', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#ECFDF5', fontWeight: 700, fontSize: 13 }}>
-                You're the artist — no hints in chat!
+              <div style={artistBannerStyle}>
+                You are drawing this round.
               </div>
             )}
           </div>
@@ -497,39 +505,100 @@ const centeredScreenStyle: React.CSSProperties = {
   justifyContent: 'center',
   minHeight: '100vh',
   padding: 18,
+  background: '#05160E',
 };
 
-const stickyBadgeStyle = (bg: string): React.CSSProperties => ({
-  position: 'absolute',
-  top: -14,
-  left: '50%',
-  transform: 'translateX(-50%) rotate(-2deg)',
-  background: bg,
+const modalCardStyle: React.CSSProperties = {
+  padding: 32,
+  maxWidth: 460,
+  width: '100%',
+  textAlign: 'center',
+  background: '#0B2418',
   border: '2px solid #1F6B46',
+  borderRadius: 16,
+};
+
+const roundTagStyle: React.CSSProperties = {
+  display: 'inline-block',
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   borderRadius: 8,
-  padding: '2px 14px',
-  fontSize: 18,
+  padding: '3px 12px',
+  fontSize: 13,
+  fontWeight: 700,
+  color: '#86EFAC',
+  marginBottom: 10,
+};
+
+const modalTitleStyle: React.CSSProperties = {
+  fontSize: 26,
   fontWeight: 700,
   color: '#ECFDF5',
-  boxShadow: '2px 2px 0px #020A06',
-  whiteSpace: 'nowrap',
-});
+  margin: '4px 0 6px',
+};
 
-const roundIconBadgeStyle = (bg: string): React.CSSProperties => ({
-  width: 58,
-  height: 58,
-  borderRadius: 16,
-  background: bg,
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
+const modalSubtitleStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  margin: '0 0 22px',
+};
+
+const wordChoicesListStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 10,
+};
+
+const iconBadgeStyle: React.CSSProperties = {
+  width: 54,
+  height: 54,
+  margin: '0 auto 14px',
+  borderRadius: 12,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-});
+};
+
+const scoreListStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 8,
+  marginBottom: 20,
+};
+
+const primaryBtnStyle: React.CSSProperties = {
+  background: '#22C55E',
+  color: '#05160E',
+  padding: '13px 28px',
+  fontSize: 15,
+  fontWeight: 700,
+  borderRadius: 10,
+  border: 'none',
+  cursor: 'pointer',
+  width: '100%',
+};
+
+const revealedWordStyle: React.CSSProperties = {
+  display: 'inline-block',
+  background: '#14452E',
+  border: '1.5px solid #22C55E',
+  borderRadius: 8,
+  padding: '2px 12px',
+  color: '#4ADE80',
+};
+
+const gameShellStyle: React.CSSProperties = {
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  background: '#05160E',
+};
 
 const hudBarStyle: React.CSSProperties = {
   background: '#0B2418',
-  borderBottom: '2.5px solid #1F6B46',
+  borderBottom: '2px solid #1F6B46',
   padding: '12px 24px',
   display: 'flex',
   alignItems: 'center',
@@ -539,36 +608,133 @@ const hudBarStyle: React.CSSProperties = {
 };
 
 const roundPillStyle: React.CSSProperties = {
-  background: '#E0F2FE',
-  border: '2px solid #1F6B46',
-  borderRadius: 10,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
+  borderRadius: 8,
   padding: '5px 12px',
   fontSize: 14,
   fontWeight: 700,
   color: '#ECFDF5',
 };
 
-const timerBadgeStyle = (bg: string): React.CSSProperties => ({
+const timerBadgeStyle = (bg: string, darkText: boolean) => ({
   background: bg,
-  border: '2px solid #1F6B46',
-  boxShadow: '2px 2px 0px #020A06',
-  borderRadius: 12,
-  minWidth: 46,
+  border: '1.5px solid #22C55E',
+  borderRadius: 10,
+  minWidth: 44,
   padding: '4px 10px',
-  fontSize: 22,
+  fontSize: 20,
   fontWeight: 700,
-  color: '#ECFDF5',
-  textAlign: 'center',
+  color: darkText ? '#05160E' : '#ECFDF5',
+  textAlign: 'center' as const,
 });
 
 const wordClueBoxStyle: React.CSSProperties = {
-  background: '#22C55E',
-  border: '2px solid #1F6B46',
-  boxShadow: '2px 2px 0px #020A06',
-  borderRadius: 12,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
+  borderRadius: 10,
   padding: '6px 18px',
-  fontSize: 19,
+  fontSize: 18,
   fontWeight: 700,
   color: '#ECFDF5',
   textAlign: 'center',
+};
+
+const artistRoleStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 7,
+  fontSize: 14,
+  fontWeight: 700,
+  color: '#ECFDF5',
+};
+
+const arenaBodyStyle: React.CSSProperties = {
+  flex: 1,
+  maxWidth: 1120,
+  width: '100%',
+  margin: '0 auto',
+  display: 'flex',
+  gap: 18,
+  padding: 18,
+  flexWrap: 'wrap',
+};
+
+const sidebarStyle: React.CSSProperties = {
+  flex: '1 1 280px',
+  maxWidth: 340,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 16,
+};
+
+const sideCardStyle: React.CSSProperties = {
+  padding: 16,
+  background: '#0B2418',
+  border: '2px solid #1F6B46',
+  borderRadius: 14,
+};
+
+const sideHeaderStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  marginBottom: 10,
+  paddingBottom: 8,
+  borderBottom: '1.5px dashed #1F6B46',
+};
+
+const guessFeedStyle: React.CSSProperties = {
+  flex: 1,
+  overflowY: 'auto',
+  marginBottom: 12,
+  maxHeight: 260,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 6,
+};
+
+const guessInputStyle: React.CSSProperties = {
+  flex: 1,
+  padding: '10px 12px',
+  borderRadius: 10,
+  border: '1.5px solid #1F6B46',
+  background: '#081D13',
+  color: '#ECFDF5',
+  fontSize: 14,
+  fontWeight: 500,
+  outline: 'none',
+};
+
+const sendBtnStyle: React.CSSProperties = {
+  background: '#22C55E',
+  color: '#05160E',
+  padding: '8px 14px',
+  fontSize: 14,
+  fontWeight: 700,
+  borderRadius: 10,
+  border: 'none',
+  cursor: 'pointer',
+};
+
+const guessedBannerStyle: React.CSSProperties = {
+  background: '#14532D',
+  border: '1.5px solid #22C55E',
+  borderRadius: 10,
+  padding: '10px 12px',
+  textAlign: 'center',
+  color: '#ECFDF5',
+  fontWeight: 700,
+  fontSize: 13,
+};
+
+const artistBannerStyle: React.CSSProperties = {
+  background: '#103322',
+  border: '1.5px solid #1F6B46',
+  borderRadius: 10,
+  padding: '10px 12px',
+  textAlign: 'center',
+  color: '#86EFAC',
+  fontWeight: 700,
+  fontSize: 13,
 };

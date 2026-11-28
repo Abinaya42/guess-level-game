@@ -9,7 +9,7 @@ export const JoinRoomPage: React.FC = () => {
   const handleJoin = () => {
     const c = code.trim().toUpperCase();
     if (c.length !== 6) {
-      setError('Room pass needs all 6 characters.');
+      setError('Enter a 6-character room code.');
       return;
     }
     setError('');
@@ -20,44 +20,32 @@ export const JoinRoomPage: React.FC = () => {
 
   return (
     <div style={pageStyle}>
-      <div className="sketch-card" style={cardStyle}>
-        {/* Tilted Sticky Note Tag */}
-        <div style={stickyTagStyle} className="font-hand">
-          Guest Pass
-        </div>
-
-        {/* Custom Hand-Drawn Ticket Stub Emblem */}
+      <div style={cardStyle}>
         <div style={badgeStyle}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" fill="#0B2418" />
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />
             <path d="M13 5v2" />
             <path d="M13 17v2" />
             <path d="M13 11v2" />
           </svg>
         </div>
 
-        <h1 style={{ fontSize: 28, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
-          Join a Sketch Table
-        </h1>
-        <p style={{ color: '#86EFAC', fontSize: 14, marginBottom: 26, lineHeight: 1.5 }}>
-          Punch in the 6-character room code from your host to pull up a chair.
+        <h1 style={titleStyle}>Join Room</h1>
+        <p style={subtitleStyle}>
+          Enter the 6-character room code to join a game.
         </p>
 
-        {/* Ticket Code Input */}
-        <div style={ticketSlotStyle}>
-          <label className="font-hand" style={{ display: 'block', fontSize: 17, fontWeight: 700, color: '#44403C', marginBottom: 8 }}>
-            6-Character Pass Code
-          </label>
+        <div style={codeBoxStyle}>
+          <label style={labelStyle}>Room Code</label>
           <input
             value={code}
-            onChange={e => {
+            onChange={(e) => {
               setCode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6));
               setError('');
             }}
-            placeholder="XXXXXX"
+            placeholder="ABC123"
             maxLength={6}
-            onKeyDown={e => e.key === 'Enter' && handleJoin()}
-            className="font-display"
+            onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
             style={codeInputStyle(!!error)}
           />
           {error && <div style={errStyle}>{error}</div>}
@@ -66,34 +54,18 @@ export const JoinRoomPage: React.FC = () => {
         <button
           onClick={handleJoin}
           disabled={!isReady}
-          className="sketch-btn"
           style={{
-            background: isReady ? '#34D399' : '#1F6B46',
-            color: isReady ? '#ECFDF5' : '#6EE7B7',
-            padding: '15px',
-            fontSize: 17,
-            width: '100%',
-            marginBottom: 14,
+            ...joinBtnStyle,
+            background: isReady ? '#22C55E' : '#143827',
+            color: isReady ? '#05160E' : '#86EFAC',
             cursor: isReady ? 'pointer' : 'not-allowed',
           }}
         >
-          Enter Sketch Room →
+          Join Room
         </button>
 
-        <button
-          onClick={() => navigate('/home')}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#86EFAC',
-            cursor: 'pointer',
-            fontSize: 14,
-            fontWeight: 700,
-            textDecoration: 'underline',
-            textUnderlineOffset: 3,
-          }}
-        >
-          ← Back to Studio
+        <button onClick={() => navigate('/home')} style={backBtnStyle}>
+          Back to Home
         </button>
       </div>
     </div>
@@ -106,71 +78,99 @@ const pageStyle: React.CSSProperties = {
   justifyContent: 'center',
   minHeight: '100vh',
   padding: 20,
+  background: '#05160E',
 };
 
 const cardStyle: React.CSSProperties = {
-  padding: '38px 32px',
+  padding: '32px 28px',
   maxWidth: 420,
   width: '100%',
   textAlign: 'center',
-  position: 'relative',
-};
-
-const stickyTagStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: -14,
-  right: 22,
-  background: '#22C55E',
+  background: '#0B2418',
   border: '2px solid #1F6B46',
-  borderRadius: 8,
-  padding: '2px 12px',
-  fontSize: 18,
-  fontWeight: 700,
-  color: '#ECFDF5',
-  transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #020A06',
+  borderRadius: 16,
 };
 
 const badgeStyle: React.CSSProperties = {
-  width: 60,
-  height: 60,
-  margin: '0 auto',
-  borderRadius: 16,
-  background: '#10B981',
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
+  width: 52,
+  height: 52,
+  margin: '0 auto 12px',
+  borderRadius: 12,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  transform: 'rotate(-4deg)',
 };
 
-const ticketSlotStyle: React.CSSProperties = {
-  background: '#14452E',
-  border: '2px dashed #1F6B46',
-  borderRadius: 14,
-  padding: '16px 16px 18px',
-  marginBottom: 22,
-};
-
-const codeInputStyle = (err: boolean): React.CSSProperties => ({
-  width: '100%',
-  padding: '14px 12px',
-  borderRadius: 11,
-  border: `2.5px solid ${err ? '#E11D48' : '#ECFDF5'}`,
-  background: '#0B2418',
-  fontSize: 28,
+const titleStyle: React.CSSProperties = {
+  fontSize: 26,
   fontWeight: 700,
-  letterSpacing: 8,
-  textAlign: 'center',
+  color: '#ECFDF5',
+  margin: '0 0 6px',
+};
+
+const subtitleStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  margin: '0 0 22px',
+  lineHeight: 1.5,
+};
+
+const codeBoxStyle: React.CSSProperties = {
+  background: '#081D13',
+  border: '1.5px dashed #1F6B46',
+  borderRadius: 12,
+  padding: '16px',
+  marginBottom: 20,
+};
+
+const labelStyle: React.CSSProperties = {
+  display: 'block',
+  fontSize: 14,
+  fontWeight: 700,
+  color: '#86EFAC',
+  marginBottom: 8,
+};
+
+const codeInputStyle = (err: boolean) => ({
+  width: '100%',
+  padding: '12px',
+  borderRadius: 10,
+  border: `1.5px solid ${err ? '#4ADE80' : '#1F6B46'}`,
+  background: '#0B2418',
+  fontSize: 26,
+  fontWeight: 700,
+  letterSpacing: 7,
+  textAlign: 'center' as const,
   outline: 'none',
-  boxSizing: 'border-box',
+  boxSizing: 'border-box' as const,
   color: '#ECFDF5',
 });
 
 const errStyle: React.CSSProperties = {
-  color: '#E11D48',
+  color: '#4ADE80',
   fontSize: 12,
   fontWeight: 700,
   marginTop: 8,
+};
+
+const joinBtnStyle: React.CSSProperties = {
+  padding: '13px 20px',
+  fontSize: 16,
+  fontWeight: 700,
+  width: '100%',
+  borderRadius: 10,
+  border: 'none',
+  marginBottom: 12,
+};
+
+const backBtnStyle: React.CSSProperties = {
+  background: 'none',
+  border: 'none',
+  color: '#86EFAC',
+  cursor: 'pointer',
+  fontSize: 14,
+  fontWeight: 600,
+  textDecoration: 'underline',
 };

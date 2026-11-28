@@ -7,8 +7,9 @@ import { useAuthStore } from '../stores/authStore';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
-  email: z.string().email('Drop in a valid email address'),
+  email: z.string().email('Enter a valid email address'),
 });
+
 type FormData = z.infer<typeof schema>;
 
 export const ForgotPasswordPage: React.FC = () => {
@@ -26,7 +27,7 @@ export const ForgotPasswordPage: React.FC = () => {
     try {
       await forgotPassword(data.email);
       setSent(true);
-      toast.success('Reset note dispatched to your inbox!');
+      toast.success('Password reset email sent.');
     } catch (err: any) {
       setServerError(err.message);
     }
@@ -35,39 +36,25 @@ export const ForgotPasswordPage: React.FC = () => {
   if (sent) {
     return (
       <div style={pageStyle}>
-        <div className="sketch-card" style={cardStyle}>
-          <div style={stickyTagStyle('#34D399')} className="font-hand">
-            Sent!
-          </div>
-
+        <div style={cardStyle}>
           <div style={{ textAlign: 'center' }}>
-            <div style={badgeStyle('#14452E')}>
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="3" fill="#0B2418" />
+            <div style={badgeStyle}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
             </div>
 
-            <h2 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '16px 0 8px' }}>
-              Check Your Inbox
-            </h2>
-            <p style={{ color: '#86EFAC', fontSize: 14, lineHeight: 1.5 }}>
-              We've sent a fresh password reset link to your email address.
+            <h2 style={titleStyle}>Check Your Inbox</h2>
+            <p style={subtitleStyle}>
+              We sent a password reset link to your email address.
             </p>
 
             <button
               onClick={() => navigate('/login')}
-              className="sketch-btn"
-              style={{
-                marginTop: 24,
-                background: '#22C55E',
-                color: '#ECFDF5',
-                padding: '13px 28px',
-                fontSize: 16,
-                width: '100%',
-              }}
+              style={primaryBtnStyle}
             >
-              ← Back to Sign In
+              Back to Sign In
             </button>
           </div>
         </div>
@@ -77,35 +64,29 @@ export const ForgotPasswordPage: React.FC = () => {
 
   return (
     <div style={pageStyle}>
-      <div className="sketch-card" style={cardStyle}>
-        <div style={stickyTagStyle('#10B981')} className="font-hand">
-          Key Recovery
-        </div>
-
-        <div style={{ textAlign: 'center', marginBottom: 26 }}>
-          <div style={badgeStyle('#22C55E')}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="7.5" cy="15.5" r="5.5" fill="#0B2418" />
+      <div style={cardStyle}>
+        <div style={{ textAlign: 'center', marginBottom: 22 }}>
+          <div style={badgeStyle}>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="7.5" cy="15.5" r="5.5" />
               <path d="m21 2-9.6 9.6" />
               <path d="m15.5 7.5 3 3L22 7l-3-3" />
             </svg>
           </div>
 
-          <h1 style={{ fontSize: 26, fontWeight: 700, color: '#ECFDF5', margin: '14px 0 6px' }}>
-            Lost Your Key?
-          </h1>
-          <p style={{ color: '#86EFAC', fontSize: 14, lineHeight: 1.5 }}>
-            Enter your email and we'll send over a password reset link.
+          <h1 style={titleStyle}>Forgot Password</h1>
+          <p style={subtitleStyle}>
+            Enter your email and we will send you a password reset link.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={formStyle}>
           <div>
             <label style={labelStyle}>Email</label>
             <input
               {...register('email')}
               type="email"
-              placeholder="artist@sketchbook.com"
+              placeholder="player@example.com"
               style={inputStyle(!!errors.email)}
             />
             {errors.email && <span style={errStyle}>{errors.email.message}</span>}
@@ -116,23 +97,20 @@ export const ForgotPasswordPage: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="sketch-btn"
             style={{
-              background: isLoading ? '#1F6B46' : '#34D399',
-              color: '#ECFDF5',
-              padding: '13px',
-              fontSize: 16,
-              width: '100%',
+              ...primaryBtnStyle,
+              background: isLoading ? '#143827' : '#22C55E',
+              color: isLoading ? '#86EFAC' : '#05160E',
               cursor: isLoading ? 'not-allowed' : 'pointer',
             }}
           >
-            {isLoading ? 'Sending Note...' : 'Send Reset Link →'}
+            {isLoading ? 'Sending...' : 'Send Reset Link'}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: 22, color: '#86EFAC', fontSize: 14 }}>
-          <Link to="/login" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
-            ← Back to Sign In
+        <p style={footerLinkWrapStyle}>
+          <Link to="/login" style={footerLinkStyle}>
+            Back to Sign In
           </Link>
         </p>
       </div>
@@ -146,43 +124,49 @@ const pageStyle: React.CSSProperties = {
   justifyContent: 'center',
   minHeight: '100vh',
   padding: 20,
+  background: '#05160E',
 };
 
 const cardStyle: React.CSSProperties = {
-  padding: '38px 32px',
+  padding: '32px 28px',
   maxWidth: 420,
   width: '100%',
-  position: 'relative',
+  background: '#0B2418',
+  border: '2px solid #1F6B46',
+  borderRadius: 16,
 };
 
-const stickyTagStyle = (bg: string): React.CSSProperties => ({
-  position: 'absolute',
-  top: -14,
-  right: 22,
-  background: bg,
-  border: '2px solid #1F6B46',
-  borderRadius: 8,
-  padding: '2px 12px',
-  fontSize: 18,
-  fontWeight: 700,
-  color: '#ECFDF5',
-  transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #020A06',
-});
-
-const badgeStyle = (bg: string): React.CSSProperties => ({
-  width: 60,
-  height: 60,
-  margin: '0 auto',
-  borderRadius: 16,
-  background: bg,
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
+const badgeStyle: React.CSSProperties = {
+  width: 52,
+  height: 52,
+  margin: '0 auto 12px',
+  borderRadius: 12,
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  transform: 'rotate(-4deg)',
-});
+};
+
+const titleStyle: React.CSSProperties = {
+  fontSize: 25,
+  fontWeight: 700,
+  color: '#ECFDF5',
+  margin: '0 0 6px',
+};
+
+const subtitleStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  lineHeight: 1.5,
+  margin: 0,
+};
+
+const formStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 14,
+};
 
 const labelStyle: React.CSSProperties = {
   display: 'block',
@@ -192,20 +176,20 @@ const labelStyle: React.CSSProperties = {
   marginBottom: 6,
 };
 
-const inputStyle = (err: boolean): React.CSSProperties => ({
+const inputStyle = (err: boolean) => ({
   width: '100%',
-  padding: '12px 14px',
-  borderRadius: 11,
-  border: `2px solid ${err ? '#E11D48' : '#ECFDF5'}`,
-  background: '#0B2418',
+  padding: '11px 14px',
+  borderRadius: 10,
+  border: `1.5px solid ${err ? '#4ADE80' : '#1F6B46'}`,
+  background: '#081D13',
   fontSize: 15,
   color: '#ECFDF5',
   outline: 'none',
-  boxSizing: 'border-box',
+  boxSizing: 'border-box' as const,
 });
 
 const errStyle: React.CSSProperties = {
-  color: '#E11D48',
+  color: '#86EFAC',
   fontSize: 12,
   fontWeight: 600,
   marginTop: 4,
@@ -213,11 +197,37 @@ const errStyle: React.CSSProperties = {
 };
 
 const errorBoxStyle: React.CSSProperties = {
-  background: '#FFE4E6',
-  border: '2px solid #1F6B46',
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   borderRadius: 10,
   padding: '10px 14px',
-  color: '#9F1239',
+  color: '#ECFDF5',
   fontSize: 13,
   fontWeight: 600,
+};
+
+const primaryBtnStyle: React.CSSProperties = {
+  marginTop: 8,
+  background: '#22C55E',
+  color: '#05160E',
+  padding: '13px 20px',
+  fontSize: 15,
+  fontWeight: 700,
+  width: '100%',
+  borderRadius: 10,
+  border: 'none',
+  cursor: 'pointer',
+};
+
+const footerLinkWrapStyle: React.CSSProperties = {
+  textAlign: 'center',
+  marginTop: 20,
+  color: '#86EFAC',
+  fontSize: 14,
+};
+
+const footerLinkStyle: React.CSSProperties = {
+  color: '#4ADE80',
+  fontWeight: 700,
+  textDecoration: 'underline',
 };

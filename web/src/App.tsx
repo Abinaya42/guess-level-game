@@ -25,7 +25,6 @@ import { SettingsPage } from './pages/SettingsPage';
 export const App: React.FC = () => {
   const { setUser, setFirebaseUser } = useAuthStore();
 
-  // Persist auth across page refresh
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       setFirebaseUser(fbUser);
@@ -41,13 +40,25 @@ export const App: React.FC = () => {
       }
     });
     return unsub;
-  }, []);
+  }, [setUser, setFirebaseUser]);
 
   return (
     <BrowserRouter>
-      <Toaster position="top-center" toastOptions={{ duration: 3000, style: { borderRadius: '12px', fontSize: '14px' } }} />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#0B2418',
+            color: '#ECFDF5',
+            border: '1.5px solid #22C55E',
+            borderRadius: '10px',
+            fontSize: '14px',
+            fontWeight: 600,
+          },
+        }}
+      />
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<SplashPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -55,10 +66,8 @@ export const App: React.FC = () => {
         <Route path="/verify-email" element={<EmailVerificationPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
-        {/* Join by invite link */}
         <Route path="/join/:code" element={<ProtectedRoute><LobbyPage /></ProtectedRoute>} />
 
-        {/* Protected routes */}
         <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
         <Route path="/create-room" element={<ProtectedRoute><CreateRoomPage /></ProtectedRoute>} />
@@ -68,7 +77,6 @@ export const App: React.FC = () => {
         <Route path="/history" element={<ProtectedRoute><GameHistoryPage /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 
-        {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

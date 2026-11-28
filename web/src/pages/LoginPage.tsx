@@ -7,109 +7,122 @@ import { useAuthStore } from '../stores/authStore';
 import toast from 'react-hot-toast';
 
 const schema = z.object({
-  email: z.string().email('Drop in a valid email address'),
+  email: z.string().email('Enter a valid email address'),
   password: z.string().min(1, 'Password is required'),
 });
+
 type FormData = z.infer<typeof schema>;
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { login, isLoading } = useAuthStore();
   const [serverError, setServerError] = useState('');
+  const [focusedField, setFocusedField] = useState<'email' | 'password' | null>(null);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
   });
+
+  const emailRegister = register('email');
+  const passwordRegister = register('password');
 
   const onSubmit = async (data: FormData) => {
     setServerError('');
     try {
       await login(data.email, data.password);
-      toast.success('Pencils ready — welcome back!');
+      toast.success('Signed in.');
       navigate('/home');
     } catch (err: any) {
-      setServerError(err.message);
+      setServerError(err?.message || 'Sign in failed');
     }
   };
 
   return (
     <div style={pageStyle}>
-      {/* Subtle decorative hand-drawn corner doodles */}
-      <svg width="110" height="110" viewBox="0 0 110 110" fill="none" style={{ position: 'fixed', top: 24, left: 24, opacity: 0.22, pointerEvents: 'none' }}>
-        <path d="M18 65 C 25 22, 78 18, 86 58 C 92 85, 42 96, 26 74" stroke="#ECFDF5" strokeWidth="3" strokeLinecap="round" strokeDasharray="6 6" />
-        <path d="M62 24 L 68 38 L 83 40 L 71 50 L 74 65 L 62 57 L 50 65 L 53 50 L 41 40 L 56 38 Z" stroke="#ECFDF5" strokeWidth="2.5" strokeLinejoin="round" />
-      </svg>
+      <div style={cardWrapperStyle}>
+        <div style={cardOffsetShadowStyle} />
 
-      <div className="sketch-card" style={cardStyle}>
-        {/* Tilted Sticky Note Tag */}
-        <div style={stickyTagStyle} className="font-hand">
-          Sketch &amp; Guess!
-        </div>
+        <div style={ribbonBadgeStyle}>Sketch &amp; Guess!</div>
 
-        <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          {/* Custom Hand-Drawn Pencil Emblem */}
-          <div style={logoBadgeStyle}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ECFDF5" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" fill="#FB7185" />
-              <path d="m14 6 4 4" />
-              <path d="M3 21h18" strokeDasharray="3 3" />
-            </svg>
+        <div style={cardStyle}>
+          <div style={headerWrapStyle}>
+            <div style={logoBadgeStyle}>
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#05160E"
+                strokeWidth="2.3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                <path d="m15 5 4 4" />
+              </svg>
+            </div>
+
+            <h1 style={titleStyle}>Grab a Brush</h1>
+            <p style={subtitleStyle}>Sign in to join your room and start sketching</p>
           </div>
 
-          <h1 style={{ fontSize: 30, fontWeight: 700, color: '#ECFDF5', margin: '10px 0 4px' }}>
-            Grab a Brush
-          </h1>
-          <p style={{ color: '#86EFAC', fontSize: 14 }}>
-            Sign in to join your room and start sketching
+          <form onSubmit={handleSubmit(onSubmit)} style={formStyle}>
+            <div>
+              <label style={labelStyle}>Email</label>
+              <input
+                {...emailRegister}
+                type="email"
+                placeholder="player@example.com"
+                onFocus={() => setFocusedField('email')}
+                onBlur={(e) => {
+                  setFocusedField(null);
+                  void emailRegister.onBlur(e);
+                }}
+                style={inputStyle(!!errors.email, focusedField === 'email')}
+              />
+              {errors.email && <span style={errStyle}>{errors.email.message}</span>}
+            </div>
+
+            <div>
+              <label style={labelStyle}>Password</label>
+              <input
+                {...passwordRegister}
+                type="password"
+                placeholder="••••••••"
+                onFocus={() => setFocusedField('password')}
+                onBlur={(e) => {
+                  setFocusedField(null);
+                  void passwordRegister.onBlur(e);
+                }}
+                style={inputStyle(!!errors.password, focusedField === 'password')}
+              />
+              {errors.password && <span style={errStyle}>{errors.password.message}</span>}
+            </div>
+
+            <div style={forgotRowStyle}>
+              <Link to="/forgot-password" style={forgotLinkStyle}>
+                Forgot password?
+              </Link>
+            </div>
+
+            {serverError && <div style={errorBoxStyle}>{serverError}</div>}
+
+            <button type="submit" disabled={isLoading} style={submitBtn(isLoading)}>
+              {isLoading ? 'Entering Room...' : 'Enter Game Room →'}
+            </button>
+          </form>
+
+          <p style={footerTextStyle}>
+            New around here?{' '}
+            <Link to="/register" style={registerLinkStyle}>
+              Create an account
+            </Link>
           </p>
         </div>
-
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div>
-            <label style={labelStyle}>Email</label>
-            <input
-              {...register('email')}
-              type="email"
-              placeholder="artist@sketchbook.com"
-              style={inputStyle(!!errors.email)}
-            />
-            {errors.email && <span style={errStyle}>{errors.email.message}</span>}
-          </div>
-
-          <div>
-            <label style={labelStyle}>Password</label>
-            <input
-              {...register('password')}
-              type="password"
-              placeholder="••••••••"
-              style={inputStyle(!!errors.password)}
-            />
-            {errors.password && <span style={errStyle}>{errors.password.message}</span>}
-          </div>
-
-          <div style={{ textAlign: 'right', marginTop: -4 }}>
-            <Link to="/forgot-password" style={{ color: '#ECFDF5', fontSize: 13, fontWeight: 600, textDecoration: 'underline', textUnderlineOffset: 3 }}>
-              Forgot password?
-            </Link>
-          </div>
-
-          {serverError && (
-            <div style={errorBoxStyle}>
-              {serverError}
-            </div>
-          )}
-
-          <button type="submit" disabled={isLoading} className="sketch-btn" style={submitBtn(isLoading)}>
-            {isLoading ? 'Opening Sketchbook...' : 'Enter Game Room →'}
-          </button>
-        </form>
-
-        <p style={{ textAlign: 'center', marginTop: 22, color: '#86EFAC', fontSize: 14 }}>
-          New around here?{' '}
-          <Link to="/register" style={{ color: '#E11D48', fontWeight: 700, textDecoration: 'underline', textUnderlineOffset: 3 }}>
-            Create an account
-          </Link>
-        </p>
       </div>
     </div>
   );
@@ -121,43 +134,92 @@ const pageStyle: React.CSSProperties = {
   justifyContent: 'center',
   minHeight: '100vh',
   padding: 20,
+  backgroundColor: '#05160E',
+  backgroundImage: 'radial-gradient(#164E32 1.25px, transparent 1.25px)',
+  backgroundSize: '18px 18px',
+};
+
+const cardWrapperStyle: React.CSSProperties = {
   position: 'relative',
+  maxWidth: 420,
+  width: '100%',
+};
+
+const cardOffsetShadowStyle: React.CSSProperties = {
+  position: 'absolute',
+  inset: 0,
+  transform: 'translate(8px, 8px)',
+  borderRadius: 18,
+  background: '#030E09',
+  border: '1.5px solid #133B27',
+  zIndex: 0,
+};
+
+const ribbonBadgeStyle: React.CSSProperties = {
+  position: 'absolute',
+  top: -12,
+  right: 18,
+  zIndex: 3,
+  background: '#FACC15',
+  color: '#05160E',
+  fontSize: 12,
+  fontWeight: 800,
+  padding: '5px 12px',
+  borderRadius: 8,
+  border: '1.5px solid #05160E',
+  boxShadow: '2px 2px 0px #05160E',
+  transform: 'rotate(3deg)',
+  letterSpacing: 0.2,
 };
 
 const cardStyle: React.CSSProperties = {
-  padding: '38px 34px',
-  maxWidth: 420,
-  width: '100%',
   position: 'relative',
+  zIndex: 1,
+  padding: '32px 28px',
+  width: '100%',
+  background: '#0B2418',
+  border: '2px solid #1F6B46',
+  borderRadius: 18,
+  boxSizing: 'border-box',
 };
 
-const stickyTagStyle: React.CSSProperties = {
-  position: 'absolute',
-  top: -14,
-  right: 22,
-  background: '#22C55E',
-  border: '2px solid #1F6B46',
-  borderRadius: 8,
-  padding: '2px 12px',
-  fontSize: 18,
-  fontWeight: 700,
-  color: '#ECFDF5',
-  transform: 'rotate(3deg)',
-  boxShadow: '2px 2px 0px #020A06',
+const headerWrapStyle: React.CSSProperties = {
+  textAlign: 'center',
+  marginBottom: 24,
 };
 
 const logoBadgeStyle: React.CSSProperties = {
-  width: 60,
-  height: 60,
-  margin: '0 auto',
-  borderRadius: 16,
-  background: '#22C55E',
-  border: '2.5px solid #1F6B46',
-  boxShadow: '3px 3px 0px #020A06',
+  width: 54,
+  height: 54,
+  margin: '0 auto 12px',
+  borderRadius: 14,
+  background: '#84CC16',
+  border: '2px solid #05160E',
+  boxShadow: '3px 3px 0px #05160E',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  transform: 'rotate(-5deg)',
+  transform: 'rotate(-4deg)',
+};
+
+const titleStyle: React.CSSProperties = {
+  fontSize: 28,
+  fontWeight: 800,
+  color: '#ECFDF5',
+  margin: '0 0 6px',
+  letterSpacing: -0.3,
+};
+
+const subtitleStyle: React.CSSProperties = {
+  color: '#86EFAC',
+  fontSize: 14,
+  margin: 0,
+};
+
+const formStyle: React.CSSProperties = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 14,
 };
 
 const labelStyle: React.CSSProperties = {
@@ -168,42 +230,78 @@ const labelStyle: React.CSSProperties = {
   marginBottom: 6,
 };
 
-const inputStyle = (err: boolean): React.CSSProperties => ({
+const inputStyle = (hasError: boolean, isFocused: boolean): React.CSSProperties => ({
   width: '100%',
   padding: '12px 14px',
-  borderRadius: 11,
-  border: `2px solid ${err ? '#E11D48' : '#ECFDF5'}`,
-  background: '#0B2418',
+  borderRadius: 12,
+  border: `1.5px solid ${
+    isFocused ? '#4ADE80' : hasError ? '#F87171' : '#1F6B46'
+  }`,
+  background: '#071A11',
   fontSize: 15,
   color: '#ECFDF5',
   outline: 'none',
   boxSizing: 'border-box',
+  boxShadow: isFocused
+    ? '0 0 0 3px rgba(74, 222, 128, 0.25), 0 0 14px rgba(34, 197, 94, 0.35)'
+    : 'none',
+  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
 });
 
 const errStyle: React.CSSProperties = {
-  color: '#E11D48',
+  color: '#FCA5A5',
   fontSize: 12,
   fontWeight: 600,
   marginTop: 5,
   display: 'block',
 };
 
+const forgotRowStyle: React.CSSProperties = {
+  textAlign: 'right',
+  marginTop: -2,
+};
+
+const forgotLinkStyle: React.CSSProperties = {
+  color: '#A7F3D0',
+  fontSize: 13,
+  fontWeight: 600,
+  textDecoration: 'underline',
+};
+
 const errorBoxStyle: React.CSSProperties = {
-  background: '#FFE4E6',
-  border: '2px solid #1F6B46',
+  background: '#103322',
+  border: '1.5px solid #22C55E',
   borderRadius: 10,
   padding: '10px 14px',
-  color: '#9F1239',
+  color: '#ECFDF5',
   fontSize: 13,
   fontWeight: 600,
 };
 
 const submitBtn = (loading: boolean): React.CSSProperties => ({
-  background: loading ? '#1F6B46' : '#34D399',
-  color: '#ECFDF5',
-  padding: '13px',
+  background: loading ? '#143827' : '#22C55E',
+  color: loading ? '#86EFAC' : '#05160E',
+  padding: '13px 20px',
   fontSize: 16,
+  fontWeight: 800,
   width: '100%',
   marginTop: 6,
-  opacity: loading ? 0.8 : 1,
+  borderRadius: 12,
+  border: '2px solid #05160E',
+  boxShadow: loading ? 'none' : '0 4px 0 #05160E',
+  cursor: loading ? 'not-allowed' : 'pointer',
+  transition: 'transform 0.1s ease, box-shadow 0.1s ease',
 });
+
+const footerTextStyle: React.CSSProperties = {
+  textAlign: 'center',
+  marginTop: 20,
+  color: '#A7F3D0',
+  fontSize: 14,
+};
+
+const registerLinkStyle: React.CSSProperties = {
+  color: '#4ADE80',
+  fontWeight: 700,
+  textDecoration: 'underline',
+};
