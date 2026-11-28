@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() { _loading = true; _error = null; });
     try {
-      final cred = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailCtrl.text.trim(),
         password: _passCtrl.text,
       );
@@ -39,19 +39,26 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       ref.read(currentUserProvider.notifier).state = user;
       if (mounted) context.go('/home');
     } on FirebaseAuthException catch (e) {
-      setState(() { _error = _authError(e.code); });
+      setState(() { _error = _authError(e.code, e.message); });
+    } catch (e) {
+      setState(() { _error = 'Profile/Server sync error: $e'; });
     } finally {
       if (mounted) setState(() => _loading = false);
     }
   }
 
-  String _authError(String code) {
+  String _authError(String code, String? message) {
     switch (code) {
-      case 'user-not-found': return 'No account found with this email.';
-      case 'wrong-password': return 'Incorrect password. Please try again.';
-      case 'invalid-credential': return 'Invalid email or password.';
-      case 'too-many-requests': return 'Too many attempts. Please try later.';
-      default: return 'Login failed. Please try again.';
+      case 'user-not-found':
+        return 'No account found with this email.';
+      case 'wrong-password':
+        return 'Incorrect password. Please try again.';
+      case 'invalid-credential':
+        return 'Invalid email or password.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try later.';
+      default:
+        return 'Auth error ($code): ${message ?? 'Please try again.'}';
     }
   }
 
