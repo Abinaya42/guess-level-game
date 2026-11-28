@@ -1,11 +1,11 @@
-import 'package:dio/dio.dart';
+﻿import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models.dart';
 
 class ApiService {
   static const String _baseUrl = String.fromEnvironment(
     'API_URL',
-    defaultValue: 'http://10.0.2.2:3001/api', // Android emulator localhost
+    defaultValue: 'https://find11-game-1.onrender.com/api',
   );
 
   late final Dio _dio;
@@ -13,8 +13,8 @@ class ApiService {
   ApiService() {
     _dio = Dio(BaseOptions(
       baseUrl: _baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {'Content-Type': 'application/json'},
     ));
 
@@ -48,13 +48,13 @@ class ApiService {
     return GameStats.fromJson(res.data['stats'] as Map<String, dynamic>);
   }
 
-  Future<List<Map<String, dynamic>>> getUserHistory(String userId, {int page = 1}) async {
+  Future<List>> getUserHistory(String userId, {int page = 1}) async {
     final res = await _dio.get('/users/$userId/history', queryParameters: {'page': page});
     return (res.data['history'] as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+        .cast>();
   }
 
-  Future<Map<String, dynamic>> getRoom(String code) async {
+  Future> getRoom(String code) async {
     final res = await _dio.get('/rooms/$code');
     return res.data['room'] as Map<String, dynamic>;
   }
