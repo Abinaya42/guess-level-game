@@ -48,13 +48,13 @@ class ApiService {
     return GameStats.fromJson(res.data['stats'] as Map<String, dynamic>);
   }
 
-  Future<List>> getUserHistory(String userId, {int page = 1}) async {
+  Future<List<Map<String, dynamic>>> getUserHistory(String userId, {int page = 1}) async {
     final res = await _dio.get('/users/$userId/history', queryParameters: {'page': page});
     return (res.data['history'] as List<dynamic>)
-        .cast>();
+        .cast<Map<String, dynamic>>();
   }
 
-  Future> getRoom(String code) async {
+  Future<Map<String, dynamic>> getRoom(String code) async {
     final res = await _dio.get('/rooms/$code');
     return res.data['room'] as Map<String, dynamic>;
   }
