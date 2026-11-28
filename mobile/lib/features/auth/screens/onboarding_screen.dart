@@ -11,7 +11,7 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _page = 0;
   final _slides = [
-    {'emoji': '🎨', 'title': 'Draw Anything', 'desc': 'Express yourself with intuitive drawing tools — colors, brushes, undo, and more.'},
+    {'emoji': '🎨', 'title': 'Find 11', 'desc': 'Express yourself with intuitive drawing tools — colors, brushes, undo, and more.'},
     {'emoji': '🧩', 'title': 'Guess the Word', 'desc': 'Watch the drawing come to life and type your guesses. Faster guesses earn more points!'},
     {'emoji': '🏆', 'title': 'Win Together', 'desc': 'Play with up to 11 friends in private rooms. Invite by code or link!'},
   ];
