@@ -29,7 +29,7 @@ export const JoinRoomPage: React.FC = () => {
         {/* Custom Hand-Drawn Ticket Stub Emblem */}
         <div style={badgeStyle}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" fill="#FFFDF9" />
+            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" fill="#0B2418" />
             <path d="M13 5v2" />
             <path d="M13 17v2" />
             <path d="M13 11v2" />
@@ -120,7 +120,7 @@ const stickyTagStyle: React.CSSProperties = {
   position: 'absolute',
   top: -14,
   right: 22,
-  background: '#FDE047',
+  background: '#22C55E',
   border: '2px solid #1C1917',
   borderRadius: 8,
   padding: '2px 12px',
@@ -136,7 +136,7 @@ const badgeStyle: React.CSSProperties = {
   height: 60,
   margin: '0 auto',
   borderRadius: 16,
-  background: '#38BDF8',
+  background: '#10B981',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   display: 'flex',
@@ -146,7 +146,7 @@ const badgeStyle: React.CSSProperties = {
 };
 
 const ticketSlotStyle: React.CSSProperties = {
-  background: '#FEF9C3',
+  background: '#14452E',
   border: '2px dashed #1C1917',
   borderRadius: 14,
   padding: '16px 16px 18px',
@@ -158,7 +158,7 @@ const codeInputStyle = (err: boolean): React.CSSProperties => ({
   padding: '14px 12px',
   borderRadius: 11,
   border: `2.5px solid ${err ? '#E11D48' : '#1C1917'}`,
-  background: '#FFFDF9',
+  background: '#0B2418',
   fontSize: 28,
   fontWeight: 700,
   letterSpacing: 8,

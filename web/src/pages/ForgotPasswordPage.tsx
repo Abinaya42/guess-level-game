@@ -41,9 +41,9 @@ export const ForgotPasswordPage: React.FC = () => {
           </div>
 
           <div style={{ textAlign: 'center' }}>
-            <div style={badgeStyle('#FEF9C3')}>
+            <div style={badgeStyle('#14452E')}>
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="3" fill="#FFFDF9" />
+                <rect x="2" y="4" width="20" height="16" rx="3" fill="#0B2418" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
             </div>
@@ -60,7 +60,7 @@ export const ForgotPasswordPage: React.FC = () => {
               className="sketch-btn"
               style={{
                 marginTop: 24,
-                background: '#FDE047',
+                background: '#22C55E',
                 color: '#1C1917',
                 padding: '13px 28px',
                 fontSize: 16,
@@ -78,14 +78,14 @@ export const ForgotPasswordPage: React.FC = () => {
   return (
     <div style={pageStyle}>
       <div className="sketch-card" style={cardStyle}>
-        <div style={stickyTagStyle('#38BDF8')} className="font-hand">
+        <div style={stickyTagStyle('#10B981')} className="font-hand">
           Key Recovery
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: 26 }}>
-          <div style={badgeStyle('#FDE047')}>
+          <div style={badgeStyle('#22C55E')}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="7.5" cy="15.5" r="5.5" fill="#FFFDF9" />
+              <circle cx="7.5" cy="15.5" r="5.5" fill="#0B2418" />
               <path d="m21 2-9.6 9.6" />
               <path d="m15.5 7.5 3 3L22 7l-3-3" />
             </svg>
@@ -197,7 +197,7 @@ const inputStyle = (err: boolean): React.CSSProperties => ({
   padding: '12px 14px',
   borderRadius: 11,
   border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
-  background: '#FFFDF9',
+  background: '#0B2418',
   fontSize: 15,
   color: '#1C1917',
   outline: 'none',

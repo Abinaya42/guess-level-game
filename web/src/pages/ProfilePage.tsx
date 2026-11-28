@@ -22,7 +22,7 @@ export const ProfilePage: React.FC = () => {
 
   const statItems = stats
     ? [
-        { label: 'Games Played', val: stats.gamesPlayed, bg: '#FEF9C3' },
+        { label: 'Games Played', val: stats.gamesPlayed, bg: '#14452E' },
         { label: 'Games Won', val: stats.gamesWon, bg: '#DCFCE7' },
         { label: 'Avg Score', val: stats.avgScore, bg: '#E0F2FE' },
         { label: 'Best Score', val: stats.bestScore, bg: '#FFE4E6' },
@@ -109,7 +109,7 @@ export const ProfilePage: React.FC = () => {
 };
 
 const headerStyle: React.CSSProperties = {
-  background: '#FFFDF9',
+  background: '#0B2418',
   borderBottom: '2.5px solid #1C1917',
   padding: '14px 24px',
   display: 'flex',
@@ -118,7 +118,7 @@ const headerStyle: React.CSSProperties = {
 };
 
 const backBtnStyle: React.CSSProperties = {
-  background: '#FDE047',
+  background: '#22C55E',
   color: '#1C1917',
   padding: '8px 14px',
   fontSize: 14,
@@ -128,7 +128,7 @@ const stickyTagStyle: React.CSSProperties = {
   position: 'absolute',
   top: -14,
   right: 22,
-  background: '#38BDF8',
+  background: '#10B981',
   border: '2px solid #1C1917',
   borderRadius: 8,
   padding: '2px 12px',
@@ -143,7 +143,7 @@ const avatarBadgeStyle: React.CSSProperties = {
   width: 82,
   height: 82,
   borderRadius: 20,
-  background: '#FDE047',
+  background: '#22C55E',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   color: '#1C1917',

@@ -4,27 +4,27 @@ import { useNavigate } from 'react-router-dom';
 const slides = [
   {
     tag: 'Step 1 · Sketch',
-    badgeBg: '#FDE047',
+    badgeBg: '#22C55E',
     title: 'Sketch Anything',
     desc: 'Pick your brush size, splash vibrant colors across the paper, and bring tricky prompts to life.',
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="13.5" cy="6.5" r="1.5" fill="#E11D48" />
-        <circle cx="17.5" cy="10.5" r="1.5" fill="#38BDF8" />
+        <circle cx="17.5" cy="10.5" r="1.5" fill="#10B981" />
         <circle cx="8.5" cy="7.5" r="1.5" fill="#34D399" />
         <circle cx="6.5" cy="12.5" r="1.5" fill="#F97316" />
-        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" fill="#FFFDF9" />
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" fill="#0B2418" />
       </svg>
     ),
   },
   {
     tag: 'Step 2 · Guess',
-    badgeBg: '#38BDF8',
+    badgeBg: '#10B981',
     title: 'Crack the Doodle',
     desc: 'Watch every ink stroke appear live and type your guesses fast — quicker cracks earn bonus points!',
     icon: (
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" fill="#FFFDF9" />
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" fill="#0B2418" />
         <path d="M9 18h6" />
         <path d="M10 22h4" />
       </svg>
@@ -42,7 +42,7 @@ const slides = [
         <path d="M4 22h16" />
         <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
         <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FFFDF9" />
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#0B2418" />
       </svg>
     ),
   },
@@ -86,7 +86,7 @@ export const OnboardingPage: React.FC = () => {
                 height: 10,
                 borderRadius: 99,
                 border: '2px solid #1C1917',
-                background: i === slide ? '#FDE047' : '#FFFDF9',
+                background: i === slide ? '#22C55E' : '#0B2418',
                 cursor: 'pointer',
                 padding: 0,
                 transition: 'all 0.25s ease',
@@ -99,7 +99,7 @@ export const OnboardingPage: React.FC = () => {
           <button
             onClick={() => setSlide(s => s + 1)}
             className="sketch-btn"
-            style={btnStyle('#FDE047')}
+            style={btnStyle('#22C55E')}
           >
             Flip Page →
           </button>
@@ -115,7 +115,7 @@ export const OnboardingPage: React.FC = () => {
             <button
               onClick={() => navigate('/login')}
               className="sketch-btn"
-              style={btnStyle('#FFFDF9')}
+              style={btnStyle('#0B2418')}
             >
               I Already Have a Pass
             </button>

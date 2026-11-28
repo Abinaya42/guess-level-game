@@ -7,7 +7,7 @@ import { auth } from '../lib/firebase';
 import { Player } from '../types';
 import toast from 'react-hot-toast';
 
-const AVATAR_COLORS = ['#FDE047', '#38BDF8', '#34D399', '#FB7185', '#C084FC', '#FDBA74'];
+const AVATAR_COLORS = ['#22C55E', '#10B981', '#34D399', '#FB7185', '#C084FC', '#FDBA74'];
 
 export const LobbyPage: React.FC = () => {
   const { code } = useParams<{ code: string }>();
@@ -106,7 +106,7 @@ export const LobbyPage: React.FC = () => {
     <div style={{ minHeight: '100vh', padding: '28px 18px' }}>
       <div style={{ maxWidth: 680, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
         {/* Room Ticket Header */}
-        <div className="sketch-card" style={{ padding: 24, background: '#FDE047', position: 'relative' }}>
+        <div className="sketch-card" style={{ padding: 24, background: '#22C55E', position: 'relative' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, flexWrap: 'wrap' }}>
             <div>
               <span className="font-hand" style={{ fontSize: 18, fontWeight: 700, color: '#44403C' }}>
@@ -144,7 +144,7 @@ export const LobbyPage: React.FC = () => {
         </div>
 
         {/* Players List */}
-        <div className="sketch-card" style={{ padding: 22, background: '#FFFDF9' }}>
+        <div className="sketch-card" style={{ padding: 22, background: '#0B2418' }}>
           <h3 style={{ fontSize: 18, fontWeight: 700, color: '#1C1917', marginBottom: 14 }}>
             Artists in Room
           </h3>
@@ -162,7 +162,7 @@ export const LobbyPage: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                     padding: '10px 14px',
-                    background: isMe ? '#FEF9C3' : '#FFFFFF',
+                    background: isMe ? '#14452E' : '#0E2E1F',
                     borderRadius: 12,
                     border: '2px solid #1C1917',
                   }}
@@ -199,7 +199,7 @@ export const LobbyPage: React.FC = () => {
 
                       {p.isHost && (
                         <div style={{ fontSize: 12, color: '#B45309', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#FDE047" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="#22C55E" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                             <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
                           </svg>
                           <span>Room Host</span>
@@ -211,7 +211,7 @@ export const LobbyPage: React.FC = () => {
                   {/* Status Stamp */}
                   <div>
                     {p.isHost ? (
-                      <span style={statusPillStyle('#FEF9C3')}>Host</span>
+                      <span style={statusPillStyle('#14452E')}>Host</span>
                     ) : p.isReady ? (
                       <span style={statusPillStyle('#DCFCE7')}>Ready</span>
                     ) : (
@@ -275,7 +275,7 @@ const codeTicketStyle: React.CSSProperties = {
   fontSize: 22,
   fontWeight: 700,
   letterSpacing: 4,
-  background: '#FFFDF9',
+  background: '#0B2418',
   color: '#1C1917',
   border: '2px solid #1C1917',
   boxShadow: '2px 2px 0px #1C1917',
@@ -284,7 +284,7 @@ const codeTicketStyle: React.CSSProperties = {
 };
 
 const copyBtnStyle: React.CSSProperties = {
-  background: '#FFFDF9',
+  background: '#0B2418',
   color: '#1C1917',
   padding: '8px 14px',
   fontSize: 14,

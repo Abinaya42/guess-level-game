@@ -33,7 +33,7 @@ export const SplashPage: React.FC = () => {
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" fill="#FFFDF9" />
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" fill="#0B2418" />
             <path d="m15 5 4 4" />
           </svg>
         </div>
@@ -43,7 +43,7 @@ export const SplashPage: React.FC = () => {
         </h1>
 
         <div style={styles.taglineRow}>
-          <span style={styles.pill('#FEF9C3')}>Draw</span>
+          <span style={styles.pill('#14452E')}>Draw</span>
           <span style={styles.pill('#E0F2FE')}>Guess</span>
           <span style={styles.pill('#DCFCE7')}>Win</span>
         </div>
@@ -83,7 +83,7 @@ const styles: Record<string, any> = {
     position: 'absolute',
     top: -14,
     right: 22,
-    background: '#38BDF8',
+    background: '#10B981',
     border: '2px solid #1C1917',
     borderRadius: 8,
     padding: '2px 12px',
@@ -97,7 +97,7 @@ const styles: Record<string, any> = {
     width: 84,
     height: 84,
     borderRadius: 22,
-    background: '#FDE047',
+    background: '#22C55E',
     border: '3px solid #1C1917',
     boxShadow: '4px 4px 0px #1C1917',
     display: 'flex',

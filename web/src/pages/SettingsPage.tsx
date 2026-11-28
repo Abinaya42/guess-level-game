@@ -69,7 +69,7 @@ export const SettingsPage: React.FC = () => {
             className="sketch-btn"
             style={{
               background: saving ? '#DCFCE7' : '#22C55E',
-              color: saving ? '#166534' : '#FFFFFF',
+              color: saving ? '#166534' : '#0E2E1F',
               padding: '12px 22px',
               fontSize: 15,
               cursor: saving ? 'not-allowed' : 'pointer',

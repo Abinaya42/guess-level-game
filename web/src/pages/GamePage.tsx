@@ -173,7 +173,7 @@ export const GamePage: React.FC = () => {
     return (
       <div style={centeredScreenStyle}>
         <div className="sketch-card" style={{ padding: 36, maxWidth: 460, width: '100%', textAlign: 'center', position: 'relative' }}>
-          <div style={stickyBadgeStyle('#FDE047')} className="font-hand">
+          <div style={stickyBadgeStyle('#22C55E')} className="font-hand">
             Round {round?.roundNumber || 1} — Your Turn!
           </div>
           <h2 style={{ fontSize: 28, fontWeight: 700, color: '#1C1917', marginTop: 10, marginBottom: 6 }}>
@@ -184,7 +184,7 @@ export const GamePage: React.FC = () => {
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {wordChoices.map((word, idx) => {
-              const cardColors = ['#FEF9C3', '#E0F2FE', '#FFE4E6'];
+              const cardColors = ['#14452E', '#E0F2FE', '#FFE4E6'];
               return (
                 <button
                   key={word}
@@ -214,7 +214,7 @@ export const GamePage: React.FC = () => {
     return (
       <div style={centeredScreenStyle}>
         <div className="sketch-card" style={{ padding: 36, maxWidth: 400, width: '100%', textAlign: 'center' }}>
-          <div style={{ ...roundIconBadgeStyle('#38BDF8'), margin: '0 auto 16px', animation: 'wiggle 1.2s ease-in-out infinite' }}>
+          <div style={{ ...roundIconBadgeStyle('#10B981'), margin: '0 auto 16px', animation: 'wiggle 1.2s ease-in-out infinite' }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
               <path d="m15 5 4 4" />
@@ -239,7 +239,7 @@ export const GamePage: React.FC = () => {
           <div style={stickyBadgeStyle('#34D399')} className="font-hand">
             Final Standings
           </div>
-          <div style={{ ...roundIconBadgeStyle('#FDE047'), margin: '8px auto 14px' }}>
+          <div style={{ ...roundIconBadgeStyle('#22C55E'), margin: '8px auto 14px' }}>
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
               <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
               <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
@@ -264,7 +264,7 @@ export const GamePage: React.FC = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '10px 16px',
-                  background: i === 0 ? '#FEF9C3' : '#FFFDF9',
+                  background: i === 0 ? '#14452E' : '#0B2418',
                   borderRadius: 12,
                   border: '2px solid #1C1917',
                 }}
@@ -277,7 +277,7 @@ export const GamePage: React.FC = () => {
           <button
             onClick={() => { reset(); navigate('/home'); }}
             className="sketch-btn"
-            style={{ background: '#FDE047', color: '#1C1917', padding: '14px 32px', fontSize: 16 }}
+            style={{ background: '#22C55E', color: '#1C1917', padding: '14px 32px', fontSize: 16 }}
           >
             Back to Studio
           </button>
@@ -305,7 +305,7 @@ export const GamePage: React.FC = () => {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
             {scores.slice(0, 5).map((s, i) => (
-              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#FFFDF9', border: '1.5px solid #1C1917', borderRadius: 10 }}>
+              <div key={s.userId} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 14px', background: '#0B2418', border: '1.5px solid #1C1917', borderRadius: 10 }}>
                 <span style={{ fontWeight: 700, color: '#1C1917' }}>#{i + 1} {s.username}</span>
                 <span className="font-display" style={{ fontWeight: 700, color: '#1C1917' }}>{s.totalPoints} pts</span>
               </div>
@@ -321,7 +321,7 @@ export const GamePage: React.FC = () => {
 
   // ── Main Gameplay Screen ────────────────────────────────────────────────────
   const timeLeft = round?.timeLeft ?? 60;
-  const timerBg = timeLeft <= 10 ? '#FB7185' : timeLeft <= 20 ? '#FDE047' : '#34D399';
+  const timerBg = timeLeft <= 10 ? '#FB7185' : timeLeft <= 20 ? '#22C55E' : '#34D399';
   const artist = players.find(p => p.userId === round?.artistId);
 
   return (
@@ -379,13 +379,13 @@ export const GamePage: React.FC = () => {
         {/* Right: Scoreboard + Guesses */}
         <div style={{ flex: '1 1 280px', maxWidth: 340, display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Scoreboard */}
-          <div className="sketch-card" style={{ padding: 16, background: '#FFFDF9' }}>
+          <div className="sketch-card" style={{ padding: 16, background: '#0B2418' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
                 <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
                 <path d="M4 22h16" />
-                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#FDE047" />
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" fill="#22C55E" />
               </svg>
               <span className="font-display" style={{ fontSize: 15, fontWeight: 700, color: '#1C1917' }}>Scoreboard</span>
             </div>
@@ -400,7 +400,7 @@ export const GamePage: React.FC = () => {
                     alignItems: 'center',
                     padding: '6px 10px',
                     borderRadius: 9,
-                    background: s.userId === user?.id ? '#FEF9C3' : 'transparent',
+                    background: s.userId === user?.id ? '#14452E' : 'transparent',
                     border: s.userId === user?.id ? '1.5px solid #1C1917' : '1.5px solid transparent',
                     fontSize: 14,
                   }}
@@ -417,7 +417,7 @@ export const GamePage: React.FC = () => {
           </div>
 
           {/* Live Guess Feed */}
-          <div className="sketch-card" style={{ padding: 16, background: '#FFFDF9', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div className="sketch-card" style={{ padding: 16, background: '#0B2418', flex: 1, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 8, borderBottom: '1.5px dashed #D6D3D1' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
@@ -456,7 +456,7 @@ export const GamePage: React.FC = () => {
                     padding: '10px 12px',
                     borderRadius: 10,
                     border: '2px solid #1C1917',
-                    background: '#FFFFFF',
+                    background: '#0E2E1F',
                     color: '#1C1917',
                     fontSize: 14,
                     fontWeight: 500,
@@ -480,7 +480,7 @@ export const GamePage: React.FC = () => {
             )}
 
             {isArtist && (
-              <div style={{ background: '#FEF9C3', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#1C1917', fontWeight: 700, fontSize: 13 }}>
+              <div style={{ background: '#14452E', border: '2px solid #1C1917', borderRadius: 10, padding: '10px 12px', textAlign: 'center', color: '#1C1917', fontWeight: 700, fontSize: 13 }}>
                 You're the artist — no hints in chat!
               </div>
             )}
@@ -528,7 +528,7 @@ const roundIconBadgeStyle = (bg: string): React.CSSProperties => ({
 });
 
 const hudBarStyle: React.CSSProperties = {
-  background: '#FFFDF9',
+  background: '#0B2418',
   borderBottom: '2.5px solid #1C1917',
   padding: '12px 24px',
   display: 'flex',
@@ -562,7 +562,7 @@ const timerBadgeStyle = (bg: string): React.CSSProperties => ({
 });
 
 const wordClueBoxStyle: React.CSSProperties = {
-  background: '#FDE047',
+  background: '#22C55E',
   border: '2px solid #1C1917',
   boxShadow: '2px 2px 0px #1C1917',
   borderRadius: 12,

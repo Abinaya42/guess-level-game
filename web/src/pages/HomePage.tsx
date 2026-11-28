@@ -114,7 +114,7 @@ export const HomePage: React.FC = () => {
               className="sketch-btn"
               style={{
                 background: joinCode.length === 6 ? '#22C55E' : '#DCFCE7',
-                color: joinCode.length === 6 ? '#FFFFFF' : '#166534',
+                color: joinCode.length === 6 ? '#0E2E1F' : '#166534',
                 padding: '12px',
                 fontSize: 16,
                 cursor: joinCode.length === 6 ? 'pointer' : 'not-allowed',

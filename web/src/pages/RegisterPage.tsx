@@ -60,7 +60,7 @@ export const RegisterPage: React.FC = () => {
           {/* Custom Hand-Drawn Brush Emblem */}
           <div style={logoBadgeStyle}>
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" fill="#FDE047" />
+              <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" fill="#22C55E" />
               <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" fill="#FB7185" />
             </svg>
           </div>
@@ -152,7 +152,7 @@ const logoBadgeStyle: React.CSSProperties = {
   height: 58,
   margin: '0 auto',
   borderRadius: 16,
-  background: '#38BDF8',
+  background: '#10B981',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   display: 'flex',
@@ -174,7 +174,7 @@ const inputStyle = (err: boolean): React.CSSProperties => ({
   padding: '11px 14px',
   borderRadius: 11,
   border: `2px solid ${err ? '#E11D48' : '#1C1917'}`,
-  background: '#FFFDF9',
+  background: '#0B2418',
   fontSize: 15,
   color: '#1C1917',
   outline: 'none',
@@ -200,7 +200,7 @@ const errorBoxStyle: React.CSSProperties = {
 };
 
 const submitBtn = (loading: boolean): React.CSSProperties => ({
-  background: loading ? '#E7E5E4' : '#FDE047',
+  background: loading ? '#E7E5E4' : '#22C55E',
   color: '#1C1917',
   padding: '13px',
   fontSize: 16,

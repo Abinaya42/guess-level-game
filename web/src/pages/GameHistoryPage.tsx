@@ -4,7 +4,7 @@ import { useAuthStore } from '../stores/authStore';
 import { getUserHistory } from '../services/api';
 import { GameHistory } from '../types';
 
-const PODIUM_COLORS = ['#FDE047', '#E0F2FE', '#FFEDD5'];
+const PODIUM_COLORS = ['#22C55E', '#E0F2FE', '#FFEDD5'];
 const PODIUM_LABELS = ['1st', '2nd', '3rd'];
 
 export const GameHistoryPage: React.FC = () => {
@@ -137,7 +137,7 @@ export const GameHistoryPage: React.FC = () => {
                 disabled={loading}
                 className="sketch-btn"
                 style={{
-                  background: '#FDE047',
+                  background: '#22C55E',
                   color: '#1C1917',
                   padding: '13px',
                   fontSize: 15,
@@ -157,7 +157,7 @@ export const GameHistoryPage: React.FC = () => {
 };
 
 const headerStyle: React.CSSProperties = {
-  background: '#FFFDF9',
+  background: '#0B2418',
   borderBottom: '2.5px solid #1C1917',
   padding: '14px 24px',
   display: 'flex',
@@ -166,7 +166,7 @@ const headerStyle: React.CSSProperties = {
 };
 
 const backBtnStyle: React.CSSProperties = {
-  background: '#FDE047',
+  background: '#22C55E',
   color: '#1C1917',
   padding: '8px 14px',
   fontSize: 14,
@@ -177,7 +177,7 @@ const emptyBadgeStyle: React.CSSProperties = {
   height: 60,
   margin: '0 auto',
   borderRadius: 16,
-  background: '#FEF9C3',
+  background: '#14452E',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   display: 'flex',
@@ -198,7 +198,7 @@ const roomTagStyle: React.CSSProperties = {
 };
 
 const rankBoxStyle = (isFirst: boolean): React.CSSProperties => ({
-  background: isFirst ? '#FDE047' : '#F5F5F4',
+  background: isFirst ? '#22C55E' : '#F5F5F4',
   border: '2px solid #1C1917',
   borderRadius: 12,
   padding: '6px 12px',

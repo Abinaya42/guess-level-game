@@ -69,7 +69,7 @@ export const CreateRoomPage: React.FC = () => {
         {/* Custom Hand-Drawn Easel / Canvas Emblem */}
         <div style={logoBadgeStyle}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="4" y="3" width="16" height="12" rx="2" fill="#FFFDF9" />
+            <rect x="4" y="3" width="16" height="12" rx="2" fill="#0B2418" />
             <path d="M12 15v6" />
             <path d="M8 21l2-6" />
             <path d="M16 21l-2-6" />
@@ -178,7 +178,7 @@ const stickyTagStyle: React.CSSProperties = {
   position: 'absolute',
   top: -14,
   right: 22,
-  background: '#38BDF8',
+  background: '#10B981',
   border: '2px solid #1C1917',
   borderRadius: 8,
   padding: '2px 12px',
@@ -194,7 +194,7 @@ const logoBadgeStyle: React.CSSProperties = {
   height: 62,
   margin: '0 auto',
   borderRadius: 16,
-  background: '#FDE047',
+  background: '#22C55E',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   display: 'flex',
@@ -204,7 +204,7 @@ const logoBadgeStyle: React.CSSProperties = {
 };
 
 const rulesBoxStyle: React.CSSProperties = {
-  background: '#FEF9C3',
+  background: '#14452E',
   border: '2px solid #1C1917',
   borderRadius: 14,
   padding: '16px 18px',

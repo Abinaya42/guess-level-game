@@ -20,9 +20,9 @@ interface DrawingTools {
 }
 
 const COLORS = [
-  '#1C1917', '#FFFFFF', '#E11D48', '#F97316', '#EAB308',
+  '#1C1917', '#0E2E1F', '#E11D48', '#F97316', '#EAB308',
   '#16A34A', '#2563EB', '#7C3AED', '#EC4899', '#0891B2',
-  '#65A30D', '#92400E', '#64748B', '#38BDF8', '#34D399',
+  '#65A30D', '#92400E', '#64748B', '#10B981', '#34D399',
 ];
 
 const BRUSH_SIZES = [3, 7, 13, 22];
@@ -50,13 +50,13 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#FFFDF9';
+    ctx.fillStyle = '#0B2418';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     strokes.forEach((stroke) => {
       if (stroke.points.length < 2) return;
       ctx.beginPath();
-      ctx.strokeStyle = stroke.isEraser ? '#FFFDF9' : stroke.color;
+      ctx.strokeStyle = stroke.isEraser ? '#0B2418' : stroke.color;
       ctx.lineWidth = stroke.brushSize;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
@@ -93,7 +93,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
     const ctx = canvas.getContext('2d')!;
     ctx.beginPath();
-    ctx.strokeStyle = tools.isEraser ? '#FFFDF9' : tools.color;
+    ctx.strokeStyle = tools.isEraser ? '#0B2418' : tools.color;
     ctx.lineWidth = tools.isEraser ? tools.brushSize * 2.5 : tools.brushSize;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -133,7 +133,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {/* Sketchpad Frame */}
-      <div className="sketch-card" style={{ padding: 10, background: '#FFFDF9', position: 'relative' }}>
+      <div className="sketch-card" style={{ padding: 10, background: '#0B2418', position: 'relative' }}>
         {/* Top Binder Rings Accent */}
         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '0 24px 8px', borderBottom: '1.5px dashed #E7E5E4' }}>
           {Array.from({ length: 8 }).map((_, i) => (
@@ -158,7 +158,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
             display: 'block',
             width: '100%',
             borderRadius: 10,
-            background: '#FFFDF9',
+            background: '#0B2418',
             cursor: isArtist ? (tools.isEraser ? 'cell' : 'crosshair') : 'default',
             touchAction: 'none',
           }}
@@ -215,7 +215,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                     width: 30,
                     height: 30,
                     borderRadius: 8,
-                    background: active ? '#FDE047' : '#FFFDF9',
+                    background: active ? '#22C55E' : '#0B2418',
                     border: '2px solid #1C1917',
                     display: 'flex',
                     alignItems: 'center',
@@ -229,7 +229,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
                       height: Math.min(size + 3, 18),
                       borderRadius: '50%',
                       background: tools.isEraser ? '#78716C' : tools.color,
-                      border: tools.color === '#FFFFFF' ? '1px solid #1C1917' : 'none',
+                      border: tools.color === '#0E2E1F' ? '1px solid #1C1917' : 'none',
                     }}
                   />
                 </button>
@@ -244,7 +244,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
             <button
               onClick={() => setTools(t => ({ ...t, isEraser: false }))}
               className="sketch-btn"
-              style={toolBtnStyle(!tools.isEraser ? '#FDE047' : '#FFFDF9')}
+              style={toolBtnStyle(!tools.isEraser ? '#22C55E' : '#0B2418')}
               title="Pencil"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
@@ -256,7 +256,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
             <button
               onClick={() => setTools(t => ({ ...t, isEraser: true }))}
               className="sketch-btn"
-              style={toolBtnStyle(tools.isEraser ? '#38BDF8' : '#FFFDF9')}
+              style={toolBtnStyle(tools.isEraser ? '#10B981' : '#0B2418')}
               title="Eraser"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
@@ -266,14 +266,14 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
               <span>Eraser</span>
             </button>
 
-            <button onClick={onUndo} className="sketch-btn" style={toolBtnStyle('#FFFDF9')} title="Undo">
+            <button onClick={onUndo} className="sketch-btn" style={toolBtnStyle('#0B2418')} title="Undo">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M3 7v6h6" />
                 <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
               </svg>
             </button>
 
-            <button onClick={onRedo} className="sketch-btn" style={toolBtnStyle('#FFFDF9')} title="Redo">
+            <button onClick={onRedo} className="sketch-btn" style={toolBtnStyle('#0B2418')} title="Redo">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 7v6h-6" />
                 <path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7" />
@@ -302,7 +302,7 @@ const toolbarStyle: React.CSSProperties = {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '12px 14px',
-  background: '#FFFDF9',
+  background: '#0B2418',
 };
 
 const dividerStyle: React.CSSProperties = {

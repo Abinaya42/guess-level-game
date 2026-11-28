@@ -5,14 +5,17 @@
 }
 
 :root {
-  --paper-bg: #F0FDF4;
-  --paper-dot: #BBF7D0;
-  --ink: #14532D;
-  --ink-muted: #166534;
-  --accent-yellow: #4ADE80;
-  --accent-coral: #22C55E;
-  --accent-mint: #34D399;
-  --accent-blue: #16A34A;
+  --paper-bg: #05160E;
+  --paper-dot: #123B27;
+  --card-bg: #0B2418;
+  --card-elevated: #0F3020;
+  --ink: #ECFDF5;
+  --ink-muted: #86EFAC;
+  --border-dark: #020A06;
+  --accent-yellow: #22C55E;
+  --accent-coral: #16A34A;
+  --accent-mint: #10B981;
+  --accent-blue: #15803D;
 }
 
 body {
@@ -20,9 +23,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--paper-bg);
-  background-image: radial-gradient(var(--paper-dot) 1.25px, transparent 1.25px);
+  background-image: radial-gradient(var(--paper-dot) 1.35px, transparent 1.35px);
   background-size: 20px 20px;
   color: var(--ink);
+  min-height: 100vh;
 }
 
 h1, h2, h3, .font-display {
@@ -34,32 +38,36 @@ h1, h2, h3, .font-display {
   font-family: 'Caveat', cursive;
 }
 
-/* Handcrafted Sketchbook Card & Button Utilities */
+/* Dark Green Sketchbook Card & Button Utilities */
 .sketch-card {
-  background: #FFFFFF;
-  border: 2.5px solid var(--ink);
+  background: var(--card-bg);
+  color: var(--ink);
+  border: 2.5px solid var(--border-dark);
   border-radius: 18px;
-  box-shadow: 5px 5px 0px var(--ink);
+  box-shadow: 5px 5px 0px var(--border-dark);
 }
 
 .sketch-btn {
-  border: 2.5px solid var(--ink);
+  background: var(--card-elevated);
+  color: var(--ink);
+  border: 2.5px solid var(--border-dark);
   border-radius: 12px;
-  box-shadow: 3px 3px 0px var(--ink);
+  box-shadow: 3px 3px 0px var(--border-dark);
   font-family: 'Fredoka', sans-serif;
   font-weight: 600;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
   cursor: pointer;
 }
 
 .sketch-btn:hover:not(:disabled) {
   transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px var(--ink);
+  box-shadow: 4px 4px 0px var(--border-dark);
+  background: #15422C;
 }
 
 .sketch-btn:active:not(:disabled) {
   transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px var(--ink);
+  box-shadow: 1px 1px 0px var(--border-dark);
 }
 
 @keyframes spin {
@@ -77,7 +85,7 @@ h1, h2, h3, .font-display {
 }
 
 button:focus-visible, input:focus-visible {
-  outline: 2.5px solid var(--ink);
+  outline: 2.5px solid var(--accent-yellow);
   outline-offset: 2px;
 }
 
@@ -85,9 +93,12 @@ button:focus-visible, input:focus-visible {
   width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F0E9DC;
+  background: #071D13;
 }
 ::-webkit-scrollbar-thumb {
-  background: #A8A29E;
+  background: #1B5E3E;
   border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22C55E;
 }

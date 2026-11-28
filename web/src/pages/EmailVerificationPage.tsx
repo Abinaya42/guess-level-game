@@ -32,7 +32,7 @@ export const EmailVerificationPage: React.FC = () => {
         {/* Custom Hand-Drawn Envelope Emblem */}
         <div style={badgeStyle}>
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1C1917" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="3" fill="#FFFDF9" />
+            <rect x="2" y="4" width="20" height="16" rx="3" fill="#0B2418" />
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
           </svg>
         </div>
@@ -69,7 +69,7 @@ export const EmailVerificationPage: React.FC = () => {
             onClick={() => resendVerification().then(() => toast.success('Fresh verification note sent!'))}
             className="sketch-btn"
             style={{
-              background: '#FDE047',
+              background: '#22C55E',
               color: '#1C1917',
               padding: '12px',
               fontSize: 15,
@@ -121,7 +121,7 @@ const stickyTagStyle: React.CSSProperties = {
   position: 'absolute',
   top: -14,
   right: 22,
-  background: '#38BDF8',
+  background: '#10B981',
   border: '2px solid #1C1917',
   borderRadius: 8,
   padding: '2px 12px',
@@ -137,7 +137,7 @@ const badgeStyle: React.CSSProperties = {
   height: 60,
   margin: '0 auto',
   borderRadius: 16,
-  background: '#FEF9C3',
+  background: '#14452E',
   border: '2.5px solid #1C1917',
   boxShadow: '3px 3px 0px #1C1917',
   display: 'flex',
@@ -147,7 +147,7 @@ const badgeStyle: React.CSSProperties = {
 };
 
 const emailBoxStyle: React.CSSProperties = {
-  background: '#FEF9C3',
+  background: '#14452E',
   border: '2px dashed #1C1917',
   borderRadius: 11,
   padding: '10px 14px',
