@@ -9,3 +9,9 @@ dist/
 .env.*
 !.env.example
 serviceAccountKey.json
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+serviceAccountKey.json
