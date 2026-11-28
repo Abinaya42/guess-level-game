@@ -1,12 +1,10 @@
-import 'dart:async';
-import 'package:flutter/foundation.dart';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// Ungal project-la firebase_options.dart irundhaa keezha irukkura line-ah uncomment pannunga:
-// import 'firebase_options.dart';
+import 'firebase_options.dart';
 
 import 'core/providers/providers.dart';
 import 'features/auth/screens/splash_screen.dart';
@@ -30,18 +28,7 @@ void main() {
 
     try {
       await Firebase.initializeApp(
-        // firebase_options.dart irundhaa:
-        // options: DefaultFirebaseOptions.currentPlatform,
-
-        // firebase_options.dart illaatti unga Firebase Web keys podunga:
-        options: kIsWeb
-            ? const FirebaseOptions(
-                apiKey: 'YOUR_WEB_API_KEY',
-                appId: 'YOUR_WEB_APP_ID',
-                messagingSenderId: 'YOUR_SENDER_ID',
-                projectId: 'YOUR_PROJECT_ID',
-              )
-            : null,
+        options: DefaultFirebaseOptions.currentPlatform,
       );
     } catch (e, stack) {
       debugPrint('Firebase init error: $e\n$stack');
@@ -87,7 +74,7 @@ class GuessLevelApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'Guess 11',
+      title: 'Find 11',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
